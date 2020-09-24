@@ -32,6 +32,6 @@ def test_auth_register_InvalidFirstName():
         auth_register('validemail@gmail.com', '123', 'Hayden'*100, 'Everest')          
 
 def test_auth_register_InvalidLastName():
-    with pytest.raises(InputError) as e:
+    with pytest.raises(InputError):
         auth_register('validemail@gmail.com', '123', 'Hayden', 'Everest'*100)                   
                
