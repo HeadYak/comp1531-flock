@@ -27,11 +27,24 @@ def test_auth_register_InvalidPassword():
     with pytest.raises(InputError):
         auth_register('validemail@gmail.com', '123', 'Hayden', 'Everest')  
 
-def test_auth_register_InvalidFirstName():
+#Test case for when attempting to register with a first name thats too long
+def test_auth_register_InvalidFirstName1():
     with pytest.raises(InputError):
-        auth_register('validemail@gmail.com', '123', 'Hayden'*100, 'Everest')          
+        auth_register('validemail@gmail.com', '123', 'Hayden'*100, 'Everest')       
 
-def test_auth_register_InvalidLastName():
+#Test case for when attempting to register with a empty first name
+def test_auth_register_InvalidFirstName2():
     with pytest.raises(InputError):
-        auth_register('validemail@gmail.com', '123', 'Hayden', 'Everest'*100)                   
+        auth_register('validemail@gmail.com', '123', '', 'Everest')              
+
+#Test case for when attempting to register with a last name thats too long
+def test_auth_register_InvalidLastName1():
+    with pytest.raises(InputError):
+        auth_register('validemail@gmail.com', '123', 'Hayden', 'Everest'*100)      
+
+
+#Test case for when attempting to register with a empty last name
+def test_auth_register_InvalidLastName2():
+    with pytest.raises(InputError):
+        auth_register('validemail@gmail.com', '123', 'Hayden', '')   
                
