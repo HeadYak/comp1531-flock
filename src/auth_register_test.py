@@ -12,26 +12,26 @@ def test_auth_register_BaseCase():
 
 #Test case for attempting to register using an invalid email address
 def test_auth_register_InvalidEmail():
-    with pytest.raises(InputError):
+    with pytest.raises(InputError) as e:
         auth_register('Thisisnotanemailaddress', '123abc!@#', 'Hayden', 'Everest')
 
 
 #Test case for when attempting to register with an email already used to register
 def test_auth_register_ExistingEmail():
-    with pytest.raises(InputError):
+    with pytest.raises(InputError) as e:
         auth_register('existingemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')   
 
 
 #Test case when attempting to register with a password shorter than 6 characters
 def test_auth_register_InvalidPassword():
-    with pytest.raises(InputError):
+    with pytest.raises(InputError) as e:
         auth_register('validemail@gmail.com', '123', 'Hayden', 'Everest')  
 
 def test_auth_register_InvalidFirstName():
-    with pytest.raises(InputError):
+    with pytest.raises(InputError) as e:
         auth_register('validemail@gmail.com', '123', 'Hayden'*100, 'Everest')          
 
 def test_auth_register_InvalidLastName():
-    with pytest.raises(InputError):
+    with pytest.raises(InputError) as e:
         auth_register('validemail@gmail.com', '123', 'Hayden', 'Everest'*100)                   
                
