@@ -21,18 +21,18 @@ def channels_list_test():
     ch_id4 =channels_create(token2, SameName, False)
 
     #should return the channels that the token passed into the funtion created.
-    assert channels_list(token1) == [{'id': ch_id1, 'name': "aGreatChannel", 'public': True},
-                                    {'id': ch_id3, 'name': "SameName", 'public': True}]
+    assert channels_list(token1) == [{'id': ch_id1, 'name': "aGreatChannel", 'is_public': True},
+                                    {'id': ch_id3, 'name': "SameName", 'is_public': True}]
                                                                
-    assert channels_list(token2) == [{'id': ch_id2, 'name': "yetAnotherChannel", 'public': False},
-                                    {'id': ch_id14, 'name': "SameName", 'public': False}]     
+    assert channels_list(token2) == [{'id': ch_id2, 'name': "yetAnotherChannel", 'is_public': False},
+                                    {'id': ch_id14, 'name': "SameName", 'is_public': False}]     
                                                               
    #should add channel ch_id2 to the users list of channels they are in                      
    channels_join(token1, ch_id2)
-   assert channels_list(token1) == [{'id': ch_id1, 'name': "aGreatChannel", 'public': True},
-                                    {'id': ch_id3, 'name': "SameName", 'public': True},
-                                    {'id': ch_id2, 'name': "yetAnotherChannel", 'public': False}]
+   assert channels_list(token1) == [{'id': ch_id1, 'name': "aGreatChannel", 'is_public': True},
+                                    {'id': ch_id3, 'name': "SameName", 'is_public': True},
+                                    {'id': ch_id2, 'name': "yetAnotherChannel", 'is_public': False}]
    
    #should remove channel ch_id4 from the users list of channels they are in                               
    channel_leave(token2, ch_id4)
-   assert channels_list(token2) == [{'id': ch_id2, 'name': "yetAnotherChannel", 'public': False}]
+   assert channels_list(token2) == [{'id': ch_id2, 'name': "yetAnotherChannel", 'is_chanpublic': False}]
