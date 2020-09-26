@@ -21,8 +21,22 @@ def auth_logout(token):
 
 
 def auth_register(email, password, name_first, name_last):
+
+    def check(email):  
+  
+        # pass the regular expression 
+        # and the string in search() method 
+        if(re.search(regex,email)):  
+            return True  
+            
+        else:  
+            return False  
+    print(check(email))
     #Code below checks if any users in the users dictionary and checks if input email already exists
-    if (len(users) != 0):
+    if (check(email) == False):
+        raise InputError('Invalid Email')
+    
+    elif (len(users) != 0):
         for user in users:
             if(user['email'] == email):
                 raise InputError('Email already registered')
@@ -35,11 +49,12 @@ def auth_register(email, password, name_first, name_last):
         raise InputError('Invalid Last Name')
     
     #Code below checks if input email is a valid email using regex
-    elif(not re.search(regex,email)):
-        raise InputError('Invalid Email')
-
+    
+    #Code below checks the length of the password
+    elif(len(password) < 6):
+        raise InputError('Invalid password')    
     #Code below is for when all conditions are met
-    elif(re.search(regex,email) and len(password) > 6):
+    elif(check(email) == True and len(password) >= 6):
         #Create a new dictionary with data about the user
         new_user = {
             'u_id': len(users)+1,
@@ -56,9 +71,11 @@ def auth_register(email, password, name_first, name_last):
 
         #Append the copied dictionary onto our list of users
         users.append(new_user_copy)
-    
-    #Return the correct output
-    return {
-        'u_id': new_user['u_id'],
-        'token': new_user['token'],
-    }
+
+        print(users)
+        #Return the correct output
+        return {
+            'u_id': new_user_copy['u_id'],
+            'token': new_user_copy['token'],
+        }
+
