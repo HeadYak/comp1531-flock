@@ -2,14 +2,18 @@ from auth import auth_register
 import pytest
 import echo
 from error import InputError
+from global_data import users
 
 def test_auth_register_BaseCase():
     result = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
-    assert result == {
-        'u_id': 1,
-        'token': '12345',
-    }
+    u_id = result['u_id']
+    token = result['token']
 
+    for user in users:
+        if(user['u_id'] == u_id and user['token'] == token):
+            pass
+
+    
 #Test case for attempting to register using an invalid email address
 def test_auth_register_InvalidEmail():
     with pytest.raises(InputError):
@@ -19,7 +23,9 @@ def test_auth_register_InvalidEmail():
 #Test case for when attempting to register with an email already used to register
 def test_auth_register_ExistingEmail():
     with pytest.raises(InputError):
-        auth_register('existingemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')   
+        auth_register('validemail@gmail.com', '123abc!@#', 'Howard', 'Evererton')
+        auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
+         
 
 
 #Test case when attempting to register with a password shorter than 6 characters
