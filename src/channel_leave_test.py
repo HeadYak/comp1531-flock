@@ -10,10 +10,10 @@ def channels_leave_test():
     #Creating users to create channels
     user1 = auth_register("user1@gmail.com", user1pass, user1, last1)
     user2 = auth_register("user2@gmail.com", user2pass, user2, last2)
-    token1 = user1.['token']
-    token2 = user2.['token']
-    u_id1 = user1.['u_id']
-    u_id2 = user2.['u_id']
+    token1 = user1['token']
+    token2 = user2['token']
+    u_id1 = user1['u_id']
+    u_id2 = user2['u_id']
     
     #creating channels
     ch_id1 = channels_create(token1, aGreatChannel, True)
@@ -34,12 +34,11 @@ def channels_leave_test():
     channel_leave(token2, ch_id2)
     assert user_in_channel(u_id2, ch_id2) == False
     
-    
 def user_in_channel(int u_id, int channel_id):
     found = False
     for channel in channels:
-        if channel.['channel_id'] = ch_id1:
-            for member in channel.['members']
-                if member.['u_id'] = u_id2
+        if channel['channel_id'] = ch_id1:
+            for member in channel['members']
+                if member['u_id'] = u_id2
                     found = True
     return found
