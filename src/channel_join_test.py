@@ -7,7 +7,7 @@ from global_data import users, channels
 from helper_functions import user_in_channel
 
 
-def channels_leave_test():
+def test_channels_leave():
     #Creating users to create channels
     user1 = auth_register("user1@gmail.com", user1pass, user1, last1)
     user2 = auth_register("user2@gmail.com", user2pass, user2, last2)

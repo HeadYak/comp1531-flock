@@ -6,21 +6,20 @@ from helper_functions import user_in_channel, user_exists, channel_exists, creat
 
 def channel_invite(token, channel_id, u_id):
     
-    authorised_u_id == get_u_id(token)
+    authorised_u_id = get_u_id(token)
     
     if (channel_exists(channel_id) == False):
         raise InputError('Invalid channel')
         
-    elif(user_exists(u_id) == False):
+    if(user_exists(u_id) == False):
         raise InputError('Invalid user id')
     
-    elif (user_in_channel(authorised_u_id, channel_id) == False):
+    if (user_in_channel(authorised_u_id, channel_id) == False):
         raise InputError('User not a member of channel')
-       
-    else:
-        for channel in channels:
-            if (channel['channel_id'] == channel_id):
-                channel['members'].append(create_member(u_id))   
+    
+    for channel in channels:
+        if (channel['channel_id'] == channel_id):
+            channel['members'].append(create_member(u_id))   
     
     return {}
 
@@ -59,20 +58,19 @@ def channel_messages(token, channel_id, start):
 
 def channel_leave(token, channel_id):
 
-    authorised_u_id == get_u_id(token)
+    authorised_u_id = get_u_id(token)
 
     if (channel_exists(channel_id) == False):
         raise InputError('Invalid channel')
     
-    elif (user_in_channel(authorised_u_id, channel_id) == False):
+    if (user_in_channel(authorised_u_id, channel_id) == False):
         raise InputError('User not a member of channel')
-    
-    else:
-        for channel in channels:
-            if (channel['channel_id'] == channel_id):
-                for member in channel['members']:
-                    if (member['u_id'] == u_id):
-                       channel['members']. remove(member)
+
+    for channel in channels:
+        if (channel['channel_id'] == channel_id):
+            for member in channel['members']:
+                if (member['u_id'] == u_id):
+                   channel['members']. remove(member)
     
     return {}
 
@@ -89,13 +87,12 @@ def channel_join(token, channel_id):
     if (public == False):
         raise InputError('Private Channel')
     
-    elif (channel_exists(channel_id)) == False:
+    if (channel_exists(channel_id)) == False:
         raise InputError('Invalid channel')
-    
-    else:
-        for channel in channels:
-            if (channel['channel_id'] == channel_id):
-                channel['members'].append(create_member(u_id))   
+
+    for channel in channels:
+        if (channel['channel_id'] == channel_id):
+            channel['members'].append(create_member(u_id))   
         
     return {}
 
