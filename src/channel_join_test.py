@@ -4,6 +4,7 @@ import pytest
 import echo
 from error import InputError
 from global_data import users, channels
+from helper_functions import user_in_channel
 
 
 def channels_leave_test():
@@ -29,12 +30,4 @@ def channels_leave_test():
         
     channel_join(token2, ch_id1)
     assert user_in_channel(u_id2, ch_id1) == True
-    
-def user_in_channel(int u_id, int channel_id):
-    found = False
-    for channel in channels:
-        if channel['channel_id'] = ch_id1:
-            for member in channel['members']
-                if member['u_id'] = u_id2
-                    found = True
-    return found
+
