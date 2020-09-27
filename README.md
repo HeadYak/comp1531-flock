@@ -4,6 +4,9 @@
 
 * 23/09: `token` language elaborated on slightly in 6.4
 * 23/09: Removing the "that the authorised user is part of" from the `InputError` in `channel_invite`
+* 25/09: Added *inclusively* to constraints on some string lengths
+* 25/09: IMPORTANT - added a `clear` function to the specficiation. It's been added to `src/other.py`. This function needs to be implemented for iteration 1, though it's very easy and you would have need to anyway - we're simply formalising it. It's at the bottom of the interface table.
+* 27/09: Permissions clarified in new section 6.6, with little language tweaks you can see in the commit
 
 ## Contents
 
@@ -57,7 +60,7 @@ Besides the information available in the interface that Sally and Bob provided, 
 7. Within a channel, ability to edit, remove, pin, unpin, react, or unreact to a message
 8. Ability to view user anyone's user profile, and modify a user's own profile (name, email, handle, and profile photo)
 9. Ability to search for messages based on a search string
-10. Ability to modify a user's admin privileges: (MEMBER, OWNER)
+10. Ability to modify a user's admin permissions: (MEMBER, OWNER)
 11. Ability to begin a "standup", which is an X minute period where users can send messages that at the end of the period will automatically be collated and summarised to all users
 
 The specific capabilities that need to be built for this project are described in the interface at the bottom. This is clearly a lot of features, but not all of them are to be implemented at once (see below)
@@ -122,7 +125,7 @@ A number of files have been added to your `/src/` folder in your repository. The
  * `channels.py`
  * `user.py` (not *required* for iteration 1)
  * `message.py` (not *required* for iteration 1)
- * `other.py` (not *required* for iteration 1)
+ * `other.py` (all except `clear` are not *required* for iteration 1)
 
 They do not contain any real implementation, but do contain some stub code to give you a feel for what the different functions should return. You will replace these stubs with actual implementations as you develop.
 
@@ -258,26 +261,27 @@ These interface specifications come from Sally and Bob, who are building the fro
 |------------|-------------|----------|-----------|----------|
 |auth_login|(email, password)|{ u_id, token }|**InputError** when any of:<ul><li>Email entered is not a valid email using the method provided [here](https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/) (unless you feel you have a better method)</li><li>Email entered does not belong to a user</li><li>Password is not correct</li></ul> | Given a registered users' email and password and generates a valid token for the user to remain authenticated |
 |auth_logout|(token)|{ is_success }|N/A|Given an active token, invalidates the taken to log the user out. If a valid token is given, and the user is successfully logged out, it returns true, otherwise false. |
-|auth_register|(email, password, name_first, name_last)|{ u_id, token }|**InputError** when any of:<ul><li>Email entered is not a valid email using the method provided [here](https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/) (unless you feel you have a better method).</li><li>Email address is already being used by another user</li><li>Password entered is less than 6 characters long</li><li>name_first not is between 1 and 50 characters in length</li><li>name_last is not between 1 and 50 characters in length</ul>|Given a user's first and last name, email address, and password, create a new account for them and return a new token for authentication in their session. A handle is generated that is the concatentation of a lowercase-only first name and last name. If the concatenation is longer than 20 characters, it is cutoff at 20 characters. If the handle is already taken, you may modify the handle in any way you see fit to make it unique. |
+|auth_register|(email, password, name_first, name_last)|{ u_id, token }|**InputError** when any of:<ul><li>Email entered is not a valid email using the method provided [here](https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/) (unless you feel you have a better method).</li><li>Email address is already being used by another user</li><li>Password entered is less than 6 characters long</li><li>name_first not is between 1 and 50 characters inclusively in length</li><li>name_last is not between 1 and 50 characters inclusively in length</ul>|Given a user's first and last name, email address, and password, create a new account for them and return a new token for authentication in their session. A handle is generated that is the concatentation of a lowercase-only first name and last name. If the concatenation is longer than 20 characters, it is cutoff at 20 characters. If the handle is already taken, you may modify the handle in any way you see fit to make it unique. |
 |channel_invite|(token, channel_id, u_id)|{}|**InputError** when any of:<ul><li>channel_id does not refer to a valid channel.</li><li>u_id does not refer to a valid user</li></ul>**AccessError** when<ul><li>the authorised user is not already a member of the channel</li>|Invites a user (with user id u_id) to join a channel with ID channel_id. Once invited the user is added to the channel immediately|
 |channel_details|(token, channel_id)|{ name, owner_members, all_members }|**InputError** when any of:<ul><li>Channel ID is not a valid channel</li></ul>**AccessError** when<ul><li>Authorised user is not a member of channel with channel_id</li></ul>|Given a Channel with ID channel_id that the authorised user is part of, provide basic details about the channel|
 |channel_messages|(token, channel_id, start)|{ messages, start, end }|**InputError** when any of:<ul><li>Channel ID is not a valid channel</li><li>start is greater than the total number of messages in the channel</li></ul>**AccessError** when<ul><li>Authorised user is not a member of channel with channel_id</li></ul>|Given a Channel with ID channel_id that the authorised user is part of, return up to 50 messages between index "start" and "start + 50". Message with index 0 is the most recent message in the channel. This function returns a new index "end" which is the value of "start + 50", or, if this function has returned the least recent messages in the channel, returns -1 in "end" to indicate there are no more messages to load after this return.|
 |channel_leave|(token, channel_id)|{}|**InputError** when any of:<ul><li>Channel ID is not a valid channel</li></ul>**AccessError** when<ul><li>Authorised user is not a member of channel with channel_id</li></ul>|Given a channel ID, the user removed as a member of this channel|
-|channel_join|(token, channel_id)|{}|**InputError** when any of:<ul><li>Channel ID is not a valid channel</li></ul>**AccessError** when<ul><li>channel_id refers to a channel that is private (when the authorised user is not an admin)</li></ul>|Given a channel_id of a channel that the authorised user can join, adds them to that channel|
+|channel_join|(token, channel_id)|{}|**InputError** when any of:<ul><li>Channel ID is not a valid channel</li></ul>**AccessError** when<ul><li>channel_id refers to a channel that is private (when the authorised user is not a global owner)</li></ul>|Given a channel_id of a channel that the authorised user can join, adds them to that channel|
 |channel_addowner|(token, channel_id, u_id)|{}|**InputError** when any of:<ul><li>Channel ID is not a valid channel</li><li>When user with user id u_id is already an owner of the channel</li></ul>**AccessError** when the authorised user is not an owner of the flockr, or an owner of this channel</li></ul>|Make user with user id u_id an owner of this channel|
 |channel_removeowner|(token, channel_id, u_id)|{}|**InputError** when any of:<ul><li>Channel ID is not a valid channel</li><li>When user with user id u_id is not an owner of the channel</li></ul>**AccessError** when the authorised user is not an owner of the flockr, or an owner of this channel</li></ul>|Remove user with user id u_id an owner of this channel|
 |channels_list|(token)|{ channels }|N/A|Provide a list of all channels (and their associated details) that the authorised user is part of|
 |channels_listall|(token)|{ channels }|N/A|Provide a list of all channels (and their associated details)|
 |channels_create|(token, name, is_public)|{ channel_id }|**InputError** when any of:<ul><li>Name is more than 20 characters long</li></ul>|Creates a new channel with that name that is either a public or private channel|
 |message_send|(token, channel_id, message)|{ message_id }|**InputError** when any of:<ul><li>Message is more than 1000 characters</li></ul>**AccessError** when: <li> the authorised user has not joined the channel they are trying to post to</li></ul>|Send a message from authorised_user to the channel specified by channel_id|
-|message_remove|(token, message_id)|{}|**InputError** when any of:<ul><li>Message (based on ID) no longer exists</li></ul>**AccessError** when none of the following are true:<ul><li>Message with message_id was sent by the authorised user making this request</li><li>The authorised user is an admin or owner of this channel or the flockr</li></ul>|Given a message_id for a message, this message is removed from the channel|
-|message_edit|(token, message_id, message)|{}|**AccessError** when none of the following are true:<ul><li>Message with message_id was sent by the authorised user making this request</li><li>The authorised user is an admin or owner of this channel or the flockr</li></ul>|Given a message, update it's text with new text. If the new message is an empty string, the message is deleted.|
+|message_remove|(token, message_id)|{}|**InputError** when any of:<ul><li>Message (based on ID) no longer exists</li></ul>**AccessError** when none of the following are true:<ul><li>Message with message_id was sent by the authorised user making this request</li><li>The authorised user is an owner of this channel or the flockr</li></ul>|Given a message_id for a message, this message is removed from the channel|
+|message_edit|(token, message_id, message)|{}|**AccessError** when none of the following are true:<ul><li>Message with message_id was sent by the authorised user making this request</li><li>The authorised user is an owner of this channel or the flockr</li></ul>|Given a message, update it's text with new text. If the new message is an empty string, the message is deleted.|
 |user_profile|(token, u_id)|{ user }|**InputError** when any of:<ul><li>User with u_id is not a valid user</li></ul>|For a valid user, returns information about their email, first name, last name, and handle|
-|user_profile_setname|(token, name_first, name_last)|{}|**InputError** when any of:<ul><li>name_first is not between 1 and 50 characters in length</li><li>name_last is not between 1 and 50 characters in length</ul></ul>|Update the authorised user's first and last name|
+|user_profile_setname|(token, name_first, name_last)|{}|**InputError** when any of:<ul><li>name_first is not between 1 and 50 characters inclusively in length</li><li>name_last is not between 1 and 50 characters inclusively in length</ul></ul>|Update the authorised user's first and last name|
 |user_profile_setemail|(token, email)|{}|**InputError** when any of:<ul><li>Email entered is not a valid email using the method provided [here](https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/) (unless you feel you have a better method).</li><li>Email address is already being used by another user</li>|Update the authorised user's email address|
 |user_profile_sethandle|(token, handle_str)|{}|**InputError** when any of:<ul><li>handle_str must be between 3 and 20 characters</li><li>handle is already used by another user</li></ul>|Update the authorised user's handle (i.e. display name)|
 |users_all|(token)|{ users}|N/A|Returns a list of all users and their associated details|
 |search|(token, query_str)|{ messages }|N/A|Given a query string, return a collection of messages in all of the channels that the user has joined that match the query|
+|clear|()|{}|N/A|Resets the internal data of the application to it's initial state|
 
 ### 6.3. Errors for all functions
 
@@ -304,6 +308,20 @@ For example, if we imagine a user with token "12345" is trying to read messages 
  * channel_messages("12345", 6, 0) => { [messages], 0, 50 }
  * channel_messages("12345", 6, 50) => { [messages], 50, 100 }
  * channel_messages("12345", 6, 100) => { [messages], 100, -1 }
+
+### 6.6. Permissions:
+ * Members in a channel have one of two channel permissions.
+   1) Owner of the channel (the person who created it, and whoever else that creator adds)
+   2) Members of the channel
+ * Slackr user's have two global permissions
+   1) Owners, who can also modify other owners' permissions.
+   2) Members, who do not have any special permissions (permission_id 3)
+* All slackr users are members by default, except for the very first user who signs up, who is an owner
+
+A user's primary permissions are their global permissions. Then the channel permissions are layered on top. For example:
+* An owner of slackr has owner permissions in every channel they've joined
+* A member of slackr is a member in channels they are not owners of
+* A member of slackr is an owner in channels they are owners of
 
 ## 7. Due Dates and Weightings
 
