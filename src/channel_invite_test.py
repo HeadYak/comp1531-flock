@@ -20,7 +20,9 @@ def test_channels_invite():
     
     #creating channels
     ch_id1 = channels_create(token1, "aGreatChannel", True)
-    ch_id2 =channels_create(token2, "yetAnotherChannel", False)
+    ch_id2 = channels_create(token2, "yetAnotherChannel", False)
+    
+    print(ch_id1)
     
     #not a valid channel
     with pytest.raises(InputError):
