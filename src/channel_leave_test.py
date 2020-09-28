@@ -5,9 +5,10 @@ import pytest
 import echo
 from error import InputError
 from helper_functions import user_in_channel
-
+from other import clear
 
 def test_channels_leave():
+    clear()
     #Creating users to create channels
     
     user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
@@ -35,5 +36,5 @@ def test_channels_leave():
     #test private channel
     channel_leave(token2, ch_id2)
     assert user_in_channel(u_id2, ch_id2) == False
-    
+    clear()
 
