@@ -8,14 +8,57 @@ name_maxlen = 50
 name_minlen = 1 
 def auth_login(email, password):
     
-    return {
-        'u_id': 1,
-        'token': '12345',
-    }
+    def check(email):
+    
+        if re.search(regex,email):
+            return True
+        else:
+            return False
+     
+    # Check is email is invalid 
+    if check(email) == False:
+        raise InputError('Invalid Email')
+    
+    # Handle case where no users registered 
+    if len(users) == 0:
+       raise InputError('Email does not belong to a user')
+    
+    userFound = False
+    userDetails = {}
+    #  Check if entered email is registered as a user
+    for user in users:
+        if user['email'] == email:
+            userFound = True
+            userDetails = user.copy()
+            # Check if entered password matches registered user's password
+            if password != userDetails['password']:
+                raise InputError('Entered Password is Incorrect')
+            else:
+                user['token'] = user['u_id']
+                
+            break
+            
+    # Raise exception if email is not registered 
+    if userFound == False:
+        raise InputError('Email does not belong to a user')
+      
+    # Return u_id and token upon successful login
+    return {'u_id' : userDetails['u_id'], 'token' : userDetails['token']}
 
 def auth_logout(token):
+    
+    tokenFound = False
+    
+    # Search for matching active token
+    for user in users:
+        if token == user['token']:
+            # Flag that active token was found and invalidate it to log out user
+            tokenFound = True
+            user['token'] = -1
+            break
+            
     return {
-        'is_success': True,
+        'is_success': tokenFound,
     }
 
     
