@@ -6,6 +6,7 @@ import echo
 from error import InputError
 from global_data import *
 from helper_functions import user_in_channel
+from other import clear
 
 
 def test_channels_invite():
