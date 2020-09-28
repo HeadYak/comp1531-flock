@@ -2,30 +2,27 @@ from global_data import users, channels
 def user_in_channel(u_id, channel_id):
     found = False
     for channel in channels:
-        if (channel['channel_id'] == ch_id1):
+        if (channel['channel_id'] == channel_id):
             for member in channel['members']:
-                if (member['u_id'] == u_id2):
+                if (member['u_id'] == u_id):
                     found = True
     return found
 
-
-def user_in_channel_token(token, channel_id):
-    permission = None
+def user_is_owner(u_id, channel_id):
+    found = False
     for channel in channels:
         if (channel['channel_id'] == channel_id):
-            if(channel['creator'] == token):
-                permission = 'creator'
-                return permission
-
             for owner in channel['owners']:
-                if (owner['token'] == token):
-                    permission = 'owner'
-                    return permission
-            for member in channel['members']:
-                if (member['token'] == token):
-                    permission = 'member'
-                    return permission
-
+                if (owner['u_id'] == u_id):
+                    found = True
+    return found
+def user_is_creator(u_id, channel_id):
+    result = False
+    for channel in channels:
+        if (channel['channel_id'] == channel_id):
+            if channel['creator'] == u_id:
+                result = True
+    return result
 
 
 def channel_exists(channel_id):
