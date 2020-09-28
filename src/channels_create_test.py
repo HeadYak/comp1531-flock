@@ -9,7 +9,7 @@ from other import clear
 
 #Creating a channel thats public
 def test_channels_create_ChannelPublic():
-
+    clear()
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
 
     #Storing u_id generated from registration process in a variable for easy access
@@ -24,6 +24,7 @@ def test_channels_create_ChannelPublic():
 
 #Creating a channel thats not public
 def test_channels_create_ChannelNotPublic():
+    clear()
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
 
     #Storing u_id generated from registration process in a variable for easy access
@@ -38,7 +39,7 @@ def test_channels_create_ChannelNotPublic():
     clear()
 #Creating a channel with an invalid name
 def test_channels_create_InvalidName():
-    
+    clear()
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
 
     #Storing u_id generated from registration process in a variable for easy access
