@@ -69,14 +69,17 @@ def channel_leave(token, channel_id):
     for channel in channels:
         if (channel['channel_id'] == channel_id):
             for member in channel['members']:
-                if (member['u_id'] == u_id):
-                   channel['members']. remove(member)
+                print(channel['members'])
+                if (member['u_id'] == authorised_u_id):
+                    print(channel['members'])
+                    channel['members']. remove(member)
+                    print(channel['members'])
     
     return {}
 
 def channel_join(token, channel_id):
     
-    u_id == get_u_id(token)
+    u_id = get_u_id(token)
     
     public = False 
     for channel in channels:

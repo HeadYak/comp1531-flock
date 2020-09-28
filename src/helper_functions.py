@@ -2,16 +2,9 @@ from global_data import users, channels
 def user_in_channel(u_id, channel_id):
     found = False
     for channel in channels:
-        if(channel['creator']['u_id'] == u_id):
-            found = True
-        if (channel['channel_id'] == channel_id):
+        if channel['channel_id'] == channel_id:
             for member in channel['members']:
-                if (member['u_id'] == u_id):
-                    found = True
-            if(channel['creator']['u_id'] == u_id):
-                found = True
-            for owner in channel['owners']:
-                if (owner['u_id'] == u_id):
+                if member['u_id'] == u_id:
                     found = True
     return found
 
@@ -32,9 +25,11 @@ def user_is_creator(u_id, channel_id):
     return result
 
 
+
 def channel_exists(channel_id):
     channel_exists = False
     for channel in channels:
+        print(channel['channel_id'])
         if (channel['channel_id'] == channel_id):
             channel_exists = True
             
@@ -69,3 +64,21 @@ def create_member(u_id):
         'name_last': name_last,
     }
    
+def put_frank(u_id, channel_id):
+    found = False
+    for channel in channels:
+        if(channel['creator']['u_id'] == u_id):
+            found = True
+            print(found)
+        if (channel['channel_id'] == channel_id):
+            for member in channel['members']:
+                if (member['u_id'] == u_id):
+                    found = True
+                    print(found)
+            if(channel['creator']['u_id'] == u_id):
+                found = True
+                print(found)
+            for owner in channel['owners']:
+                if (owner['u_id'] == u_id):
+                    found = True
+                    print(found)
