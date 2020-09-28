@@ -13,7 +13,7 @@ def test_channels_create_ChannelPublic():
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
 
     #Storing u_id generated from registration process in a variable for easy access
-    owner_u_id = register['u_id']
+    # owner_u_id = register['u_id']
 
     #Storing token generated from registration process in a variable for easy access
     owner_token = register['token']
@@ -27,7 +27,7 @@ def test_channels_create_ChannelNotPublic():
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
 
     #Storing u_id generated from registration process in a variable for easy access
-    owner_u_id = register['u_id']
+    # owner_u_id = register['u_id']
 
     #Storing token generated from registration process in a variable for easy access
     owner_token = register['token']
@@ -42,7 +42,7 @@ def test_channels_create_InvalidName():
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
 
     #Storing u_id generated from registration process in a variable for easy access
-    owner_u_id = register['u_id']
+    # owner_u_id = register['u_id']
 
     #Storing token generated from registration process in a variable for easy access
     owner_token = register['token']
