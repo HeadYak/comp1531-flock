@@ -1,7 +1,7 @@
 from global_data import users, channels
 import pytest
-from error import InputError
-from helper_functions import user_in_channel, user_exists, channel_exists, create_member, get_u_id
+from error import InputError, AccessError
+from helper_functions import user_in_channel, user_exists, channel_exists, create_member, get_u_id, user_in_channel_token, get_token
 
 
 def channel_invite(token, channel_id, u_id):
@@ -97,6 +97,18 @@ def channel_join(token, channel_id):
     return {}
 
 def channel_addowner(token, channel_id, u_id):
+
+
+    if (user_in_channel_token(token,channel_id) == None):
+        raise AccessError('User not associated with channel')   
+    elif(user_in_channel_token(get_token(u_id),channel_id) == ('creator' or 'owner')):
+        raise InputError('User is already owner')  
+    elif(channel_exists(channel_id) == False):
+        raise InputError('Invalid channel_id') 
+    elif(user_in_channel_token(token,channel_id) != None):
+        for channel in channels:
+            if channel['channel_id'] == channel_id:
+                channel['owners'].append(u_id)
     return {
     }
 

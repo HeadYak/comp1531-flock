@@ -1,6 +1,4 @@
 from global_data import users, channels
-
-
 def user_in_channel(u_id, channel_id):
     found = False
     for channel in channels:
@@ -9,6 +7,25 @@ def user_in_channel(u_id, channel_id):
                 if (member['u_id'] == u_id2):
                     found = True
     return found
+
+
+def user_in_channel_token(token, channel_id):
+    permission = None
+    for channel in channels:
+        if (channel['channel_id'] == channel_id):
+            if(channel['creator'] == token):
+                permission = 'creator'
+                return permission
+
+            for owner in channel['owners']:
+                if (owner['token'] == token):
+                    permission = 'owner'
+                    return permission
+            for member in channel['members']:
+                if (member['token'] == token):
+                    permission = 'member'
+                    return permission
+
 
 
 def channel_exists(channel_id):
@@ -31,7 +48,11 @@ def get_u_id(token):
     for user in users:
         if (user['token'] == token):
             return user['u_id']
-    
+
+def get_token(u_id):
+    for user in users:
+        if (user['u_id'] == u_id):
+            return user['token']    
 def create_member(u_id):
     for user in users:
         if (user['u_id'] == u_id):

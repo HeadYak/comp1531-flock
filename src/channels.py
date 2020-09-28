@@ -1,6 +1,7 @@
 from global_data import channels, users
 import pytest
 from error import InputError
+from helper_functions import get_u_id
 def channels_list(token):
     return {
         'channels': [
@@ -35,12 +36,14 @@ def channels_create(token, name, is_public):
 
 
     if(valid_token == True and len(name) <= 20):
+
         new_channel = {
             'channel_id': len(channels)+1,
             'name': name,
             'is_public': is_public,
-            'creator': token,
+            'creator': get_u_id(token),
             'owners': [],
+            'members': [],
             'messages': []
         }
         new_channel_copy = new_channel.copy()
