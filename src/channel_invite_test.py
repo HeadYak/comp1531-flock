@@ -19,8 +19,8 @@ def test_channels_invite():
     u_id2 = user2['u_id']
     
     #creating channels
-    ch_id1 = channels_create(token1, "aGreatChannel", True)
-    ch_id2 = channels_create(token2, "yetAnotherChannel", False)
+    ch_id1 = channels_create(token1, "aGreatChannel", True)['channel_id'] 
+    ch_id2 = channels_create(token2, "yetAnotherChannel", False)['channel_id'] 
     
     print(ch_id1)
     
