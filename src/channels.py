@@ -37,7 +37,7 @@ def channels_create(token, name, is_public):
             'name': name,
             'is_public': is_public,
             'creator': create_member(get_u_id(token)),
-            'owners': [],
+            'owners': [create_member(get_u_id(token))],
             'members': [create_member(get_u_id(token))],
             'messages': []
         }

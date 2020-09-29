@@ -29,12 +29,12 @@ def test_channel_addowner_owner():
 
     for channel in channels:
         if channel['channel_id'] == channel_id:
-            assert len(channel['owners']) == 0
+            assert len(channel['owners']) == 1
 
     channel_addowner(creator_token, channel_id, nonowner_u_id)
     for channel in channels:
         if channel['channel_id'] == channel_id:
-            assert len(channel['owners']) == 1
+            assert len(channel['owners']) == 2
     clear()
 
 #Test case for making someone an owner twice

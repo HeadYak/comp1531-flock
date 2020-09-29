@@ -12,6 +12,7 @@ def user_is_owner(u_id, channel_id):
     found = False
     for channel in channels:
         if (channel['channel_id'] == channel_id):
+            # print('hello: ' ,channel)
             for owner in channel['owners']:
                 if (owner['u_id'] == u_id):
                     found = True

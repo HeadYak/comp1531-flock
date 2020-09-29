@@ -1,6 +1,8 @@
 from channels import channels_listall
+from channels import channels_create
 from auth import auth_register
 import pytest
+
 
 def channels_listall_test():
     #Creating users to create channels
