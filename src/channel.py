@@ -1,4 +1,4 @@
-from global_data import users, channels
+from global_data import users, channels, messages
 import pytest
 from error import InputError, AccessError
 from helper_functions import user_in_channel, user_exists, channel_exists, create_member, get_u_id, get_token, user_is_owner, user_is_creator
@@ -43,6 +43,46 @@ def channel_details(token, channel_id):
     }
 
 def channel_messages(token, channel_id, start):
+
+
+    if (channel_exists(channel_id) == False):
+        raise InputError('Invalid channel')
+        
+    if (user_in_channel(get_u_id(token), channel_id) == False):
+        raise AccessError('User is not in channel')
+    
+    all_messages = []
+    for message in messages:
+        if (message['channel_id'] == channel_id):
+            all_messages.append(message)
+            
+    all_messages = sorted(all_messages, key=lambda k: k['time_created'], reverse = True)
+    
+    total_messages = len(all_messages)
+    
+    if (start > (total_messages - 1)):
+        raise Inputerror('Invalid start value')
+    
+    end = start + 50
+    current_message = start
+    
+    channel_messages = []
+    while current_message < end:
+        if (current_message == total_messages):
+            end = -1
+            break
+        channel_messages.append(all_messages[current_message])
+        current_message += 1
+        
+    return {
+        'messages': channel_messages,
+        'start': start,
+        'end': end,
+    }
+    
+ 
+        
+    
     return {
         'messages': [
             {
@@ -69,11 +109,9 @@ def channel_leave(token, channel_id):
     for channel in channels:
         if (channel['channel_id'] == channel_id):
             for member in channel['members']:
-                print(channel['members'])
                 if (member['u_id'] == authorised_u_id):
-                    print(channel['members'])
                     channel['members']. remove(member)
-                    print(channel['members'])
+                    
     
     return {}
 
