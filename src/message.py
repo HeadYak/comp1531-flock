@@ -13,7 +13,7 @@ def message_send(token, channel_id, message):
         raise AccessError("User not in channel")
     
     now = datetime.now()
-    timestamp = timestamp = datetime.timestamp(now)
+    timestamp = datetime.timestamp(now)
     
     print(messages)
  
