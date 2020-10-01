@@ -3,7 +3,7 @@ from channels import channels_create
 from auth import auth_register
 import pytest
 import echo
-from error import InputError
+from error import InputError, AccessError
 from global_data import users, channels
 from helper_functions import user_in_channel
 
@@ -26,6 +26,8 @@ def test_channels_leave():
     with pytest.raises(InputError):
         #test for invalid channel
         channel_join(token1, 50)
+
+    with pytest.raises(AccessError):
         #user attempting to join private channel
         channel_join(token1, ch_id2)
         

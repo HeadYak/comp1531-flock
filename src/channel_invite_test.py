@@ -3,7 +3,7 @@ from channels import channels_create
 from auth import auth_register
 import pytest
 import echo
-from error import InputError
+from error import InputError, AccessError
 from global_data import *
 from helper_functions import user_in_channel
 from other import clear
@@ -29,6 +29,10 @@ def test_channels_invite():
         channel_invite(token1, 50, u_id2)
         #test for invalid u_id
         channel_invite(token1, ch_id1, 3)
+        
+
+
+    with pytest.raises(AccessError):
         #test for user not already member of the channel
         channel_invite(token2, ch_id1, u_id1)
     

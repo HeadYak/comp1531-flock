@@ -15,7 +15,7 @@ def channel_invite(token, channel_id, u_id):
         raise InputError('Invalid user id')
     
     if (user_in_channel(authorised_u_id, channel_id) == False):
-        raise InputError('User not a member of channel')
+        raise AccessError('User not a member of channel')
     
     for channel in channels:
         if (channel['channel_id'] == channel_id):
@@ -52,16 +52,17 @@ def channel_messages(token, channel_id, start):
         raise AccessError('User is not in channel')
     
     all_messages = []
-    for message in messages:
-        if (message['channel_id'] == channel_id):
-            all_messages.append(message)
+    for channel in channels:
+        if (channel['channel_id'] == channel_id):
+            all_messages = channel['messages']
+            break
             
     all_messages = sorted(all_messages, key=lambda k: k['time_created'], reverse = True)
     
     total_messages = len(all_messages)
     
     if (start > (total_messages - 1)):
-        raise Inputerror('Invalid start value')
+        raise InputError('Invalid start value')
     
     end = start + 50
     current_message = start
@@ -79,22 +80,7 @@ def channel_messages(token, channel_id, start):
         'start': start,
         'end': end,
     }
-    
- 
-        
-    
-    return {
-        'messages': [
-            {
-                'message_id': 1,
-                'u_id': 1,
-                'message': 'Hello world',
-                'time_created': 1582426789,
-            }
-        ],
-        'start': 0,
-        'end': 50,
-    }
+
 
 def channel_leave(token, channel_id):
 
@@ -104,7 +90,7 @@ def channel_leave(token, channel_id):
         raise InputError('Invalid channel')
     
     if (user_in_channel(authorised_u_id, channel_id) == False):
-        raise InputError('User not a member of channel')
+        raise AccessError('User not a member of channel')
 
     for channel in channels:
         if (channel['channel_id'] == channel_id):
@@ -119,6 +105,10 @@ def channel_join(token, channel_id):
     
     u_id = get_u_id(token)
     
+
+    if (channel_exists(channel_id)) == False:
+        raise InputError('Invalid channel')
+
     public = False 
     for channel in channels:
         if (channel['channel_id'] == channel_id):
@@ -126,11 +116,8 @@ def channel_join(token, channel_id):
                 public = True
     
     if (public == False):
-        raise InputError('Private Channel')
+        raise AccessError('Private Channel')
     
-    if (channel_exists(channel_id)) == False:
-        raise InputError('Invalid channel')
-
     for channel in channels:
         if (channel['channel_id'] == channel_id):
             channel['members'].append(create_member(u_id))   
