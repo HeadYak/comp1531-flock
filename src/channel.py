@@ -126,24 +126,38 @@ def channel_join(token, channel_id):
 
 def channel_addowner(token, channel_id, u_id):
     
-    print('token:' , token)
+
     print('u_id:' , u_id)
-    print(channels)
-    print(create_member(get_u_id(token)))
-    
-    if (user_in_channel(get_u_id(token),channel_id) == False):
+
+    if(channel_exists(channel_id) == False):
+        raise InputError('Invalid channel_id') 
+    elif (user_in_channel(get_u_id(token),channel_id) == False):
         raise AccessError('User not associated with channel')   
     elif((user_is_owner(u_id, channel_id) == True) or user_is_creator(u_id,channel_id) == True):
         raise InputError('User is already owner')  
-    elif(channel_exists(channel_id) == False):
-        raise InputError('Invalid channel_id') 
+
     elif(user_in_channel(get_u_id(token),channel_id) != None):
         for channel in channels:
             if channel['channel_id'] == channel_id:
-                channel['owners'].append(u_id)
+                channel['owners'].append(create_member(u_id))
+                
     return {
     }
 
 def channel_removeowner(token, channel_id, u_id):
+    # for channel in channels:
+    #     if channel['channel_id'] == channel_id:
+    #         print('hello: ', channel['owners'])
+    # print('input u_id: ' , u_id)
+    if(channel_exists(channel_id) == False):
+        raise InputError('Invalid channel_id')
+    elif (user_in_channel(get_u_id(token),channel_id) == False):
+        raise AccessError('User not associated with channel')   
+    elif((user_is_owner(u_id, channel_id) == False) and user_is_creator(u_id,channel_id) == False):
+        raise InputError('User is not owner')  
+    elif(user_in_channel(get_u_id(token),channel_id) != None):
+        for channel in channels:
+            if channel['channel_id'] == channel_id:
+                channel['owners'].remove(create_member(u_id))
     return {
     }

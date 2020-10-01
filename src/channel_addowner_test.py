@@ -11,6 +11,7 @@ from other import clear
 
 
 def test_channel_addowner_owner():
+    clear()
     #Registering a user
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     #Storing u_id generated from registration process in a variable for easy access
@@ -19,25 +20,26 @@ def test_channel_addowner_owner():
     creator_token = register['token']
     #Using the registered user to create a channel
     new_channel = channels_create(creator_token , "Testing Channel" , True)
+    print(new_channel)
     #Storing channel_id generated from channel creation in a variable for easy access
     channel_id = new_channel['channel_id']
 
     register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Howard', 'Everdun')
     nonowner_u_id = register1['u_id']
 
-    print(channels)
     for channel in channels:
         if channel['channel_id'] == channel_id:
-            assert len(channel['owners']) == 0
+            assert len(channel['owners']) == 1
 
     channel_addowner(creator_token, channel_id, nonowner_u_id)
     for channel in channels:
         if channel['channel_id'] == channel_id:
-            assert len(channel['owners']) == 1
+            assert len(channel['owners']) == 2
     clear()
 
 #Test case for making someone an owner twice
 def test_channel_addowner_alreadyowner():
+    clear()
     #Registering a user
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     #Storing u_id generated from registration process in a variable for easy access
@@ -60,6 +62,7 @@ def test_channel_addowner_alreadyowner():
 
 #Test case for trying to make someone an owner while not being an owner
 def test_channel_addowner_notowner():
+    clear()
     #Registering a user
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     #Storing u_id generated from registration process in a variable for easy access
@@ -85,7 +88,7 @@ def test_channel_addowner_notowner():
 
 #Test case when attempting to make someone an owner using an invalid channel_id
 def test_channel_addowner_invalidchannelid():
-
+    clear()
     #Registering a user
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     #Storing u_id generated from registration process in a variable for easy access
