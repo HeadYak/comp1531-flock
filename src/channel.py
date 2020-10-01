@@ -24,23 +24,21 @@ def channel_invite(token, channel_id, u_id):
     return {}
 
 def channel_details(token, channel_id):
-    return {
-        'name': 'Hayden',
-        'owner_members': [
-            {
-                'u_id': 1,
-                'name_first': 'Hayden',
-                'name_last': 'Jacobs',
-            }
-        ],
-        'all_members': [
-            {
-                'u_id': 1,
-                'name_first': 'Hayden',
-                'name_last': 'Jacobs',
-            }
-        ],
-    }
+    u_id = get_u_id(token)
+    if(channel_exists(channel_id) != True):
+        raise InputError
+    elif(user_in_channel(u_id, channel_id) != True):
+        raise AccessError
+    
+    else:
+        for channel in channels:
+            if channel['channel_id'] == channel_id:
+
+                return {
+                    'name': channel['name'],
+                    'owner_members': channel['owners'],
+                    'all_members': channel['members']
+                }
 
 def channel_messages(token, channel_id, start):
     return {
