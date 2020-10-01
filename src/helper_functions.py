@@ -53,6 +53,7 @@ def get_token(u_id):
     for user in users:
         if (user['u_id'] == u_id):
             return user['token']    
+            
 def create_member(u_id):
     for user in users:
         if (user['u_id'] == u_id):
