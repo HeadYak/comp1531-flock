@@ -2,26 +2,19 @@ from global_data import channels, users
 import pytest
 from error import InputError
 from helper_functions import get_u_id
-from helper_functions import create_member
+from helper_functions import create_member, user_in_channel, get_u_id
+
+
 def channels_list(token):
-    return {
-        'channels': [
-        	{
-        		'channel_id': 1,
-        		'name': 'My Channel',
-        	}
-        ],
-    }
+    u_id = get_u_id(token)
+    user_channels = []
+    for channel in channels: 
+        if (user_in_channel(u_id, channel['channel_id']) == True):
+            user_channels.append(channel)
+    return user_channels
 
 def channels_listall(token):
-    return {
-        'channels': [
-        	{
-        		'channel_id': 1,
-        		'name': 'My Channel',
-        	}
-        ],
-    }
+    return channels
 
 def channels_create(token, name, is_public):
     print(token)
