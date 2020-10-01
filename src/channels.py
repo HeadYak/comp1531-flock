@@ -47,6 +47,7 @@ def channels_create(token, name, is_public):
         return {
             'channel_id': new_channel_copy['channel_id']
         }
+        
     if(len(name) > 20):
         raise InputError('Invalid Name')
 
