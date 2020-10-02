@@ -3,7 +3,6 @@ from message import message_send
 from channels import channels_create
 from auth import auth_register
 import pytest
-import echo
 from error import InputError, AccessError
 from global_data import messages
 from helper_functions import user_in_channel

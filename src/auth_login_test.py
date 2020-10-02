@@ -1,6 +1,5 @@
 from auth import auth_login
 from auth import auth_register
-import echo 
 import pytest
 from error import InputError
 from global_data import users

@@ -3,7 +3,6 @@ from channels import channels_create
 from channel import channel_addowner, channel_details
 
 import pytest
-import echo 
 from error import InputError, AccessError
 from other import clear
 def test_channel_details():

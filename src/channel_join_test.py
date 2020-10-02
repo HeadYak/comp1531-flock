@@ -2,7 +2,6 @@ from channel import channel_invite, channel_join
 from channels import channels_create
 from auth import auth_register
 import pytest
-import echo
 from error import InputError, AccessError
 from global_data import users, channels
 from helper_functions import user_in_channel
