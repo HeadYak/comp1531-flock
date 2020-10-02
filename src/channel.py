@@ -96,7 +96,9 @@ def channel_leave(token, channel_id):
         if (channel['channel_id'] == channel_id):
             for member in channel['members']:
                 if (member['u_id'] == authorised_u_id):
-                    channel['members']. remove(member)
+                    channel['members'].remove(member)
+
+                    
                     
     
     return {}

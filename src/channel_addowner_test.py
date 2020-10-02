@@ -20,7 +20,6 @@ def test_channel_addowner_owner():
     creator_token = register['token']
     #Using the registered user to create a channel
     new_channel = channels_create(creator_token , "Testing Channel" , True)
-    print(new_channel)
     #Storing channel_id generated from channel creation in a variable for easy access
     channel_id = new_channel['channel_id']
 

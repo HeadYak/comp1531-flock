@@ -17,8 +17,6 @@ def channels_listall(token):
     return channels
 
 def channels_create(token, name, is_public):
-    print(token)
-    print(users)
     valid_token = False
     for user in users:
         if(user['token'] == token):
