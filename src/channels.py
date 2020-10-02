@@ -2,30 +2,21 @@ from global_data import channels, users
 import pytest
 from error import InputError
 from helper_functions import get_u_id
-from helper_functions import create_member
+from helper_functions import create_member, user_in_channel, get_u_id
+
+
 def channels_list(token):
-    return {
-        'channels': [
-        	{
-        		'channel_id': 1,
-        		'name': 'My Channel',
-        	}
-        ],
-    }
+    u_id = get_u_id(token)
+    user_channels = []
+    for channel in channels: 
+        if (user_in_channel(u_id, channel['channel_id']) == True):
+            user_channels.append(channel)
+    return user_channels
 
 def channels_listall(token):
-    return {
-        'channels': [
-        	{
-        		'channel_id': 1,
-        		'name': 'My Channel',
-        	}
-        ],
-    }
+    return channels
 
 def channels_create(token, name, is_public):
-    print(token)
-    print(users)
     valid_token = False
     for user in users:
         if(user['token'] == token):
@@ -37,7 +28,7 @@ def channels_create(token, name, is_public):
             'name': name,
             'is_public': is_public,
             'creator': create_member(get_u_id(token)),
-            'owners': [],
+            'owners': [create_member(get_u_id(token))],
             'members': [create_member(get_u_id(token))],
             'messages': []
         }
@@ -47,6 +38,7 @@ def channels_create(token, name, is_public):
         return {
             'channel_id': new_channel_copy['channel_id']
         }
+        
     if(len(name) > 20):
         raise InputError('Invalid Name')
 
