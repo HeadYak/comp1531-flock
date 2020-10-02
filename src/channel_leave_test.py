@@ -2,7 +2,6 @@ from channel import channel_invite, channel_leave
 from channels import channels_create
 from auth import auth_register
 import pytest
-import echo
 from error import InputError, AccessError
 from helper_functions import user_in_channel
 from other import clear

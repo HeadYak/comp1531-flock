@@ -1,6 +1,5 @@
 from auth import auth_register, users
 import pytest
-import echo
 from error import InputError
 from other import clear
 # from global_data import users
@@ -44,6 +43,7 @@ def test_auth_register_InvalidEmail():
 
 #Test case for when attempting to register with an email already used to register
 def test_auth_register_ExistingEmail():
+    auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     with pytest.raises(InputError):
         auth_register('validemail@gmail.com', '123abc!@#', 'Howard', 'Evererton')
         auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')

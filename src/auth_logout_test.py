@@ -2,7 +2,6 @@ from auth import auth_logout
 from auth import auth_register
 from other import clear
 import pytest
-import echo
 from error import InputError
 
 # Testing giving a valid token
