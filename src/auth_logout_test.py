@@ -1,5 +1,6 @@
 from auth import auth_logout
 from auth import auth_register
+from other import clear
 import pytest
 import echo
 from error import InputError
@@ -13,4 +14,5 @@ def test_auth_logout_valid():
 def test_auth_logout_invalid():
     badLog = auth_logout(-4)
     assert badLog['is_success'] == False
+    clear()
     
