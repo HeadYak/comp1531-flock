@@ -2,16 +2,16 @@
 
 ### Authorization
 
-* auth.py - auth_registration: When a user is registered they are autimatically logged in
-* auth.py - auth_registration: The defualt handle str for users is ther first name plus first letter of there last name
+* auth.py - auth_registration: When a user is registered they are automatically logged in
+* auth.py - auth_registration: The defualt handle _str for users is their first name plus the first letter of their last name
 * auth.py - auth_registration: The u_id is equal to however many channels there are plus 1
 
 ### Channels/Channel
 
 * channels.py - channels_create: User will automatically become a member of the channel upon creating it
-* channels.py - channels_create: As only requirement for name is not more than 20 characters long, channel can have no name
+* channels.py - channels_create: As the only requirement for name is that it can not be more than 20 characters long, a channel can have no name
 *  channels.py - channels_create: The channel_id is equal to however many channels there are plus 1
-* channel.py - channel_invite: User can invite people to channel, even if its private, as long as they are a member/owner
+* channel.py - channel_invite: User can invite people to channel, even if it's private, as long as they are a member/owner
 * channel.py - channel_join: Global owner refers to owner of the flockr, and has access to all channels, even private ones
 * channel.py - channel_join: There is no limit on the amount of channels a user can join
 * channel.py - channel_leave: When an owner of a channel leaves they are no longer an owner
@@ -21,7 +21,7 @@
 
 ### Data storing
 
-* users - users are stored in a list of dictionaries with each  with each dictionary having the following keys
+* users - users are stored in a list of dictionaries with each dictionary having the following keys
 
 ```python
 user = {
