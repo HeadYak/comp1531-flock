@@ -1,4 +1,3 @@
-
 ## Iteration 1
 
 ### Authorization
@@ -26,10 +25,10 @@
 
 ```python
 user = {
-            'u_id': number,
+            'u_id': int,
             'name_first': string,
             'name_last': name_last,
-            'handle_str': name_first.lower() + name_last[0],
+            'handle_str': string,
             'email': string,
             'password': string
             'token': number
@@ -41,7 +40,7 @@ user = {
 
 ```python
  channel = {
-              'channel_id': number
+              'channel_id': int
               'name': string
               'is_public': boolean
               'creator': dictionary,
@@ -56,11 +55,9 @@ user = {
 
 ```python
      { 
-     
-        'u_id': number,
+        'u_id': int,
         'name_first': string,
         'name_last': string,
-                                    
      }
 ```
 
