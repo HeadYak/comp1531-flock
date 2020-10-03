@@ -1,4 +1,3 @@
-# Project Assumptions
 
 ## Iteration 1
 
@@ -25,21 +24,22 @@
 
 * users - users are stored in a list of dictionaries with each  with each dictionary having the following keys
 
-
+```python
 user = {
-            'u_id': len(users)+1,
-            'name_first': name_first,
+            'u_id': number,
+            'name_first': string,
             'name_last': name_last,
             'handle_str': name_first.lower() + name_last[0],
-            'email': email,
-            'password': password,
-            'token': len(users)+1
+            'email': string,
+            'password': string
+            'token': number
         }
 
+```
 
 * channels - channels is a list of dictionaries with each dictionary having the following keys
 
- 
+```python
  channel = {
               'channel_id': number
               'name': string
@@ -49,18 +49,19 @@ user = {
               'members': list of dictionaries,
               'messages': list of dictionaries,
            }
-           
+       
+```   
 
 * Creator, owners, and members are represented by dictionaries in this form
 
-    
+```python
      { 
      
-        'u_id': u_id,
-        'name_first': name_first,
-        'name_last': name_last,
+        'u_id': number,
+        'name_first': string,
+        'name_last': string,
                                     
      }
-
+```
 
 
