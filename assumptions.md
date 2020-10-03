@@ -25,6 +25,7 @@
 
 * users - users are stored in a list of dictionaries with each  with each dictionary having the following keys
 
+
 user = {
             'u_id': len(users)+1,
             'name_first': name_first,
@@ -38,6 +39,7 @@ user = {
 
 * channels - channels is a list of dictionaries with each dictionary having the following keys
 
+ 
  channel = {
               'channel_id': number
               'name': string
@@ -47,9 +49,11 @@ user = {
               'members': list of dictionaries,
               'messages': list of dictionaries,
            }
+           
 
 * Creator, owners, and members are represented by dictionaries in this form
 
+    
      { 
      
         'u_id': u_id,
