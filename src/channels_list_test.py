@@ -16,6 +16,8 @@ def test_channels_list():
     u_id1 = user1['u_id']
     u_id2 = user2['u_id']
 
+    #testing function returns an empty list before any channels have been made
+    assert channels_list(token1) == []
 
     #Creating channels to test channels_list.
 
@@ -27,7 +29,7 @@ def test_channels_list():
     ch_id3 =channels_create(token1, "SameName", True)['channel_id']
     ch_id4 =channels_create(token2, "SameName", True)['channel_id']
 
-    #should return the channels that the token passed into the funtion created.
+    #Test for user2
     assert channels_list(token1) == [{'channel_id': ch_id1, 'name': "aGreatChannel", 'is_public': True, 
                                       'creator':{'u_id': u_id1, 'name_first': 'user1', 'name_last': 'last1'}, 
                                       'owners': [{'u_id': u_id1, 'name_first': 'user1', 'name_last': 'last1'}], 
@@ -37,7 +39,8 @@ def test_channels_list():
                                       'creator': {'u_id': u_id1, 'name_first': 'user1', 'name_last': 'last1'}, 
                                       'owners': [{'u_id': u_id1, 'name_first': 'user1', 'name_last': 'last1'}], 
                                       'members': [{'u_id': u_id1, 'name_first': 'user1', 'name_last': 'last1'}], 'messages': []}]
-                                                               
+
+    #Test for user1                                                       
     assert channels_list(token2) == [{'channel_id': ch_id2, 'name': "yetAnotherChannel", 'is_public': True, 
                                       'creator': {'u_id': u_id2, 'name_first': 'user2', 'name_last': 'last2'}, 
                                       'owners': [{'u_id': u_id2, 'name_first': 'user2', 'name_last': 'last2'}], 
@@ -47,8 +50,9 @@ def test_channels_list():
                                       'creator': {'u_id': u_id2, 'name_first': 'user2', 'name_last': 'last2'}, 
                                       'owners': [{'u_id': u_id2, 'name_first': 'user2', 'name_last': 'last2'}], 
                                       'members':[{'u_id': u_id2, 'name_first': 'user2', 'name_last': 'last2'}], 'messages': []}]     
-                                                              
-    #add channel ch_id2 to the users list of channels they are in                      
+
+
+    #check once user has joined channel it adds a member                    
     channel_join(token1, ch_id2)
     assert channels_list(token1) ==  [{'channel_id': ch_id1, 'name': "aGreatChannel", 'is_public': True, 
                                       'creator': {'u_id': u_id1, 'name_first': 'user1', 'name_last': 'last1'}, 
@@ -66,7 +70,7 @@ def test_channels_list():
                                       'owners': [{'u_id': u_id1, 'name_first': 'user1', 'name_last': 'last1'}], 
                                       'members':[{'u_id': u_id1, 'name_first': 'user1', 'name_last': 'last1'}], 'messages': []},]
    
-    #should remove channel ch_id4 from the users list of channels they are in                           
+    #check once user has left a channel they are no longer a member                           
     channel_leave(token2, ch_id4)
     assert channels_list(token2) == [ {'channel_id': ch_id2, 'name': "yetAnotherChannel", 'is_public': True, 
                                       'creator': {'u_id': u_id2, 'name_first': 'user2', 'name_last': 'last2'}, 
