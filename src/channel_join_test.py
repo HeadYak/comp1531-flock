@@ -43,6 +43,7 @@ def test_channels_leave():
     channel_join(token3, ch_id1)
     assert user_in_channel(u_id3, ch_id1) == True
 
+    #testing if member already in channel they are not appended again
     channel_join(token3, ch_id1)
     for channel in channels:
         if channel['channel_id'] == ch_id1:
