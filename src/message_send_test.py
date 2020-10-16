@@ -1,18 +1,18 @@
+'''
+Nessacary imports
+'''
 import pytest
-from channel import channel_invite, channel_messages
+from channel import channel_messages
 from message import message_send
 from channels import channels_create
 from auth import auth_register
 from error import InputError, AccessError
 from other import clear
 
-'''
-Testing message_send function
-'''
-
-
 def test_message_send():
-    
+    '''
+    Testing message_send function
+    '''
     clear()
 
     #Creating users to create channels
@@ -27,13 +27,12 @@ def test_message_send():
 
     #error test
     with pytest.raises(InputError):
-            #message too lond
-            message_send(token1, ch_id1, 'h'*1001)
+        #message too lond
+        message_send(token1, ch_id1, 'h'*1001)
 
     with pytest.raises(AccessError):
-            #user not in channel
-            message_send(token1, ch_id2, "ilegal")
-
+        #user not in channel
+        message_send(token1, ch_id2, "ilegal")
 
     #creating channel messages
     message_send(token1, ch_id1, 'h'*1000)
@@ -44,5 +43,6 @@ def test_message_send():
     message_send(token2, ch_id2, "hello")
 
     #checking messages have been added
-    assert len(channel_messages(token1, ch_id1, 0,)['messages']) == 2
-    assert len(channel_messages(token2, ch_id2, 0,)['messages']) == 3
+    print(channel_messages(token1, ch_id1, 0))
+    assert len(channel_messages(token1, ch_id1, 0)['messages']) == 2
+    assert len(channel_messages(token2, ch_id2, 0)['messages']) == 3

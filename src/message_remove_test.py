@@ -1,18 +1,18 @@
+'''
+Nessacary imports
+'''
 import pytest
-from channel import channel_invite, channel_messages, channel_join
+from channel import channel_messages, channel_join
 from message import message_send, message_remove
 from channels import channels_create
 from auth import auth_register
 from error import InputError, AccessError
 from other import clear
-from global_data import channels
-'''
-Testing message_send function
-'''
-
 
 def test_message_send():
-    
+    '''
+    Testing message_send function
+    '''
     clear()
 
     #Creating users to create channels
@@ -30,23 +30,21 @@ def test_message_send():
     m_id2 = message_send(token1, ch_id1, 'hey')['message_id']
 
     m_id3 = message_send(token2, ch_id2, "hello")['message_id']
-    m_id4 = message_send(token2, ch_id2, "hello")['message_id']
-    m_id5 = message_send(token2, ch_id2, "hello")['message_id']
-         
-
-
+    message_send(token2, ch_id2, "hello")
+    message_send(token2, ch_id2, "hello")
     channel_join(token1, ch_id2)
     m_id6 = message_send(token1, ch_id2, "hello")['message_id']
 
+    print(channel_messages(token1, ch_id1, 0))
+
     with pytest.raises(AccessError):
-            #user id not created message and isnt an owner
-            message_remove(token1, m_id3)
+        #user id not created message and isnt an owner
+        message_remove(token1, m_id3)
 
     #checking messages have been added
     assert len(channel_messages(token1, ch_id1, 0,)['messages']) == 2
     assert len(channel_messages(token2, ch_id2, 0,)['messages']) == 4
 
-    
     #remove all messages
     message_remove(token1, m_id1)
     message_remove(token1, m_id2)
@@ -59,13 +57,7 @@ def test_message_send():
     assert len(channel_messages(token1, ch_id1, 0,)['messages']) == 0
     assert len(channel_messages(token2, ch_id2, 0,)['messages']) == 3
 
-    for channel in channels:
-        if channel['channel_id'] == ch_id2:
-            print(channel['messages'])
-
     #error test
     with pytest.raises(InputError):
-            #invalid message id
-            message_remove(token1, m_id1)
-
-   
+        #invalid message id
+        message_remove(token1, m_id1)
