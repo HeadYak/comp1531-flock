@@ -1,28 +1,40 @@
+'''
+Funcstion for channels list, listall and messages
+'''
 from global_data import channels, users
-import pytest
 from error import InputError
-from helper_functions import get_u_id
-from helper_functions import create_member, user_in_channel, get_u_id
+from helper_functions import create_member, user_in_channel, get_u_id, user_exists
 
 
 def channels_list(token):
+    '''
+    Lists all current channels user is apart of
+    '''
     u_id = get_u_id(token)
     user_channels = []
-    for channel in channels: 
-        if (user_in_channel(u_id, channel['channel_id']) == True):
+    for channel in channels:
+        if user_in_channel(u_id, channel['channel_id']):
             user_channels.append(channel)
     return user_channels
 
 def channels_listall(token):
-    return channels
+    '''
+    Lists all currents channels in flock
+    '''
+    if user_exists(get_u_id(token)):
+        return channels
+    return None
 
 def channels_create(token, name, is_public):
+    '''
+    Creates a new channel
+    '''
     valid_token = False
     for user in users:
-        if(user['token'] == token):
+        if user['token'] == token:
             valid_token = True
-    if(valid_token == True and len(name) <= 20):
-        
+    if valid_token and len(name) <= 20:
+
         new_channel = {
             'channel_id': len(channels)+1,
             'name': name,
@@ -38,7 +50,8 @@ def channels_create(token, name, is_public):
         return {
             'channel_id': new_channel_copy['channel_id']
         }
-        
-    if(len(name) > 20):
+
+    if len(name) > 20:
         raise InputError('Invalid Name')
 
+    return None
