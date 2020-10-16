@@ -1,15 +1,18 @@
-from channel import channel_invite, channel_messages
-from message import message_send
+'''
+Nessacary imports
+'''
+import pytest
+from channel import channel_messages
 from channels import channels_create
 from auth import auth_register
-import pytest
 from error import InputError, AccessError
-from global_data import messages
-from helper_functions import user_in_channel
 from other import clear
 
 def test_channel_messages():
-    
+    '''
+    Tests for channel_messages
+    '''
+    clear()
     #Creating users to create channels
     user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
     user2 = auth_register("user2@gmail.com", "user2pass", "user2", "last2")
@@ -29,6 +32,3 @@ def test_channel_messages():
     with pytest.raises(AccessError):
         #test for user sending message to channel they are not a member of
         channel_messages(token1, ch_id2, 0)
-
-
-

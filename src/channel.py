@@ -1,7 +1,6 @@
 '''
 Nessacary imports
 '''
-import pytest
 from global_data import channels
 from error import InputError, AccessError
 from helper_functions import user_in_channel, user_exists, channel_exists, \

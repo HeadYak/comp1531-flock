@@ -66,6 +66,26 @@ def message_edit(token, message_id, message):
     '''
     Function edits message with new message given
     '''
-    return {
-        message_id, token, message
-    }
+    u_id = get_u_id(token)
+
+    channel_id = find_channel(message_id)
+
+    owner = user_is_owner(u_id, channel_id)
+    creator = message_creator(u_id, message_id)
+
+    if not creator and not owner:
+        raise AccessError("user is not authorised to remove message")
+
+    no_message = False
+    if message == "":
+        no_message = True
+
+    for channel in channels:
+        for chan_messages in channel['messages']:
+            if chan_messages['message_id'] == message_id:
+                if no_message:
+                    channel['messages'].remove(chan_messages)
+                else:
+                    chan_messages['message'] = message
+
+    return {}

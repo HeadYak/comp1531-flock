@@ -28,14 +28,12 @@ def test_message_send():
     #creating channel messages
     m_id1 = message_send(token1, ch_id1, 'hello')['message_id']
     m_id2 = message_send(token1, ch_id1, 'hey')['message_id']
-
     m_id3 = message_send(token2, ch_id2, "hello")['message_id']
+    
     message_send(token2, ch_id2, "hello")
     message_send(token2, ch_id2, "hello")
     channel_join(token1, ch_id2)
     m_id6 = message_send(token1, ch_id2, "hello")['message_id']
-
-    print(channel_messages(token1, ch_id1, 0))
 
     with pytest.raises(AccessError):
         #user id not created message and isnt an owner
