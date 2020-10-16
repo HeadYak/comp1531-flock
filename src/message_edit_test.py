@@ -2,11 +2,11 @@
 Nessacary imports
 '''
 import pytest
-from channel import channel_messages, channel_join
-from message import message_send, message_remove, message_edit
+from channel import channel_join
+from message import message_send, message_edit
 from channels import channels_create
 from auth import auth_register
-from error import InputError, AccessError
+from error import AccessError
 from other import clear
 from global_data import channels
 
@@ -34,7 +34,7 @@ def test_message_edit():
     message_send(token2, ch_id2, "hello")
 
     channel_join(token1, ch_id2)
-    m_id6 = message_send(token1, ch_id2, "hello")['message_id']
+    message_send(token1, ch_id2, "hello")
 
     with pytest.raises(AccessError):
         #user did not created message and isnt an owner
