@@ -1,3 +1,7 @@
+import sys
+sys.path.append("..")
+
+
 from auth import auth_login
 from auth import auth_register
 import pytest
@@ -5,6 +9,7 @@ from error import InputError
 from global_data import users
 import re
 from other import clear
+
 # Regular expression for validating an email
 
 def test_auth_login_BaseCase():

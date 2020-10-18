@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+
 from channels import channels_listall, channels_create
 from channel import channel_leave, channel_join
 from auth import auth_register

@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+
 from auth import auth_logout
 from auth import auth_register
 from other import clear

@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+
 #Assumption that whoever creates the channel is automatically an owner
 
 from global_data import channels

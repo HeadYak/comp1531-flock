@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+
 
 from channels import channels_list, channels_create
 from channel import channel_join, channel_leave

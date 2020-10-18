@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+
 from auth import auth_register, users
 import pytest
 from error import InputError

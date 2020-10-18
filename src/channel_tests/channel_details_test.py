@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+
 from auth import auth_register 
 from channels import channels_create
 from channel import channel_addowner, channel_details

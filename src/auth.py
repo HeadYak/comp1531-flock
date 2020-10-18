@@ -2,6 +2,8 @@ from global_data import *
 import re 
 import pytest
 from error import InputError
+import sys
+sys.path.append("..")
 #Regex for verifying emails
 regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 name_maxlen = 50

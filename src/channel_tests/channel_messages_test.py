@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+
 from channel import channel_invite, channel_messages
 from message import message_send
 from channels import channels_create
