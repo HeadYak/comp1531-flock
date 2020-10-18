@@ -12,6 +12,8 @@ def test_user_profile():
     user2 = auth_register('email2@gmail.com', 'password2', 'user2', 'userlast2')
     token1 = user1['token']
     token2 = user2['token']
+    u_id1 = user1['u_id']
+    u_id2 = user2['u_id']
     
     # User with u_id is not a valid user
     with pytest.raises(InputError):
