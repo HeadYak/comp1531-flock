@@ -1,7 +1,10 @@
 '''
 Nessacary imports
 '''
+import jwt
 from global_data import users, channels
+
+SECRET = 'orangeTeam5'
 
 def user_in_channel(u_id, channel_id):
     '''
@@ -63,11 +66,8 @@ def get_u_id(token):
     '''
     gets user id given their token
     '''
-    for user in users:
-        if user['token'] == token:
-            return user['u_id']
-
-    return None
+    decoded = jwt.decode(token, SECRET, algorithms=['HS256'])
+    return decoded['u_id']
 
 def get_token(u_id):
     '''

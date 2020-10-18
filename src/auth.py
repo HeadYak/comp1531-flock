@@ -2,10 +2,14 @@ from global_data import *
 import re 
 import pytest
 from error import InputError
+import jwt
 #Regex for verifying emails
 regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 name_maxlen = 50
 name_minlen = 1 
+
+SECRET = 'orangeTeam5'
+
 def auth_login(email, password):
     
     def check(email):
@@ -26,6 +30,7 @@ def auth_login(email, password):
     userFound = False
     userDetails = {}
     #  Check if entered email is registered as a user
+
     for user in users:
         if user['email'] == email:
             userFound = True
@@ -34,7 +39,7 @@ def auth_login(email, password):
             if password != userDetails['password']:
                 raise InputError('Entered Password is Incorrect')
             else:
-                user['token'] = user['u_id']
+                user['token'] = jwt.encode({'u_id': user['u_id']}, SECRET, algorithm='HS256')
                 
             break
             
@@ -101,6 +106,9 @@ def auth_register(email, password, name_first, name_last):
         raise InputError('Invalid password')    
     #Code below is for when all conditions are met
     
+
+    encoded_token = jwt.encode({'u_id': len(users) +1}, SECRET, algorithm='HS256')
+
     if(check(email) == True and len(password) >= 6):
         #Create a new dictionary with data about the user
         new_user = {
@@ -110,7 +118,7 @@ def auth_register(email, password, name_first, name_last):
             'handle_str': name_first.lower() + name_last[0],
             'email': email,
             'password': password,
-            'token': len(users)+1
+            'token': encoded_token
         }
 
         #A copy of the dictionary is needed otherwise it messes with the references
