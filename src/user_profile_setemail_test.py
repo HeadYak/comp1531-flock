@@ -1,6 +1,7 @@
 import pytest
 from auth import auth_register
 from user import user_profile_setemail
+from global_data import users
 from error import InputError
 from other import clear
 
