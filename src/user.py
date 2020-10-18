@@ -1,3 +1,7 @@
+from error import InputError
+from global_data import users
+
+
 def user_profile(token, u_id):
     return {
         'user': {
@@ -18,5 +22,18 @@ def user_profile_setemail(token, email):
     }
 
 def user_profile_sethandle(token, handle_str):
-    return {
-    }
+    if len(handle_str) < 3:
+        raise InputError('Handle is too short')
+
+    if len(handle_str) > 20:
+        raise InputError('Handle is too long')
+
+    for user in users:
+        if user['handle_str'] == handle_str and user['token'] != token:
+            raise InputError('This handle is already taken')
+
+    for user in users:
+        if user['token'] == token:
+            print("success")
+            user['handle_str'] = handle_str
+            break
