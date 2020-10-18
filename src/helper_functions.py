@@ -8,9 +8,6 @@ from global_data import users, channels
 SECRET = 'orangeTeam5'
 
 regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-name_maxlen = 50
-name_minlen = 1 
-
 
 def user_in_channel(u_id, channel_id):
     '''

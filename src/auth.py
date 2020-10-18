@@ -2,9 +2,11 @@
 Auth Functions
 '''
 import jwt
+import hashlib
 from global_data import users
 from error import InputError
 from helper_functions import check
+
 
 SECRET = 'orangeTeam5'
 
@@ -32,7 +34,7 @@ def auth_login(email, password):
             user_found = True
             user_details = user.copy()
             # Check if entered password matches registered user's password
-            if password != user_details['password']:
+            if hashlib.sha256(password.encode()).hexdigest() != user_details['password']:
                 raise InputError('Entered Password is Incorrect')
 
             user['token'] = jwt.encode({'u_id': user['u_id']}, SECRET, algorithm='HS256')
@@ -103,7 +105,7 @@ def auth_register(email, password, name_first, name_last):
             'name_last': name_last,
             'handle_str': name_first.lower() + name_last[0],
             'email': email,
-            'password': password,
+            'password': hashlib.sha256(password.encode()).hexdigest(),
             'token': encoded_token
         }
 
