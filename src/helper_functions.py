@@ -2,9 +2,15 @@
 Nessacary imports
 '''
 import jwt
+import re 
 from global_data import users, channels
 
 SECRET = 'orangeTeam5'
+
+regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+name_maxlen = 50
+name_minlen = 1 
+
 
 def user_in_channel(u_id, channel_id):
     '''
@@ -138,3 +144,12 @@ def find_channel(message_id):
             if msg['message_id'] == message_id:
                 return channel['channel_id']
     return None
+
+def check(email):
+    '''
+    Check if email is valid
+    '''
+    if re.search(regex,email):
+        return True
+    else:
+        return False
