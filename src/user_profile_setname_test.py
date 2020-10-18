@@ -1,6 +1,7 @@
 import pytest
 from auth import auth_register
 from user import user_profile_setname
+from global_data import users
 from error import InputError
 from other import clear
 
@@ -17,9 +18,9 @@ def test_user_profile_setname():
     
     with pytest.raises(InputError):
         # first name is not between 1 and 50 characters
-        user_profile_setname(token1, 'user1'*60, 'userlast1')
+        user_profile_setname(token1, 'user1'*100, 'userlast1')
         # last name is not between 1 and 50 characters 
-        user_profile_setname(token1, 'user1', 'userlast1'*60)
+        user_profile_setname(token1, 'user1', 'userlast1'*100)
    
     # updating the users' names
     user_profile_setname(token1, 'auser1', 'useralast1')
