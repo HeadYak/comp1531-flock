@@ -18,14 +18,16 @@ def test_user_profile_setemail():
     
     with pytest.raises(InputError):
         # email entered is not a valid email
-        user_profile_setemail(token, 'notavalidemailaddress')
+        user_profile_setemail(token1, 'notavalidemailaddress')
         # email address is already being used by another user
-        user_profile_setemail(token, 'email@gmail.com')
-        user_profile_setemail(token3, 'email@gmail.com')
+        user_profile_setemail(token1, 'email@gmail.com')
+        user_profile_setemail(token2, 'email@gmail.com')
     
     # updating the users' email address
     user_profile_setemail(token1, 'updateemail1@gmail.com')
+    clear()
     user_profile_setemail(token2, 'updateemail2@gmail.com')
+    clear()
     
     for user in users:
         if user['u_id'] == u_id1:
