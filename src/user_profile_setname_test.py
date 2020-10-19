@@ -24,7 +24,9 @@ def test_user_profile_setname():
    
     # updating the users' names
     user_profile_setname(token1, 'auser1', 'useralast1')
+    clear()
     user_profile_setname(token2, 'user2', 'auserlast2')
+    clear()
     
     for user in users:
         if user['u_id'] == u_id1:
@@ -32,5 +34,5 @@ def test_user_profile_setname():
         if user['u_id'] == u_id2:
             assert user['name_last'] == 'auserlast2'
     
-    clear()
+
     
