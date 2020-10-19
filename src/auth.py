@@ -5,7 +5,7 @@ import jwt
 import hashlib
 from global_data import users
 from error import InputError
-from helper_functions import check
+from helper_functions import check, decodeToken
 
 
 SECRET = 'orangeTeam5'
@@ -96,7 +96,6 @@ def auth_register(email, password, name_first, name_last):
     #Code below is for when all conditions are met
 
     encoded_token = jwt.encode({'u_id': len(users) +1}, SECRET, algorithm='HS256')
-
     if check(email) and len(password) >= 6:
         #Create a new dictionary with data about the user
         new_user = {

@@ -8,6 +8,11 @@ from global_data import users, channels
 SECRET = 'orangeTeam5'
 
 regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+def decodeToken(token):
+    secret = 'orangeTeam5'
+    decoded = jwt.decode(token, secret, algorithms=['HS256'])
+    return decoded
+
 
 def user_in_channel(u_id, channel_id):
     '''
