@@ -7,7 +7,7 @@ import jwt
 import hashlib
 from global_data import users
 from error import InputError
-from helper_functions import check, decodeToken
+from helper_functions import check, get_u_id
 NAME_MAXLEN = 50
 NAME_MINLEN = 1
 SECRET = 'orangeTeam5'
