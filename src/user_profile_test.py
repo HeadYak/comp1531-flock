@@ -2,6 +2,7 @@ import pytest
 from auth import auth_register
 from user import user_profile
 from error import InputError
+from global_data import users
 from other import clear
 
 def test_user_profile():
@@ -17,7 +18,7 @@ def test_user_profile():
     
     # User with u_id is not a valid user
     with pytest.raises(InputError):
-        user_profile(token, u_id)
+        user_profile(3, u_id1)
         
     # creating user profiles
     user_profile(token1, u_id1)
@@ -29,7 +30,7 @@ def test_user_profile():
         'email': 'email1@gmail.com',
  	    'name_first': 'user1',
      	'name_last': 'userlast1',
-        'handle_str': 'huser1',
+        'handle_str': 'user1u',
         
     }
     assert user_profile(token2, u_id2) == {
@@ -38,8 +39,9 @@ def test_user_profile():
         'email': 'email2@gmail.com',
  	    'name_first': 'user2',
      	'name_last': 'userlast2',
-        'handle_str': 'huser2',
+        'handle_str': 'user2u',
 
     }
+
     
     
