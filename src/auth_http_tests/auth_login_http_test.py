@@ -1,14 +1,21 @@
-import pytest
-import re
-from subprocess import Popen, PIPE
-import signal
-from time import sleep
+import sys
+sys.path.append("..")
+
 import requests
 import json
+from global_data import users
 
 def test_auth_login_http(url):
     '''
     A simple test to check echo
     '''
-    resp = requests.post(url + 'auth/login', params={'email': 'hello@gmail.com', 'password' : 'HelloPassword!'})
-    assert json.loads(resp.text) == {'email': 'hello@gmail.com', 'password' : 'HelloPassword!'}
+    data = {
+        'email': 'email@gmail.com',
+        'password': 'HELLO123@',
+        'name_first': 'Frank',
+        'name_last': 'Su'
+    }
+    requests.post(url + 'auth/register', data=data)
+    resp = requests.post(url + 'auth/login', data={'email': 'email@gmail.com', 'password' : 'HELLO123@'})
+    assert resp.status_code == 200
+
