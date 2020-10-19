@@ -22,6 +22,10 @@ def user_profile_setemail(token, email):
     }
 
 def user_profile_sethandle(token, handle_str):
+    '''
+    Making sure handle_str is within character number limits, and is not taken
+    by another user.
+    '''
     if len(handle_str) < 3:
         raise InputError('Handle is too short')
 
@@ -34,6 +38,5 @@ def user_profile_sethandle(token, handle_str):
 
     for user in users:
         if user['token'] == token:
-            print("success")
             user['handle_str'] = handle_str
             break
