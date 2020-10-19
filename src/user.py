@@ -1,20 +1,24 @@
 from global_data import users
 from error import InputError
-from helper_functions import user_exists, get_u_id, check
+from helper_functions import get_u_id, check
 
 def user_profile(token, u_id):
     # retrieve u_id from token
     u_id = get_u_id(token)
     # raise error if not a valid user
-    if user_exists(u_id) == False:
-        raise InputError('Invalid User')
-    return {
-        'u_id': user['u_id'],
-        'email': user['email'],
-        'name_first': user['name_first'],
-        'name_last': user['name_last'],
-        'handle_str': user['handle_str'],
-    }
+    for user in users:
+        if user['u_id'] == u_id:
+            if user['token'] != token:
+                raise InputError('Invalid User')
+    for user in users: 
+        if user['u_id'] == u_id:  
+            return {
+                'u_id': user['u_id'],
+                'email': user['email'],
+                'name_first': user['name_first'],
+                'name_last': user['name_last'],
+                'handle_str': user['handle_str'],
+            }
 
 def user_profile_setname(token, name_first, name_last):
     u_id = get_u_id(token)
