@@ -100,6 +100,25 @@ def authregister():
     return dumps(res)
 
 
+@APP.route('/channel/invite', methods=['POST'])
+def channelinvite():
+    token = request.form.get('token')
+    channel_id = request.form.get('channel_id')
+    u_id = request.form.get('u_id')
+    res = channel_invite(token, channel_id, u_id)
+    return dumps(res)
+
+
+@APP.route('/channel/details', methods=['GET'])
+def channeldetails():
+    '''
+    Route for channel_invite
+    '''
+    token = request.args.get('token')
+    channel_id = request.args.get('channel_id')
+    res = channel_details(token, channel_id)
+    return dumps(res)    
+
 
 @APP.route('/channels/create', methods=['POST'])
 def channelscreate():
@@ -111,7 +130,6 @@ def channelscreate():
     is_public = request.form.get('is_public')
 
     res = channels_create(token, name, is_public)
-    print(res)
     return dumps(res)
 
 @APP.route('/channels/list', methods=['GET'])
@@ -119,10 +137,20 @@ def channelslist():
     '''
     Route for channel_list
     '''
-    
     token = request.args.get('token')
     res = channels_list(token)
-    print(res)
     return dumps(res)
+
+
+@APP.route('/channels/listall', methods=['GET'])
+def channelslistall():
+    '''
+    Route for channel_listall
+    '''
+    token = request.args.get('token')
+    res = channels_listall(token)
+    return dumps(res)    
+
+
 if __name__ == "__main__":
     APP.run(port=0, debug=True) # Do not edit this port
