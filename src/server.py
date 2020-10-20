@@ -76,6 +76,8 @@ def authlogout():
 
     r = auth_logout(token['token'])
 
+    print(r)
+
     return dumps(r)
 
 
