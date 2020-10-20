@@ -18,13 +18,13 @@ def test_channels_listall():
     token2 = user2['token']
 
     #testing function returns an empty list before any channels have been made
-    assert channels_listall(token1) == []
+    assert channels_listall(token1) == {'channels':[]}
 
     #Creating channels to test channels_list.
 
     #test if only one channel in the dictionary
     channels_create(token1, "aGreatChannel", True)
-    assert len(channels_listall(token1)) == 1
+    assert len(channels_listall(token1)['channels']) == 1
 
 
     ch_id2 = channels_create(token2, "yetAnotherChannel", True)['channel_id']
@@ -32,7 +32,7 @@ def test_channels_listall():
     ch_id4 = channels_create(token2, "SameName", False)['channel_id']
 
     #test if multiple channels in the dictionary
-    assert len(channels_listall(token1)) == 4
+    assert len(channels_listall(token1)['channels']) == 4
 
     channel_join(token1, ch_id2)
     channel_leave(token2, ch_id4)

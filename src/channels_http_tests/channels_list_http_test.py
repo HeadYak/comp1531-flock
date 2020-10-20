@@ -18,14 +18,14 @@ def test_channels_list_http(url):
     regis = requests.post(url + 'auth/register', data=registerdata)
     regis_dict = json.loads(regis.text)
     print('\n', regis_dict)
-    data1 = {
+    token = {
         'token': regis_dict['token']
     }
 
-    resp = requests.get(url + 'channels/list', params=data1)
+    resp = requests.get(url + 'channels/list', params=token)
     print(resp)
     resp_dict = json.loads(resp.text)
-    assert resp_dict == []
+    assert resp_dict == {'channels' :[]}
     assert resp.status_code == 200
 
     channelcreatedata = {
@@ -33,7 +33,15 @@ def test_channels_list_http(url):
         'name': "Test_channel",
         'is_public': True
     }
-    resp = requests.post(url + 'channels/create', data=channelcreatedata)
-    resp_dict = json.loads(resp.text)
-    assert 'channel_id' in resp_dict
-    assert resp.status_code == 200
+
+    newchan = requests.post(url + 'channels/create', data=channelcreatedata)
+    newchan_dict = json.loads(newchan.text)
+    print("Newchan_dict:", newchan_dict)
+
+    resp1 = requests.get(url + 'channels/list', params=token)
+    resp1_dict = json.loads(resp1.text)
+    print("Resp1_dict:", resp1_dict)
+    #Bugged need fix
+    # assert resp_dict == [{'channel_id': 1 , 'name': 'Test_channel'}]
+    assert resp1_dict == {'channels': [{'channel_id': 1, 'name': 'Test_channel'}]}
+    

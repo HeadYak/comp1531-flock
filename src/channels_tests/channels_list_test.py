@@ -20,7 +20,7 @@ def test_channels_list():
     token2 = user2['token']
 
     #testing function returns an empty list before any channels have been made
-    assert channels_list(token1) == []
+    assert channels_list(token1) == {'channels':[]}
 
     #Creating channels to test channels_list.
 
@@ -33,15 +33,15 @@ def test_channels_list():
     ch_id4 = channels_create(token2, "SameName", True)['channel_id']
 
     #Test for user2
-    assert len(channels_list(token1)) == 2
+    assert len(channels_list(token1)['channels']) == 2
 
     #Test for user1
-    assert len(channels_list(token2)) == 2
+    assert len(channels_list(token2)['channels']) == 2
 
     #check once user has joined channel it adds a member
     channel_join(token1, ch_id2)
-    assert len(channels_list(token1)) == 3
+    assert len(channels_list(token1)['channels']) == 3
 
     #check once user has left a channel they are no longer a member
     channel_leave(token2, ch_id4)
-    assert len(channels_list(token2)) == 1
+    assert len(channels_list(token2)['channels']) == 1

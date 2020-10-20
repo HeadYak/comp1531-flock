@@ -14,15 +14,20 @@ def channels_list(token):
     user_channels = []
     for channel in channels:
         if user_in_channel(u_id, channel['channel_id']):
+            channel = {'channel_id': channel['channel_id'], 'name': channel['name']}
             user_channels.append(channel)
-    return user_channels
+    # return user_channels
+    return {"channels" : user_channels}
 
 def channels_listall(token):
     '''
     Lists all currents channels in flock
     '''
     if user_exists(get_u_id(token)):
-        return channels
+        allchannel = []
+        for channel in channels:
+            allchannel.append({'channel_id': channel['channel_id'], 'name': channel['name']})
+        return {"channels": allchannel} 
     return None
 
 def channels_create(token, name, is_public):
@@ -55,8 +60,5 @@ def channels_create(token, name, is_public):
     if len(name) > 20:
         raise InputError('Invalid Name')
 
-    # print('Input token:' , token)
-    # for user in users:
-    #     print (user['token'])
     return None
 

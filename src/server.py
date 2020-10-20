@@ -119,10 +119,18 @@ def channelslist():
     '''
     Route for channel_list
     '''
-    
     token = request.args.get('token')
     res = channels_list(token)
-    print(res)
     return dumps(res)
+
+
+@APP.route('/channels/listall', methods=['GET'])
+def channelslistall():
+    '''
+    Route for channel_listall
+    '''
+    token = request.args.get('token')
+    res = channels_listall(token)
+    return dumps(res)    
 if __name__ == "__main__":
     APP.run(port=0, debug=True) # Do not edit this port
