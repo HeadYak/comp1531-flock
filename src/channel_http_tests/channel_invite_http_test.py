@@ -3,6 +3,7 @@ A http test for channels_list
 '''
 import json
 import requests
+from global_data import channels
 
 def test_channel_invite_http(url):
     user1data = {
@@ -38,6 +39,9 @@ def test_channel_invite_http(url):
     new_channel_dict = json.loads(new_channel.text)
 
     channel_id = new_channel_dict['channel_id']
+
+    print(channels)
+
     print("Token:" , user1token)
     print("Channel_id:" , channel_id)
     print("user_id:" , user2u_id)
@@ -45,12 +49,13 @@ def test_channel_invite_http(url):
     channelinvitedata = {
         'token': user1token,
         'channel_id': channel_id,
-        'user_id': user2u_id
-    }    
-    resp = requests.post(url + 'channel/invite', data=channelinvitedata)
-    print("Resp:" , resp)
-    resp_dict = json.loads(resp.text)
-    print("Resp_dict:" , resp_dict)
+        'u_id': user2u_id
+    }   
+
+    resp = requests.post(f"{url}/channel/invite", data=channelinvitedata)
+    print("Resp:", resp)
+    resp_dict = resp.json()
+    print("Resp_dict:", resp_dict)
 
     token = {
         'token': user1token
@@ -62,4 +67,4 @@ def test_channel_invite_http(url):
     print('temp_dict:', temp_dict)
 
     #400 error code invalid channel
-    assert resp_dict == {}
+    assert resp == {}
