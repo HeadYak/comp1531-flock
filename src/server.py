@@ -70,6 +70,15 @@ def authlogin():
     
     return dumps(res)
 
+@APP.route("/auth/logout", methods=['POST'])
+def authlogout():
+    token = request.get_json()
+
+    r = auth_logout(token['token'])
+
+    return dumps(r)
+
+
 @APP.route('/auth/register', methods=['POST'])
 def authregister():
     '''
