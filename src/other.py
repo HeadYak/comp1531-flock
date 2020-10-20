@@ -33,13 +33,19 @@ def admin_userpermission_change(token, u_id, permission_id):
 
 
 def search(token, query_str):
-    return {
-        'messages': [
-            {
-                'message_id': 1,
-                'u_id': 1,
-                'message': 'Hello world',
-                'time_created': 1582426789,
-            }
-        ],
-    }
+    '''
+    Function finds matching strings to the one given and returns them, 
+    only if the user is a member of the channel the message is in
+    '''
+
+    message_matches = []
+
+    member = create_member(get_u_id(token))
+
+    for channel in channels:
+        if member in channel['members']:
+            for msg in channel['messages']:
+                if query_str in msg['message']:
+                    message_matches.append(msg)
+
+    return message_matches
