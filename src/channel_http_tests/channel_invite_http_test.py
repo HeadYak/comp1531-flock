@@ -61,5 +61,5 @@ def test_channel_invite_http(url):
     # temp_dict = json.loads(temp.text)
     print('temp_dict:', temp_dict)
 
-    #Invalid channel error
+    #400 error code invalid channel
     assert resp_dict == {}

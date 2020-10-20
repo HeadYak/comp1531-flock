@@ -33,5 +33,5 @@ def test_channel_invite_http(url):
     print("\nresp:" , resp)
     resp_dict = json.loads(resp.text)
     print("\nresp_dict:" , resp_dict)
-
-    assert 1 = 2
+    #400 error code
+    assert 1 == 2
