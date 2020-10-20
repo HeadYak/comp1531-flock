@@ -4,8 +4,6 @@ sys.path.append("..")
 import requests
 import json
 import jwt
-from other import clear
-from global_data import users
 
 SECRET = 'orangeTeam5'
 
@@ -13,7 +11,6 @@ def test_auth_logout_http(url):
     '''
     A simple test to check echo
     '''
-    clear()
     data = {
         'email': 'email@gmail.com',
         'password': 'HELLO123@',
@@ -21,7 +18,7 @@ def test_auth_logout_http(url):
         'name_last': 'Su'
     }
 
-    requests.post(url + 'auth/register', data=data)
+    requests.post(f"{url}/auth/register", data=data)
     
     r = requests.post(f"{url}/auth/logout", json={'token': jwt.encode({'u_id': 1}, SECRET, algorithm='HS256')})
     payload = r.json()
