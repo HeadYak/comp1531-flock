@@ -1,16 +1,14 @@
-import sys
-sys.path.append("..")
-
-import requests
+'''
+Http test for auth_register
+'''
 import json
-from global_data import users
-from other import clear
+import requests
 SECRET = 'orangeTeam5'
 def test_auth_register_http(url):
     '''
-    A simple test to check echo
+    Http test for auth_register
     '''
-    clear()
+
     data = {
         'email': 'email@gmail.com',
         'password': 'HELLO123@',
@@ -18,5 +16,7 @@ def test_auth_register_http(url):
         'name_last': 'Su'
     }
     resp = requests.post(url + 'auth/register', data=data)
+    resp_dict = json.loads(resp.text)
+    assert 'u_id' in resp_dict
+    assert 'token' in resp_dict
     assert resp.status_code == 200
-    # assert json.loads(resp.text) == {'u_id': '', 'password' : 'HelloPassword!'}

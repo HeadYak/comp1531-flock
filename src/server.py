@@ -1,4 +1,10 @@
+'''
+File for server routes
+'''
+
 import sys
+sys.path.append('../')
+
 from json import dumps
 from flask import Flask, request
 from flask_cors import CORS
@@ -9,7 +15,6 @@ from error import InputError
 # from channels import channels_list, channels_listall, channels_create
 # from message import message_send, message_remove, message_edit
 from auth import *
-from auth import auth_register
 from channel import *
 from channels import *
 from message import *
@@ -19,6 +24,9 @@ from other import *
 from user import *
 
 def defaultHandler(err):
+    '''
+    Error handler
+    '''
     response = err.get_response()
     print('response', err, err.get_response())
     response.data = dumps({
@@ -38,6 +46,9 @@ APP.register_error_handler(Exception, defaultHandler)
 # Example
 @APP.route("/echo", methods=['GET'])
 def echo():
+    '''
+    Route for echo
+    '''
     data = request.args.get('data')
     if data == 'echo':
    	    raise InputError(description='Cannot echo "echo"')
@@ -47,18 +58,23 @@ def echo():
 
 @APP.route('/auth/login', methods=['POST'])
 def authlogin():
+    '''
+    Route for auth_login
+    '''
     email = request.form.get('email')
     password = request.form.get('password')
     print('Email:'+email)
     print('Password:'+password)
 
-    res = auth_login(email,password)
-    res['token'] = res['token'].decode('utf-8')
-
+    res = auth_login(email, password)
+    
     return dumps(res)
 
 @APP.route('/auth/register', methods=['POST'])
 def authregister():
+    '''
+    Route for auth_register
+    '''
     email = request.form.get('email')
     password = request.form.get('password')
     name_first = request.form.get('name_first')
@@ -69,14 +85,35 @@ def authregister():
     print('name_first:'+name_first)
     print('name_last:'+name_last)
 
-    res = auth_register(email,password,name_first,name_last)
-    res['token'] = res['token'].decode('utf-8')
+    res = auth_register(email, password, name_first, name_last)
+    # res['token'] = res['token'].decode('utf-8')
 
     return dumps(res)
-# @APP.route('/channel/invite', methods=['POST'])
-# def channelinvite():
-#     channel_invite(request.form.get('token'), request.form.get('channel_id'), request.form.get('u_id'))
-#     return dumps({})
 
+
+
+@APP.route('/channels/create', methods=['POST'])
+def channelscreate():
+    '''
+    Route for channel_create
+    '''
+    token = request.form.get('token')
+    name = request.form.get('name')
+    is_public = request.form.get('is_public')
+
+    res = channels_create(token, name, is_public)
+    print(res)
+    return dumps(res)
+
+@APP.route('/channels/list', methods=['GET'])
+def channelslist():
+    '''
+    Route for channel_list
+    '''
+    
+    token = request.args.get('token')
+    res = channels_list(token)
+    print(res)
+    return dumps(res)
 if __name__ == "__main__":
-    APP.run(port=0 , debug=True) # Do not edit this port
+    APP.run(port=0, debug=True) # Do not edit this port

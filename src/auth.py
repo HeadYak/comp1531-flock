@@ -104,7 +104,7 @@ def auth_register(email, password, name_first, name_last):
             'handle_str': name_first.lower() + name_last[0],
             'email': email,
             'password': hashlib.sha256(password.encode()).hexdigest(),
-            'token': encoded_token
+            'token': encoded_token.decode('utf-8')
         }
 
         #A copy of the dictionary is needed otherwise it messes with the references

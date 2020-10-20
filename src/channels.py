@@ -33,6 +33,7 @@ def channels_create(token, name, is_public):
     for user in users:
         if user['token'] == token:
             valid_token = True
+
     if valid_token and len(name) <= 20:
 
         new_channel = {
@@ -54,4 +55,8 @@ def channels_create(token, name, is_public):
     if len(name) > 20:
         raise InputError('Invalid Name')
 
+    # print('Input token:' , token)
+    # for user in users:
+    #     print (user['token'])
     return None
+

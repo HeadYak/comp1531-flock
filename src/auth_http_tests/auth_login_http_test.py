@@ -1,21 +1,29 @@
-import sys
-sys.path.append("..")
-
-import requests
+'''
+Http test for auth login
+'''
 import json
-from global_data import users
+import requests
 
 def test_auth_login_http(url):
     '''
-    A simple test to check echo
+    Http test for auth login
     '''
-    data = {
+    registerdata = {
         'email': 'email@gmail.com',
         'password': 'HELLO123@',
         'name_first': 'Frank',
         'name_last': 'Su'
     }
-    requests.post(url + 'auth/register', data=data)
-    resp = requests.post(url + 'auth/login', data={'email': 'email@gmail.com', 'password' : 'HELLO123@'})
-    assert resp.status_code == 200
 
+    logindata = {
+        'email': 'email@gmail.com',
+        'password': 'HELLO123@'
+    }
+    requests.post(url + 'auth/register', data=registerdata)
+    resp = requests.post(url + 'auth/login', data=logindata)
+
+    print("resp:", resp)
+    resp_dict = json.loads(resp.text)
+    assert 'u_id' in resp_dict
+    assert 'token' in resp_dict
+    assert resp.status_code == 200
