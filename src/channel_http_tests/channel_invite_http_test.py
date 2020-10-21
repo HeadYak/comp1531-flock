@@ -1,11 +1,21 @@
 '''
 A http test for channels_list
 '''
+
+import sys
+sys.path.append('../')
+
 import json
 import requests
 from global_data import channels
+from helper_functions import getUserData, saveUserData , getChannelData ,saveChannelData, resetData
+from other import clear
 
 def test_channel_invite_http(url):
+    resetData()
+    clear()
+    users = getUserData()
+    channels = getChannelData()
     user1data = {
         'email': 'email@gmail.com',
         'password': 'HELLO123@',
@@ -40,11 +50,6 @@ def test_channel_invite_http(url):
 
     channel_id = new_channel_dict['channel_id']
 
-    print(channels)
-
-    print("Token:" , user1token)
-    print("Channel_id:" , channel_id)
-    print("user_id:" , user2u_id)
     
     channelinvitedata = {
         'token': user1token,
@@ -52,19 +57,16 @@ def test_channel_invite_http(url):
         'u_id': user2u_id
     }   
 
+    channels = getChannelData()
+    print("\nChannels:\n" , channels)
+    users = getUserData()
+    print("Users:\n" , users)
+
     resp = requests.post(f"{url}/channel/invite", data=channelinvitedata)
     print("Resp:", resp)
     resp_dict = resp.json()
     print("Resp_dict:", resp_dict)
 
-    token = {
-        'token': user1token
-    }
-    temp = requests.post(f"{url}/channels/listall", params=token)
-    temp_dict = json.loads(temp.text)
-    # temp = requests.get(url + 'channels/listall', params=token)
-    # temp_dict = json.loads(temp.text)
-    print('temp_dict:', temp_dict)
 
     #400 error code invalid channel
     assert resp == {}

@@ -3,7 +3,8 @@ Funcstion for channels list, listall and messages
 '''
 from global_data import channels, users
 from error import InputError
-from helper_functions import create_member, user_in_channel, get_u_id, user_exists
+from helper_functions import create_member, user_in_channel, get_u_id, user_exists, \
+    saveChannelData
 
 
 def channels_list(token):
@@ -52,7 +53,7 @@ def channels_create(token, name, is_public):
         }
         new_channel_copy = new_channel.copy()
         channels.append(new_channel_copy)
-
+        saveChannelData(channels)
         return {
             'channel_id': new_channel_copy['channel_id']
         }

@@ -4,7 +4,7 @@ Nessacary imports
 from global_data import channels
 from error import InputError, AccessError
 from helper_functions import user_in_channel, user_exists, channel_exists, \
-    create_member, get_u_id, user_is_owner, user_is_creator
+    create_member, get_u_id, user_is_owner, user_is_creator, saveChannelData
 
 
 #function adds user to channel
@@ -31,6 +31,8 @@ def channel_invite(token, channel_id, u_id):
     for channel in channels:
         if channel['channel_id'] == channel_id:
             channel['members'].append(create_member(u_id))
+            saveChannelData(channels)
+            
 
     return {}
 

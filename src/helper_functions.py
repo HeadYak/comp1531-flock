@@ -150,32 +150,31 @@ def check(email):
         return True
     else:
         return False
-# def getUserData():
-#     with open('./src/persistent_data/user_data.json', 'r') as FILE:
-#         DATA_STRUCTURE = json.load(FILE)
-#         return DATA_STRUCTURE['users']
+def getUserData():
+    with open('./src/persistent_data/user_data.json', 'r') as FILE:
+        DATA_STRUCTURE = json.load(FILE)
+        return DATA_STRUCTURE['users']
 
-# def getChannelData():
-#     with open('./src/persistent_data/channel_data.json', 'r') as FILE:
-#         DATA_STRUCTURE = json.load(FILE)
-#         return DATA_STRUCTURE['channels']     
+def getChannelData():
+    with open('./src/persistent_data/channel_data.json', 'r') as FILE:
+        DATA_STRUCTURE = json.load(FILE)
+        return DATA_STRUCTURE['channels']     
 
-# def saveUserData(users):
-#     DATA_STRUCTURE = {'users': users}
-#     with open('./user_data.json', 'w') as FILE:
-#     #print(json.dumps(DATA_STRUCTURE))
-#         json.dump(DATA_STRUCTURE, FILE)
-#     return
+def saveUserData(users):
+    DATA_STRUCTURE = {'users': users}
+    with open('./src/persistent_data/user_data.json', 'w') as FILE:
+    #print(json.dumps(DATA_STRUCTURE))
+        json.dump(DATA_STRUCTURE, FILE)
+    return
 
-# def saveChannelData(channels):
-#     DATA_STRUCTURE = {'channels': channels}
-#     with open('./channel_data.json', 'w') as FILE:
-#         json.dump(DATA_STRUCTURE, FILE)
-#     return         
+def saveChannelData(channels):
+    DATA_STRUCTURE = {'channels': channels}
+    with open('./src/persistent_data/channel_data.json', 'w') as FILE:
+        json.dump(DATA_STRUCTURE, FILE)
+    return         
 
-# def resetAllData():
-#     emptyList = []
-#     saveData(emptyList)
-#     saveChannelData(emptyList)
-#     saveMessageData(emptyList)
-#     return
+def resetData():
+    saveUserData([])
+    saveChannelData([])
+
+    return

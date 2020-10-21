@@ -7,7 +7,7 @@ import jwt
 import hashlib
 from global_data import users
 from error import InputError
-from helper_functions import check, get_u_id
+from helper_functions import check, get_u_id, getUserData, saveUserData
 NAME_MAXLEN = 50
 NAME_MINLEN = 1
 SECRET = 'orangeTeam5'
@@ -113,6 +113,7 @@ def auth_register(email, password, name_first, name_last):
         #Append the copied dictionary onto our list of users
         users.append(new_user_copy)
 
+        saveUserData(users)
         #Return the correct output
         return {
             'u_id': new_user_copy['u_id'],
