@@ -112,6 +112,11 @@ def auth_register(email, password, name_first, name_last):
             'password': password,
             'token': len(users)+1
         }
+        
+        if len(users) == 0:
+            new_user['permissions_id'] = 1
+        else:
+            new_user['permissions_id'] = 2
 
         #A copy of the dictionary is needed otherwise it messes with the references
         new_user_copy = new_user.copy()

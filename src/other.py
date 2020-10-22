@@ -1,4 +1,6 @@
 from global_data import users, channels
+from error import InputError, AccessError
+from helper_functions import get_u_id, create_member
 
 def clear():
     del users[:]
@@ -7,28 +9,44 @@ def clear():
 
 def users_all(token):
     return {
-        'users': [
-            {
-                'u_id': 1,
-                'email': 'cs1531@cse.unsw.edu.au',
-                'name_first': 'Hayden',
-                'name_last': 'Jacobs',
-                'handle_str': 'hjacobs',
-            },
-        ],
+        users
     }
 
 def admin_userpermission_change(token, u_id, permission_id):
-    pass
+    owner_level = 1
+    member_level = 2
+
+    if permission_id not in (owner_level, member_level):
+        raise InputError("Invalid permission id")
+
+    for user in users:
+        if user['token'] == token:
+            if user['permission_id'] != owner_level:
+                raise AccessError("You do not have permission for this command")
+            break
+
+    for user in users:
+        if user['u_id'] == u_id:
+            user['permission_id'] = permission_id
+            return {}
+
+    raise InputError("Specified user not found")
+
 
 def search(token, query_str):
-    return {
-        'messages': [
-            {
-                'message_id': 1,
-                'u_id': 1,
-                'message': 'Hello world',
-                'time_created': 1582426789,
-            }
-        ],
-    }
+    '''
+    Function finds matching strings to the one given and returns them, 
+    only if the user is a member of the channel the message is in
+    '''
+
+    message_matches = []
+
+    member = create_member(get_u_id(token))
+
+    for channel in channels:
+        if member in channel['members']:
+            for msg in channel['messages']:
+                if query_str in msg['message']:
+                    message_matches.append(msg)
+
+    return message_matches
