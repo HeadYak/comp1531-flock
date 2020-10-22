@@ -3,7 +3,6 @@ A http test for channels_list
 '''
 import json
 import requests
-from global_data import channels
 
 def test_channel_invite_http(url):
     user1data = {
@@ -37,11 +36,8 @@ def test_channel_invite_http(url):
     new_channel = requests.post(url + 'channels/create', data=channel1)
     assert new_channel.status_code == 200
     new_channel_dict = json.loads(new_channel.text)
-
     channel_id = new_channel_dict['channel_id']
-
-    print(channels)
-
+    
     print("Token:" , user1token)
     print("Channel_id:" , channel_id)
     print("user_id:" , user2u_id)
@@ -60,7 +56,7 @@ def test_channel_invite_http(url):
     token = {
         'token': user1token
     }
-    temp = requests.post(f"{url}/channels/listall", params=token)
+    temp = requests.get(f"{url}/channels/listall", params=token)
     temp_dict = json.loads(temp.text)
     # temp = requests.get(url + 'channels/listall', params=token)
     # temp_dict = json.loads(temp.text)
