@@ -15,8 +15,9 @@ def test_auth_register_http(url):
         'name_first': 'Frank',
         'name_last': 'Su'
     }
-    resp = requests.post(url + 'auth/register', data=data)
-    resp_dict = json.loads(resp.text)
+    resp = requests.post(f"{url}/auth/register", json=data)
+    print(resp)
+    resp_dict = resp.json()
     assert 'u_id' in resp_dict
     assert 'token' in resp_dict
     assert resp.status_code == 200

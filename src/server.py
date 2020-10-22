@@ -61,10 +61,10 @@ def authlogin():
     '''
     Route for auth_login
     '''
-    email = request.form.get('email')
-    password = request.form.get('password')
-    print('Email:'+email)
-    print('Password:'+password)
+    data = request.get_json()
+
+    email = data['email']
+    password = data['password']
 
     res = auth_login(email, password)
     
@@ -84,27 +84,27 @@ def authregister():
     '''
     Route for auth_register
     '''
-    email = request.form.get('email')
-    password = request.form.get('password')
-    name_first = request.form.get('name_first')
-    name_last = request.form.get('name_last')
 
-    print('Email:'+email)
-    print('Password:'+password)
-    print('name_first:'+name_first)
-    print('name_last:'+name_last)
+    data = request.get_json()
+
+    email = data['email']
+    password = data['password']
+    name_first = data['name_first']
+    name_last = data['name_last']
 
     res = auth_register(email, password, name_first, name_last)
-    # res['token'] = res['token'].decode('utf-8')
 
     return dumps(res)
 
 
 @APP.route('/channel/invite', methods=['POST'])
 def channelinvite():
-    token = request.form.get('token')
-    channel_id = request.form.get('channel_id')
-    u_id = request.form.get('u_id')
+
+    data = request.get_json()
+
+    token = data['token']
+    channel_id = data['channel_id']
+    u_id = data['u_id']
     res = channel_invite(token, channel_id, u_id)
     return dumps(res)
 
@@ -114,6 +114,7 @@ def channeldetails():
     '''
     Route for channel_invite
     '''
+
     token = request.args.get('token')
     channel_id = request.args.get('channel_id')
     res = channel_details(token, channel_id)
@@ -125,9 +126,12 @@ def channelscreate():
     '''
     Route for channel_create
     '''
-    token = request.form.get('token')
-    name = request.form.get('name')
-    is_public = request.form.get('is_public')
+
+    data = request.get_json()
+
+    token = data['token']
+    name = data['name']
+    is_public = data['is_public']
 
     res = channels_create(token, name, is_public)
     return dumps(res)
@@ -137,6 +141,7 @@ def channelslist():
     '''
     Route for channel_list
     '''
+
     token = request.args.get('token')
     res = channels_list(token)
     return dumps(res)
@@ -147,8 +152,10 @@ def channelslistall():
     '''
     Route for channel_listall
     '''
+    data = request.get_json()
+
     token = request.args.get('token')
-    res = channels_listall(token)
+    res = channels_list(token)
     return dumps(res)    
 
 

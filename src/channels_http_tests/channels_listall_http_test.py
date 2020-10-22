@@ -14,7 +14,7 @@ def test_channels_listall_http(url):
         'name_first': 'Frank',
         'name_last': 'Su'
     }
-    regis = requests.post(url + 'auth/register', data=registerdata)
+    regis = requests.post(f"{url}/auth/register", json=registerdata)
     regis_dict = regis.json()
     print('\nregis_dict:', regis_dict)
     data1 = {
@@ -31,12 +31,12 @@ def test_channels_listall_http(url):
         'token': regis_dict['token']
     }
 
-    requests.post(url + 'channels/create', data=data1)
+    requests.post(f"{url}/channels/create", json=data1)
 
-    requests.post(url + 'channels/create', data=data2)
+    requests.post(f"{url}/channels/create", json=data2)
 
-    resp = requests.get(url + 'channels/listall', params=token)
-    resp_dict = json.loads(resp.text)
+    resp = requests.get(f"{url}/channels/listall", json=token)
+    resp_dict = resp.json()
     print('resp_dict:', resp_dict)
     assert resp_dict == {
         'channels': [{'channel_id': 1, 'name': 'Test_channel'},
