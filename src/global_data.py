@@ -2,7 +2,7 @@
 # [{"u_id:" , "name_first:" , "name_last:"}], "owners": [{"u_id:" , "name_first:" , "name_last:"}]}]
 channels = []
 
-#users = [{"u_id: " , "token: ", "email: ", "password: ", "name_first: ", "name_last: "}]
+#users = [{"u_id: " , "token: ", "email: ", "password: ", "name_first: ", "name_last: ", "handle_str" : }]
 users = []
 
 messages = []
