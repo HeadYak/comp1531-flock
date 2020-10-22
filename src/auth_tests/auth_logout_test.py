@@ -1,3 +1,6 @@
+'''
+tests for auth logout
+'''
 import sys
 sys.path.append("..")
 

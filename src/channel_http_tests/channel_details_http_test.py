@@ -39,7 +39,7 @@ def test_channel_invite_http(url):
 
     print("\nChannels:\n", channels)
     print("\nUsers:\n", users)
-    resp = requests.get(f"{url}channel/details", json=channeldetailparam)
+    resp = requests.get(f"{url}channel/details", params=channeldetailparam)
     print("\nresp:" , resp)
     resp_dict = resp.json
     print("\nresp_dict:" , resp_dict)

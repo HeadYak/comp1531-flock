@@ -44,7 +44,6 @@ def test_channel_invite_http(url):
     #Extracts elements from the response dictionary and stores into varaibles
 
     user2_dict = user2.json()
-    user2token = user2_dict['token']
     user2u_id = user2_dict['u_id']
 
     channel1 = {

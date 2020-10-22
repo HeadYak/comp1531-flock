@@ -1,7 +1,6 @@
 '''
 Http test for auth login
 '''
-import json
 import requests
 
 def test_auth_login_http(url):

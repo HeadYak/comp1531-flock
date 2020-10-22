@@ -1,1 +1,1 @@
-{"channels": [{"channel_id": 1, "name": "Heeelloooo ", "is_public": true, "creator": {"u_id": 1, "name_first": "neve", "name_last": "par"}, "owners": [{"u_id": 1, "name_first": "neve", "name_last": "par"}], "members": [{"u_id": 1, "name_first": "neve", "name_last": "par"}], "messages": []}]}
+{"channels": [{"channel_id": 1, "name": "heello", "is_public": true, "creator": {"u_id": 1, "name_first": "neve", "name_last": "par"}, "owners": [{"u_id": 1, "name_first": "neve", "name_last": "par"}], "members": [{"u_id": 1, "name_first": "neve", "name_last": "par"}], "messages": []}]}

@@ -44,6 +44,7 @@ def channel_details(token, channel_id):
     '''
     Returns the details of the channel
     '''
+    channel_id = int(channel_id)
     u_id = get_u_id(token)
     if not channel_exists(channel_id):
         raise InputError
@@ -64,6 +65,8 @@ def channel_messages(token, channel_id, start):
     '''
     returns messages in channel with given index
     '''
+    channel_id = int(channel_id)
+    start = int(start)
     #raises error if channel does not exits
     if not channel_exists(channel_id):
         raise InputError('Invalid channel')

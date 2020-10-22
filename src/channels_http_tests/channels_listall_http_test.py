@@ -35,7 +35,7 @@ def test_channels_listall_http(url):
 
     requests.post(f"{url}/channels/create", json=data2)
 
-    resp = requests.get(f"{url}/channels/listall", json=token)
+    resp = requests.get(f"{url}/channels/listall", params=token)
     resp_dict = resp.json()
     print('resp_dict:', resp_dict)
     assert resp_dict == {

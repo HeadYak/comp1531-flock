@@ -22,7 +22,7 @@ def test_channels_list_http(url):
         'token': regis_dict['token']
     }
 
-    resp = requests.get(f"{url}/channels/list", json=token)
+    resp = requests.get(f"{url}/channels/list", params=token)
     print(resp)
     resp_dict = resp.json()
     assert resp_dict == {'channels' :[]}
@@ -38,7 +38,7 @@ def test_channels_list_http(url):
     newchan_dict = newchan.json()
     print("Newchan_dict:", newchan_dict)
 
-    resp1 = requests.get(f"{url}/channels/list", json=token)
+    resp1 = requests.get(f"{url}/channels/list", params=token)
     resp1_dict = resp1.json()
     print("Resp1_dict:", resp1_dict)
     #Bugged need fix

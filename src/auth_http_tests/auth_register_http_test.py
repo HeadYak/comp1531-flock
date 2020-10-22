@@ -1,7 +1,6 @@
 '''
 Http test for auth_register
 '''
-import json
 import requests
 SECRET = 'orangeTeam5'
 def test_auth_register_http(url):

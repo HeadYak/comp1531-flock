@@ -1,8 +1,7 @@
-import sys
-sys.path.append("..")
-
+'''
+Http tests for auth logout
+'''
 import requests
-import json
 import jwt
 
 SECRET = 'orangeTeam5'
@@ -19,11 +18,11 @@ def test_auth_logout_http(url):
     }
 
     requests.post(f"{url}/auth/register", json=data)
-    
-    r = requests.post(f"{url}/auth/logout", json={'token': jwt.encode({'u_id': 1}, SECRET, algorithm='HS256')})
-    payload = r.json()
+
+    resp = requests.post(f"{url}/auth/logout", json={'token': jwt.encode({'u_id': 1}, SECRET, algorithm='HS256')})
+    payload = resp.json()
     assert payload['is_success']
 
-    r = requests.post(f"{url}/auth/logout", json={'token': jwt.encode({'u_id': -1}, SECRET, algorithm='HS256') })
-    payload = r.json()
+    resp = requests.post(f"{url}/auth/logout", json={'token': jwt.encode({'u_id': -1}, SECRET, algorithm='HS256') })
+    payload = resp.json()
     assert not payload['is_success']

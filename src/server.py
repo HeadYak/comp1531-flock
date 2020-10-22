@@ -118,7 +118,7 @@ def channeldetails():
     token = request.args.get('token')
     channel_id = request.args.get('channel_id')
     res = channel_details(token, channel_id)
-    return dumps(res)    
+    return dumps(res)
 
 
 @APP.route('/channels/create', methods=['POST'])
@@ -152,11 +152,58 @@ def channelslistall():
     '''
     Route for channel_listall
     '''
-    data = request.get_json()
 
     token = request.args.get('token')
     res = channels_list(token)
-    return dumps(res)    
+    return dumps(res) 
+
+@APP.route('/channel/messages', methods=['GET'])
+def channelmessages():
+    '''
+    Route for channel_messages
+    '''
+    token = request.args.get('token')
+    channel_id = request.args.get('channel_id')
+    start = request.args.get('start')
+
+    res = channel_messages(token, channel_id, start)
+    return dumps(res)
+
+@APP.route('/message/send', methods=['POST'])
+def messagesend():
+    '''
+    Route for message_send
+    '''
+    data = request.get_json()
+
+    token = data['token']
+    channel_id = data['channel_id']
+    message = data['message']
+
+    res = message_send(token, channel_id, message)
+    return dumps(res)
+
+@APP.route('/message/edit', methods=['PUT'])
+def messageedit():
+    '''
+    Route for message_edit
+    '''
+    data = request.get_json()
+
+    token = data['token']
+    message_id = data['message_id']
+    message = data['message']
+    res = message_edit(token, message_id, message)
+    return dumps(res)
+
+@APP.route('/message/remove', methods=['DELETE'])
+def messageremove():
+    data = request.get_json()
+
+    token = data['token']
+    message_id = data['message_id']
+    res = message_remove(token, message_id)
+    return dumps(res)
 
 
 if __name__ == "__main__":
