@@ -4,13 +4,15 @@ File of message funtions, message_send, message_remove and message edit
 from datetime import datetime
 from global_data import channels, messages
 from helper_functions import user_in_channel, get_u_id, message_exists, \
-user_is_owner, message_creator, find_channel
+user_is_owner, message_creator, find_channel, getChannelData
 from error import InputError, AccessError
 
 def message_send(token, channel_id, message):
     '''
     Function sends message to channel
     '''
+    channel_id = int(channel_id)
+
     if len(message) > 1000:
         raise InputError("Message too long")
     if not user_in_channel(get_u_id(token), channel_id):
@@ -59,8 +61,8 @@ def message_remove(token, message_id):
         for chan_messages in channel['messages']:
             if chan_messages['message_id'] == message_id:
                 channel['messages'].remove(chan_messages)
-                return
-    return
+                return {}
+    return {}
 
 def message_edit(token, message_id, message):
     '''
