@@ -1,10 +1,32 @@
+'''
+File for server routes
+'''
+
 import sys
+sys.path.append('../')
+
 from json import dumps
 from flask import Flask, request
 from flask_cors import CORS
 from error import InputError
 
+# from auth import auth_login, auth_logout, auth_register
+# from channel import channel_invite, channel_details, channel_messages,channel_leave,channel_join,channel_addowner,channel_removeowner
+# from channels import channels_list, channels_listall, channels_create
+# from message import message_send, message_remove, message_edit
+from auth import *
+from channel import *
+from channels import *
+from message import *
+from global_data import *
+from helper_functions import *
+from other import *
+from user import *
+
 def defaultHandler(err):
+    '''
+    Error handler
+    '''
     response = err.get_response()
     print('response', err, err.get_response())
     response.data = dumps({
@@ -24,6 +46,9 @@ APP.register_error_handler(Exception, defaultHandler)
 # Example
 @APP.route("/echo", methods=['GET'])
 def echo():
+    '''
+    Route for echo
+    '''
     data = request.args.get('data')
     if data == 'echo':
    	    raise InputError(description='Cannot echo "echo"')
@@ -31,5 +56,162 @@ def echo():
         'data': data
     })
 
+@APP.route('/auth/login', methods=['POST'])
+def authlogin():
+    '''
+    Route for auth_login
+    '''
+    data = request.get_json()
+
+    email = data['email']
+    password = data['password']
+
+    res = auth_login(email, password)
+    
+    return dumps(res)
+
+@APP.route("/auth/logout", methods=['POST'])
+def authlogout():
+    token = request.get_json()
+
+    r = auth_logout(token['token'])
+
+    return dumps(r)
+
+
+@APP.route('/auth/register', methods=['POST'])
+def authregister():
+    '''
+    Route for auth_register
+    '''
+
+    data = request.get_json()
+
+    email = data['email']
+    password = data['password']
+    name_first = data['name_first']
+    name_last = data['name_last']
+
+    res = auth_register(email, password, name_first, name_last)
+
+    return dumps(res)
+
+
+@APP.route('/channel/invite', methods=['POST'])
+def channelinvite():
+
+    data = request.get_json()
+
+    token = data['token']
+    channel_id = data['channel_id']
+    u_id = data['u_id']
+    res = channel_invite(token, channel_id, u_id)
+    return dumps(res)
+
+@APP.route('/channel/leave', methods=['POST'])
+def channelleave():
+    data = request.get_json()
+    token = data['token']
+    channel_id = data['channel_id']
+    res = channel_leave(token, channel_id)
+    return dumps(res)
+
+@APP.route('/channel/details', methods=['GET'])
+def channeldetails():
+    '''
+    Route for channel_invite
+    '''
+
+    token = request.args.get('token')
+    channel_id = request.args.get('channel_id')
+    res = channel_details(token, channel_id)
+    return dumps(res)
+
+
+@APP.route('/channels/create', methods=['POST'])
+def channelscreate():
+    '''
+    Route for channel_create
+    '''
+
+    data = request.get_json()
+
+    token = data['token']
+    name = data['name']
+    is_public = data['is_public']
+
+    res = channels_create(token, name, is_public)
+    return dumps(res)
+
+@APP.route('/channels/list', methods=['GET'])
+def channelslist():
+    '''
+    Route for channel_list
+    '''
+
+    token = request.args.get('token')
+    res = channels_list(token)
+    return dumps(res)
+
+
+@APP.route('/channels/listall', methods=['GET'])
+def channelslistall():
+    '''
+    Route for channel_listall
+    '''
+
+    token = request.args.get('token')
+    res = channels_list(token)
+    return dumps(res) 
+
+@APP.route('/channel/messages', methods=['GET'])
+def channelmessages():
+    '''
+    Route for channel_messages
+    '''
+    token = request.args.get('token')
+    channel_id = request.args.get('channel_id')
+    start = request.args.get('start')
+
+    res = channel_messages(token, channel_id, start)
+    return dumps(res)
+
+@APP.route('/message/send', methods=['POST'])
+def messagesend():
+    '''
+    Route for message_send
+    '''
+    data = request.get_json()
+
+    token = data['token']
+    channel_id = data['channel_id']
+    message = data['message']
+
+    res = message_send(token, channel_id, message)
+    return dumps(res)
+
+@APP.route('/message/edit', methods=['PUT'])
+def messageedit():
+    '''
+    Route for message_edit
+    '''
+    data = request.get_json()
+
+    token = data['token']
+    message_id = data['message_id']
+    message = data['message']
+    res = message_edit(token, message_id, message)
+    return dumps(res)
+
+@APP.route('/message/remove', methods=['DELETE'])
+def messageremove():
+    data = request.get_json()
+
+    token = data['token']
+    message_id = data['message_id']
+    res = message_remove(token, message_id)
+    return dumps(res)
+
+
 if __name__ == "__main__":
-    APP.run(port=0) # Do not edit this port
+    APP.run(port=0, debug=True) # Do not edit this port

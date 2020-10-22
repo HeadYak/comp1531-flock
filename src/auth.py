@@ -1,107 +1,103 @@
-from global_data import *
-import re 
-import pytest
+'''
+Auth Functions
+'''
+import sys
+sys.path.append("..")
+import jwt
+import hashlib
+from global_data import users
 from error import InputError
-#Regex for verifying emails
-regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-name_maxlen = 50
-name_minlen = 1 
+from helper_functions import check, get_u_id, getUserData, saveUserData
+NAME_MAXLEN = 50
+NAME_MINLEN = 1
+SECRET = 'orangeTeam5'
+
+global users
+
 def auth_login(email, password):
-    
-    def check(email):
-    
-        if re.search(regex,email):
-            return True
-        else:
-            return False
-     
-    # Check is email is invalid 
-    if check(email) == False:
+    '''
+    functions logs in user
+    '''
+    # Check is email is invalid
+    if not check(email):
         raise InputError('Invalid Email')
-    
-    # Handle case where no users registered 
+
+    # Handle case where no users registered
     if len(users) == 0:
-       raise InputError('Email does not belong to a user')
-    
-    userFound = False
-    userDetails = {}
+        raise InputError('Email does not belong to a user')
+
+    user_found = False
+    user_details = {}
     #  Check if entered email is registered as a user
+
     for user in users:
         if user['email'] == email:
-            userFound = True
-            userDetails = user.copy()
+            user_found = True
+            user_details = user.copy()
             # Check if entered password matches registered user's password
-            if password != userDetails['password']:
+            if hashlib.sha256(password.encode()).hexdigest() != user_details['password']:
                 raise InputError('Entered Password is Incorrect')
-            else:
-                user['token'] = user['u_id']
-                
+
+            user['token'] = jwt.encode({'u_id': user['u_id']}, SECRET, algorithm='HS256')
+
             break
-            
-    # Raise exception if email is not registered 
-    if userFound == False:
+
+    # Raise exception if email is not registered
+    if not user_found:
         raise InputError('Email does not belong to a user')
-      
+
     # Return u_id and token upon successful login
-    return {'u_id' : userDetails['u_id'], 'token' : userDetails['token']}
+    return {'u_id' : user_details['u_id'], 'token' : user_details['token']}
 
 def auth_logout(token):
-    
-    tokenFound = False
-    
+    '''
+    function logs out user given valid token
+    '''
+    token_found = False
+
     # Search for matching active token
     for user in users:
         if token == user['token']:
             # Flag that active token was found and invalidate it to log out user
-            tokenFound = True
+            token_found = True
             user['token'] = -1
             break
-            
+
     return {
-        'is_success': tokenFound,
+        'is_success': token_found,
     }
 
-    
 
 def auth_register(email, password, name_first, name_last):
-    
-
-    
-    def check(email):  
-  
-        # pass the regular expression 
-        # and the string in search() method 
-        if(re.search(regex,email)):  
-            return True  
-            
-        else:  
-            return False  
-            
+    '''
+    Function registers users
+    '''
     #Code below checks if any users in the users dictionary and checks if input email already exists
-    if (check(email) == False):
+    if not check(email):
         raise InputError('Invalid Email')
-    
-    if (len(users) != 0):
+
+    if len(users) != 0:
         for user in users:
-            if(user['email'] == email):
+            if user['email'] == email:
                 print("error")
                 raise InputError('Email already registered')
-    
+
     #Code below checks the length of the input names against restrictions
-    if(len(name_first) > name_maxlen or len(name_first) < name_minlen):
+    if len(name_first) > NAME_MAXLEN or len(name_first) < NAME_MINLEN:
         raise InputError('Invalid First Name')
 
-    if(len(name_last) > name_maxlen or len(name_last) < name_minlen):
+    if len(name_last) > NAME_MAXLEN or len(name_last) < NAME_MINLEN:
         raise InputError('Invalid Last Name')
-    
+
     #Code below checks if input email is a valid email using regex
-    
+
     #Code below checks the length of the password
-    if(len(password) < 6):
-        raise InputError('Invalid password')    
+    if len(password) < 6:
+        raise InputError('Invalid password')
     #Code below is for when all conditions are met
-    
-    if(check(email) == True and len(password) >= 6):
+
+    encoded_token = jwt.encode({'u_id': len(users) +1}, SECRET, algorithm='HS256')
+    if check(email) and len(password) >= 6:
         #Create a new dictionary with data about the user
         new_user = {
             'u_id': len(users)+1,
@@ -109,19 +105,20 @@ def auth_register(email, password, name_first, name_last):
             'name_last': name_last,
             'handle_str': name_first.lower() + name_last[0],
             'email': email,
-            'password': password,
-            'token': len(users)+1
+            'password': hashlib.sha256(password.encode()).hexdigest(),
+            'token': encoded_token.decode('utf-8')
         }
 
         #A copy of the dictionary is needed otherwise it messes with the references
         new_user_copy = new_user.copy()
-        
+
         #Append the copied dictionary onto our list of users
         users.append(new_user_copy)
 
-       
+        saveUserData(users)
         #Return the correct output
         return {
             'u_id': new_user_copy['u_id'],
             'token': new_user_copy['token'],
         }
+    return None

@@ -1,7 +1,14 @@
 '''
 Nessacary imports
 '''
+import jwt
+import re 
 from global_data import users, channels
+import json
+
+SECRET = 'orangeTeam5'
+
+regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 
 def user_in_channel(u_id, channel_id):
     '''
@@ -14,6 +21,18 @@ def user_in_channel(u_id, channel_id):
                 if member['u_id'] == u_id:
                     found = True
     return found
+def user_in_channel_persist(u_id, channel_id):
+    channels = getChannelData()
+    '''
+    checks if user is in channel
+    '''
+    found = False
+    for channel in channels:
+        if int(channel['channel_id']) == int(channel_id):
+            for member in channel['members']:
+                if int(member['u_id']) == int(u_id):
+                    found = True
+    return found    
 
 def user_is_owner(u_id, channel_id):
     '''
@@ -49,6 +68,18 @@ def channel_exists(channel_id):
             return chan_exists
     return chan_exists
 
+def channel_exists_persist(channel_id):
+    '''
+    checks if channel exists
+    '''
+    channels = getChannelData()
+    chan_exists = False
+    for channel in channels:
+        if int (channel['channel_id']) == int(channel_id):
+            chan_exists = True
+            # return chan_exists
+    return chan_exists
+
 def user_exists(u_id):
     '''
     checks if user exists
@@ -59,15 +90,23 @@ def user_exists(u_id):
             user = True
     return user_exists
 
+def user_exists_persist(u_id):
+    '''
+    checks if user exists
+    '''
+    users = getUserData()
+    user = False
+    for user in users:
+        if user['u_id'] == u_id:
+            user = True
+    return user_exists
+
 def get_u_id(token):
     '''
     gets user id given their token
     '''
-    for user in users:
-        if user['token'] == token:
-            return user['u_id']
-
-    return None
+    decoded = jwt.decode(token, SECRET, algorithms=['HS256'])
+    return decoded['u_id']
 
 def get_token(u_id):
     '''
@@ -105,6 +144,19 @@ def user_a_member(u_id, channel_id):
                     found = True
     return found
 
+def user_a_member_persist(u_id, channel_id):
+    '''
+    check if user is a member of a channel
+    '''
+    channels = getChannelData()
+    found = False
+    for channel in channels:
+        if channel['channel_id'] == channel_id:
+            for owners in channel['owners']:
+                if owners['u_id'] == u_id:
+                    found = True
+    return found    
+
 def message_exists(message_id):
     '''
     checks if message exists
@@ -138,3 +190,40 @@ def find_channel(message_id):
             if msg['message_id'] == message_id:
                 return channel['channel_id']
     return None
+
+def check(email):
+    '''
+    Check if email is valid
+    '''
+    if re.search(regex,email):
+        return True
+    else:
+        return False
+def getUserData():
+    with open('./src/persistent_data/user_data.json', 'r') as FILE:
+        DATA_STRUCTURE = json.load(FILE)
+        return DATA_STRUCTURE['users']
+
+def getChannelData():
+    with open('./src/persistent_data/channel_data.json', 'r') as FILE:
+        DATA_STRUCTURE = json.load(FILE)
+        return DATA_STRUCTURE['channels']     
+
+def saveUserData(users):
+    DATA_STRUCTURE = {'users': users}
+    with open('./src/persistent_data/user_data.json', 'w') as FILE:
+    #print(json.dumps(DATA_STRUCTURE))
+        json.dump(DATA_STRUCTURE, FILE)
+    return
+
+def saveChannelData(channels):
+    DATA_STRUCTURE = {'channels': channels}
+    with open('./src/persistent_data/channel_data.json', 'w') as FILE:
+        json.dump(DATA_STRUCTURE, FILE)
+    return         
+
+def resetData():
+    saveUserData([])
+    saveChannelData([])
+
+    return

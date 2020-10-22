@@ -4,11 +4,14 @@ Nessacary imports
 from global_data import channels
 from error import InputError, AccessError
 from helper_functions import user_in_channel, user_exists, channel_exists, \
-    create_member, get_u_id, user_is_owner, user_is_creator
-
+    create_member, get_u_id, user_is_owner, user_is_creator, saveChannelData, \
+    getChannelData, user_in_channel_persist, channel_exists_persist, user_exists_persist,\
+    getUserData
 
 #function adds user to channel
 def channel_invite(token, channel_id, u_id):
+    channels = getChannelData()
+
     '''
     Tests channel_invite function
     '''
@@ -16,36 +19,40 @@ def channel_invite(token, channel_id, u_id):
     authorised_u_id = get_u_id(token)
 
     #raising error if channel does not exist
-    if not channel_exists(channel_id):
+    if not channel_exists_persist(channel_id):
         raise InputError('Invalid channel')
 
     #raising error is user does not exist
-    if not user_exists(u_id):
+    if not user_exists_persist(u_id):
         raise InputError('Invalid user id')
 
     #raising error is user in now in channel
-    if not user_in_channel(authorised_u_id, channel_id):
+    if not user_in_channel_persist(authorised_u_id, channel_id):
         raise AccessError('User not a member of channel')
 
     #finding the correct channel then and appending new user
     for channel in channels:
-        if channel['channel_id'] == channel_id:
-            channel['members'].append(create_member(u_id))
-
+        if channel['channel_id'] == int(channel_id):
+            channel['members'].append(create_member(int(u_id)))
+            
+            
+    saveChannelData(channels)
     return {}
 
 def channel_details(token, channel_id):
+    channels = getChannelData()
     '''
     Returns the details of the channel
     '''
+    channel_id = int(channel_id)
     u_id = get_u_id(token)
-    if not channel_exists(channel_id):
-        raise InputError
-    if not user_in_channel(u_id, channel_id):
-        raise AccessError
+    if not channel_exists_persist(int(channel_id)):
+        raise InputError('1')
+    if not user_in_channel_persist(int(u_id), int(channel_id)):
+        raise AccessError('2')
 
     for channel in channels:
-        if channel['channel_id'] == channel_id:
+        if channel['channel_id'] == int(channel_id):
 
             return {
                 'name': channel['name'],
@@ -58,6 +65,8 @@ def channel_messages(token, channel_id, start):
     '''
     returns messages in channel with given index
     '''
+    channel_id = int(channel_id)
+    start = int(start)
     #raises error if channel does not exits
     if not channel_exists(channel_id):
         raise InputError('Invalid channel')
@@ -107,6 +116,7 @@ def channel_leave(token, channel_id):
     removes user from channel
     '''
     authorised_u_id = get_u_id(token)
+    channels = getChannelData()
 
     #raises error is channel does not exist
     if not channel_exists(channel_id):
@@ -119,12 +129,15 @@ def channel_leave(token, channel_id):
     #removing member from channel
     for channel in channels:
         if channel['channel_id'] == channel_id:
+            print("Channel_before:\n" , channel['members'])
             for owner in channel['owners']:
                 if owner['u_id'] == authorised_u_id:
                     channel['owners'].remove(owner)
             for member in channel['members']:
                 if member['u_id'] == authorised_u_id:
                     channel['members'].remove(member)
+                    print("Channels_after:\n" , channel['members'])
+    saveChannelData(channels)
     return {}
 
 #function adds user to channel
