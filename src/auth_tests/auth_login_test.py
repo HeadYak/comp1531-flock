@@ -48,6 +48,7 @@ def test_auth_login_non_existing_email():
     clear()
     auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton')
 def test_auth_login_incorrect_password():
+    clear()
     '''
     test for incorrect password
     '''

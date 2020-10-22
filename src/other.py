@@ -1,9 +1,9 @@
 from global_data import users, channels
-from helper_functions import get_u_id, create_member
+from helper_functions import get_u_id, create_member, resetData
 def clear():
+    resetData()
     del users[:]
     del channels[:]
-
     pass
 
 def users_all(token):

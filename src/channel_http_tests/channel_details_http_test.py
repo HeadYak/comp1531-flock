@@ -1,10 +1,15 @@
-import sys
-sys.path.append('../')
-
+'''
+Http test for channel_details
+'''
 import json
+import sys
 import requests
+sys.path.append('../')
 from helper_functions import resetData, getChannelData, getUserData
-def test_channel_invite_http(url):
+def test_channel_details_http(url):
+    '''
+    Http test for channel_details
+    '''
     resetData()
     user1data = {
         'email': 'email@gmail.com',
@@ -32,7 +37,7 @@ def test_channel_invite_http(url):
     channeldetailparam = {
         'token': user1token,
         'channel_id': channel_id
-    }    
+    }
 
     channels = getChannelData()
     users = getUserData()
@@ -41,7 +46,10 @@ def test_channel_invite_http(url):
     print("\nUsers:\n", users)
     resp = requests.get(f"{url}channel/details", params=channeldetailparam)
     print("\nresp:" , resp)
-    resp_dict = resp.json
+    resp_dict = resp.json()
     print("\nresp_dict:" , resp_dict)
+    assert 'name' in resp_dict
+    assert 'owner_members' in resp_dict
+    assert 'all_members' in resp_dict
     #400 error code
     
