@@ -39,7 +39,7 @@ def test_channel_invite_http(url):
     channel_id = new_channel_dict['channel_id']
     
     print("Token:" , user1token)
-    print("Channel_id:" , channel_id)
+    print("Channel_id:", channel_id)
     print("user_id:" , user2u_id)
     
     channelinvitedata = {
@@ -48,6 +48,8 @@ def test_channel_invite_http(url):
         'u_id': user2u_id
     }   
 
+    print(channelinvitedata)
+    
     resp = requests.post(f"{url}/channel/invite", data=channelinvitedata)
     print("Resp:", resp)
     resp_dict = resp.json()
@@ -63,4 +65,4 @@ def test_channel_invite_http(url):
     print('temp_dict:', temp_dict)
 
     #400 error code invalid channel
-    assert resp == {}
+    assert resp_dict == {}

@@ -51,7 +51,6 @@ def channel_exists(channel_id):
     chan_exists = False
     for channel in channels:
         if channel['channel_id'] == channel_id:
-            print("here")
             chan_exists = True
             return chan_exists
     return chan_exists
