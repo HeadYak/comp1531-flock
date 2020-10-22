@@ -12,7 +12,7 @@ def test_channel_invite_http(url):
         'name_first': 'Frank',
         'name_last': 'Su'
     }
-    user1 = requests.post(url + 'auth/register', data=user1data)
+    user1 = requests.post(url + 'auth/register', json=user1data)
     user1_dict = json.loads(user1.text)
     user1token = user1_dict['token']
 
@@ -23,7 +23,7 @@ def test_channel_invite_http(url):
         'is_public': True
     }
 
-    new_channel = requests.post(url + 'channels/create', data=channel1)
+    new_channel = requests.post(url + 'channels/create', json=channel1)
     assert new_channel.status_code == 200
     new_channel_dict = json.loads(new_channel.text)
     print("\nnew_channel_dict:" , new_channel_dict)
@@ -43,5 +43,11 @@ def test_channel_invite_http(url):
     print("\nresp:" , resp)
     resp_dict = json.loads(resp.text)
     print("\nresp_dict:" , resp_dict)
+
+    assert 'name' in resp_dict
+    assert 'owner_members' in resp_dict
+    assert 'all_members' in resp_dict
+    # assert
+    #  { name, owner_members, all_members }
     #400 error code
     

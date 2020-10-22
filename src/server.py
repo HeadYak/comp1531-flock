@@ -61,8 +61,12 @@ def authlogin():
     '''
     Route for auth_login
     '''
-    email = request.form.get('email')
-    password = request.form.get('password')
+    data = request.get_json()
+
+    email = data['email']
+    password = data['password']
+    # email = request.form.get('email')
+    # password = request.form.get('password')
     print('Email:'+email)
     print('Password:'+password)
 
@@ -84,11 +88,17 @@ def authregister():
     '''
     Route for auth_register
     '''
-    email = request.form.get('email')
-    password = request.form.get('password')
-    name_first = request.form.get('name_first')
-    name_last = request.form.get('name_last')
+    
+    # email = request.form.get('email')
+    # password = request.form.get('password')
+    # name_first = request.form.get('name_first')
+    # name_last = request.form.get('name_last')
 
+    data = request.get_json()
+    email = data['email']
+    password = data['password']
+    name_first = data['name_first']
+    name_last = data ['name_last']
     print('Email:'+email)
     print('Password:'+password)
     print('name_first:'+name_first)
@@ -102,9 +112,13 @@ def authregister():
 
 @APP.route('/channel/invite', methods=['POST'])
 def channelinvite():
-    token = request.form.get('token')
-    channel_id = request.form.get('channel_id')
-    u_id = request.form.get('u_id')
+    data = request.get_json()
+    token = data['token']
+    channel_id = data['channel_id']
+    u_id = data['u_id']
+    # token = request.form.get('token')
+    # channel_id = request.form.get('channel_id')
+    # u_id = request.form.get('u_id')
     res = channel_invite(token, channel_id, u_id)
     return dumps(res)
 
@@ -125,9 +139,13 @@ def channelscreate():
     '''
     Route for channel_create
     '''
-    token = request.form.get('token')
-    name = request.form.get('name')
-    is_public = request.form.get('is_public')
+    data = request.get_json()
+    token = data['token']
+    name = data['name']
+    is_public = data['is_public']
+    # token = request.form.get('token')
+    # name = request.form.get('name')
+    # is_public = request.form.get('is_public')
 
     res = channels_create(token, name, is_public)
     return dumps(res)

@@ -45,13 +45,13 @@ def channel_details(token, channel_id):
     Returns the details of the channel
     '''
     u_id = get_u_id(token)
-    if not channel_exists(channel_id):
-        raise InputError
-    if not user_in_channel_persist(u_id, channel_id):
-        raise AccessError
+    if not channel_exists_persist(int(channel_id)):
+        raise InputError('1')
+    if not user_in_channel_persist(int(u_id), int(channel_id)):
+        raise AccessError('2')
 
     for channel in channels:
-        if channel['channel_id'] == channel_id:
+        if channel['channel_id'] == int(channel_id):
 
             return {
                 'name': channel['name'],

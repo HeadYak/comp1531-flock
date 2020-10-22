@@ -15,7 +15,7 @@ def test_channels_list_http(url):
         'name_last': 'Su'
     }
 
-    regis = requests.post(url + 'auth/register', data=registerdata)
+    regis = requests.post(url + 'auth/register', json=registerdata)
     regis_dict = json.loads(regis.text)
     print('\n', regis_dict)
     token = {
@@ -34,7 +34,7 @@ def test_channels_list_http(url):
         'is_public': True
     }
 
-    newchan = requests.post(url + 'channels/create', data=channelcreatedata)
+    newchan = requests.post(url + 'channels/create', json=channelcreatedata)
     newchan_dict = json.loads(newchan.text)
     print("Newchan_dict:", newchan_dict)
 

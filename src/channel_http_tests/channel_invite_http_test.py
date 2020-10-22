@@ -26,7 +26,7 @@ def test_channel_invite_http(url):
         'name_first': 'Frank',
         'name_last': 'Su'
     }
-    user1 = requests.post(url + 'auth/register', data=user1data)
+    user1 = requests.post(url + 'auth/register', json=user1data)
     user1_dict = json.loads(user1.text)
     user1token = user1_dict['token']
 
@@ -38,7 +38,7 @@ def test_channel_invite_http(url):
         'name_first': 'Howard',
         'name_last': 'Fog'
     }
-    user2 = requests.post(url + 'auth/register', data=user2data)
+    user2 = requests.post(url + 'auth/register', json=user2data)
     assert user2.status_code == 200
 
     #Extracts elements from the response dictionary and stores into varaibles
@@ -53,7 +53,7 @@ def test_channel_invite_http(url):
         'is_public': True
     }
 
-    new_channel = requests.post(url + 'channels/create', data=channel1)
+    new_channel = requests.post(url + 'channels/create', json=channel1)
     assert new_channel.status_code == 200
     new_channel_dict = json.loads(new_channel.text)
 
@@ -71,7 +71,7 @@ def test_channel_invite_http(url):
 
     
 
-    resp = requests.post(url + 'channel/invite', data=channelinvitedata)
+    resp = requests.post(url + 'channel/invite', json=channelinvitedata)
     print("\nResp:", resp)
     resp_dict = json.loads(resp.text)
     print("Resp_dict:", resp_dict)
@@ -80,5 +80,4 @@ def test_channel_invite_http(url):
     print("\nChannels_end:\n" , channels)
     users = getUserData()
     print("\nUsers_end:\n" , users)
-    #400 error code invalid channel
     assert resp_dict == {}

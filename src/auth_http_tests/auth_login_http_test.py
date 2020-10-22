@@ -19,8 +19,8 @@ def test_auth_login_http(url):
         'email': 'email@gmail.com',
         'password': 'HELLO123@'
     }
-    requests.post(url + 'auth/register', data=registerdata)
-    resp = requests.post(url + 'auth/login', data=logindata)
+    requests.post(url + 'auth/register', json=registerdata)
+    resp = requests.post(url + 'auth/login', json=logindata)
 
     print("resp:", resp)
     resp_dict = json.loads(resp.text)
