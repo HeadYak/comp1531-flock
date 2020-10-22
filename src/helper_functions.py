@@ -144,6 +144,19 @@ def user_a_member(u_id, channel_id):
                     found = True
     return found
 
+def user_a_member_persist(u_id, channel_id):
+    '''
+    check if user is a member of a channel
+    '''
+    channels = getChannelData()
+    found = False
+    for channel in channels:
+        if channel['channel_id'] == channel_id:
+            for owners in channel['owners']:
+                if owners['u_id'] == u_id:
+                    found = True
+    return found    
+
 def message_exists(message_id):
     '''
     checks if message exists

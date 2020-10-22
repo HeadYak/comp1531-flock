@@ -122,6 +122,13 @@ def channelinvite():
     res = channel_invite(token, channel_id, u_id)
     return dumps(res)
 
+@APP.route('/channel/leave', methods=['POST'])
+def channelleave():
+    data = request.get_json()
+    token = data['token']
+    channel_id = data['channel_id']
+    res = channel_leave(token, channel_id)
+    return dumps(res)
 
 @APP.route('/channel/details', methods=['GET'])
 def channeldetails():
