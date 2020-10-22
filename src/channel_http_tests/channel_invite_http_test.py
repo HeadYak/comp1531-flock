@@ -14,8 +14,12 @@ from other import clear
 def test_channel_invite_http(url):
     resetData()
     clear()
-    users = getUserData()
     channels = getChannelData()
+    print("\nChannels_start:\n" , channels)
+    users = getUserData()
+    print("\nUsers_start:\n" , users)
+    
+    #Code block each registers a user
     user1data = {
         'email': 'email@gmail.com',
         'password': 'HELLO123@',
@@ -26,6 +30,8 @@ def test_channel_invite_http(url):
     user1_dict = json.loads(user1.text)
     user1token = user1_dict['token']
 
+
+    #Code block registers a user
     user2data = {
         'email': 'second@gmail.com',
         'password': 'HELLO123@!!!',
@@ -34,6 +40,9 @@ def test_channel_invite_http(url):
     }
     user2 = requests.post(url + 'auth/register', data=user2data)
     assert user2.status_code == 200
+
+    #Extracts elements from the response dictionary and stores into varaibles
+
     user2_dict = json.loads(user2.text)
     user2token = user2_dict['token']
     user2u_id = user2_dict['u_id']
@@ -50,23 +59,26 @@ def test_channel_invite_http(url):
 
     channel_id = new_channel_dict['channel_id']
 
-    
+    print("\nUser1token:" , user1token)
+    print("Channel_id:" , channel_id)
+    print("User2id:" ,user2u_id)
+
     channelinvitedata = {
-        'token': user1token,
-        'channel_id': channel_id,
-        'u_id': user2u_id
-    }   
+        "token": user1token,
+        "channel_id": channel_id,
+        "u_id": user2u_id
+    }  
 
-    channels = getChannelData()
-    print("\nChannels:\n" , channels)
-    users = getUserData()
-    print("Users:\n" , users)
+    
 
-    resp = requests.post(f"{url}/channel/invite", data=channelinvitedata)
-    print("Resp:", resp)
-    resp_dict = resp.json()
+    resp = requests.post(url + 'channel/invite', data=channelinvitedata)
+    print("\nResp:", resp)
+    resp_dict = json.loads(resp.text)
     print("Resp_dict:", resp_dict)
 
-
+    channels = getChannelData()
+    print("\nChannels_end:\n" , channels)
+    users = getUserData()
+    print("\nUsers_end:\n" , users)
     #400 error code invalid channel
-    assert resp == {}
+    assert resp_dict == {}

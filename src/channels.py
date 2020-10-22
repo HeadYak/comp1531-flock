@@ -6,7 +6,8 @@ from error import InputError
 from helper_functions import create_member, user_in_channel, get_u_id, user_exists, \
     saveChannelData
 
-
+global channels
+global users
 def channels_list(token):
     '''
     Lists all current channels user is apart of

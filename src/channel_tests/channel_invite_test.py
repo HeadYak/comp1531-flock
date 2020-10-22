@@ -5,11 +5,12 @@ from channel import channel_invite
 from channels import channels_create
 from auth import auth_register
 from error import InputError, AccessError
-from helper_functions import user_in_channel
+from helper_functions import user_in_channel, resetData, getChannelData, user_in_channel_persist
 from other import clear
 import pytest
 
 def test_channels_invite():
+    resetData()
     'Tests for channel_invite'
     clear()
     #Creating users to create channels
@@ -35,12 +36,15 @@ def test_channels_invite():
         #test for user not already member of the channel
         channel_invite(token2, ch_id1, u_id1)
 
+    channels = getChannelData()
+    print("\nChannels_before:" , channels)
     #test user invite works with public channel
     channel_invite(token1, ch_id1, u_id2)
-    assert user_in_channel(u_id2, ch_id1)
+
+    channels = getChannelData()
+    print("\nChannels_after:" , channels)
+    assert user_in_channel_persist(u_id2, ch_id1)
 
     #test user invite works with private channel
     channel_invite(token2, ch_id2, u_id1)
-    assert user_in_channel(u_id1, ch_id2)
-
-    clear()
+    assert user_in_channel_persist(u_id1, ch_id2)

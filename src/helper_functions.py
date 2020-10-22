@@ -5,6 +5,7 @@ import jwt
 import re 
 from global_data import users, channels
 import json
+
 SECRET = 'orangeTeam5'
 
 regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
@@ -20,6 +21,18 @@ def user_in_channel(u_id, channel_id):
                 if member['u_id'] == u_id:
                     found = True
     return found
+def user_in_channel_persist(u_id, channel_id):
+    channels = getChannelData()
+    '''
+    checks if user is in channel
+    '''
+    found = False
+    for channel in channels:
+        if int(channel['channel_id']) == int(channel_id):
+            for member in channel['members']:
+                if int(member['u_id']) == int(u_id):
+                    found = True
+    return found    
 
 def user_is_owner(u_id, channel_id):
     '''
@@ -55,10 +68,33 @@ def channel_exists(channel_id):
             return chan_exists
     return chan_exists
 
+def channel_exists_persist(channel_id):
+    '''
+    checks if channel exists
+    '''
+    channels = getChannelData()
+    chan_exists = False
+    for channel in channels:
+        if int (channel['channel_id']) == int(channel_id):
+            chan_exists = True
+            # return chan_exists
+    return chan_exists
+
 def user_exists(u_id):
     '''
     checks if user exists
     '''
+    user = False
+    for user in users:
+        if user['u_id'] == u_id:
+            user = True
+    return user_exists
+
+def user_exists_persist(u_id):
+    '''
+    checks if user exists
+    '''
+    users = getUserData()
     user = False
     for user in users:
         if user['u_id'] == u_id:

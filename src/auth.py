@@ -12,6 +12,8 @@ NAME_MAXLEN = 50
 NAME_MINLEN = 1
 SECRET = 'orangeTeam5'
 
+global users
+
 def auth_login(email, password):
     '''
     functions logs in user

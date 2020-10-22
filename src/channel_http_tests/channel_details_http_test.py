@@ -1,7 +1,11 @@
+import sys
+sys.path.append('../')
+
 import json
 import requests
-
+from helper_functions import resetData, getChannelData, getUserData
 def test_channel_invite_http(url):
+    resetData()
     user1data = {
         'email': 'email@gmail.com',
         'password': 'HELLO123@',
@@ -29,9 +33,15 @@ def test_channel_invite_http(url):
         'token': user1token,
         'channel_id': channel_id
     }    
+
+    channels = getChannelData()
+    users = getUserData()
+
+    print("\nChannels:\n", channels)
+    print("\nUsers:\n", users)
     resp = requests.get(url + 'channel/details', params=channeldetailparam)
     print("\nresp:" , resp)
     resp_dict = json.loads(resp.text)
     print("\nresp_dict:" , resp_dict)
     #400 error code
-    assert 1 == 2
+    
