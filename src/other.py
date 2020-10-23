@@ -1,5 +1,5 @@
 from global_data import users, channels
-from helper_functions import get_u_id, create_member
+from helper_functions import get_u_id, create_member, resetData
 from error import InputError, AccessError
 
 def clear():

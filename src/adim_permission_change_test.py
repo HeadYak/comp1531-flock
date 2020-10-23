@@ -4,7 +4,6 @@ from other import admin_userpermission_change, clear
 from auth import auth_register
 from global_data import users
 from error import InputError, AccessError
-from helper_functions import resetData
 
 # Testing base case: User is an owner, and target is an existing user
 def test_userpermssion_change_base():
