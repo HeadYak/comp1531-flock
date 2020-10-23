@@ -4,11 +4,12 @@ sys.path.append('../')
 import json
 import requests
 from helper_functions import resetData, getChannelData, getUserData
+from other import clear
 
 
 def test_channel_join_http(url):
     resetData()
-
+    clear()
     user1data = {
         'email': 'email@gmail.com',
         'password': 'HELLO123@',

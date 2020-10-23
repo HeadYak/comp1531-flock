@@ -9,15 +9,13 @@ from auth import auth_register
 from error import AccessError
 from other import clear
 from global_data import channels
-from helper_functions import resetData, getChannelData
 
 def test_message_edit():
     '''
     Testing message_send function
     '''
-    channels = getChannelData()
     clear()
-    resetData()
+
     #Creating users to create channels
     user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
     user2 = auth_register("user2@gmail.com", "user2pass", "user2", "last2")

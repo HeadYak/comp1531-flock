@@ -135,7 +135,7 @@ def channeljoin():
     data = request.get_json()
     token = data['token']
     channel_id = data['channel_id']   
-    res = channel_join(token, channel_id) 
+    res = channel_join_p(token, channel_id) 
     return dumps(res)
 
 
