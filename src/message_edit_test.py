@@ -29,7 +29,7 @@ def test_message_edit():
     #creating channel messages
     m_id1 = message_send(token1, ch_id1, 'hello')['message_id']
     m_id2 = message_send(token1, ch_id1, 'hey')['message_id']
-    m_id3 = message_send(token2, ch_id2, "hello")['message_id']
+    message_send(token2, ch_id2, "hello")['message_id']
     message_send(token2, ch_id2, "hello")
     message_send(token2, ch_id2, "hello")
 
@@ -38,7 +38,7 @@ def test_message_edit():
 
     with pytest.raises(AccessError):
         #user did not created message and isnt an owner
-        message_edit(token1, m_id3, "message")
+        message_edit(token2, m_id1, "message")
 
     message_edit(token1, m_id1, "newMessage")
     message_edit(token1, m_id2, "")

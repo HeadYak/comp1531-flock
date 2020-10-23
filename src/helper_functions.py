@@ -186,6 +186,16 @@ def check(email):
         return True
     else:
         return False
+
+def permission(u_id):
+     '''
+     find users premission
+     '''
+     for user in users:
+         if user['u_id'] == u_id:
+             return user['permission_id']
+     return None
+
 def getUserData():
     with open('./src/persistent_data/user_data.json', 'r') as FILE:
         DATA_STRUCTURE = json.load(FILE)

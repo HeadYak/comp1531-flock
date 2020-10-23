@@ -4,7 +4,7 @@ File of message funtions, message_send, message_remove and message edit
 from datetime import datetime
 from global_data import channels, messages
 from helper_functions import user_in_channel, get_u_id, message_exists, \
-user_is_owner, message_creator, find_channel, getChannelData
+user_is_owner, message_creator, find_channel, getChannelData, permission
 from error import InputError, AccessError
 
 def message_send(token, channel_id, message):
@@ -52,10 +52,11 @@ def message_remove(token, message_id):
     m_id = message_exists(message_id)
     owner = user_is_owner(u_id, channel_id)
     creator = message_creator(u_id, message_id)
+    permission_id = permission(u_id)
 
     if not m_id:
         raise InputError("Invalid message ID")
-    if not creator and not owner:
+    if not creator and not owner and permission_id == 2:
         raise AccessError("user is not authorised to remove message")
     for channel in channels:
         for chan_messages in channel['messages']:
@@ -74,8 +75,9 @@ def message_edit(token, message_id, message):
 
     owner = user_is_owner(u_id, channel_id)
     creator = message_creator(u_id, message_id)
+    permission_id = permission(u_id)
 
-    if not creator and not owner:
+    if not creator and not owner and permission_id == 2:
         raise AccessError("user is not authorised to remove message")
 
     no_message = False

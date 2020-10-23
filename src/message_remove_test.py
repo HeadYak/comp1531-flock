@@ -28,7 +28,7 @@ def test_message_send():
     #creating channel messages
     m_id1 = message_send(token1, ch_id1, 'hello')['message_id']
     m_id2 = message_send(token1, ch_id1, 'hey')['message_id']
-    m_id3 = message_send(token2, ch_id2, "hello")['message_id']
+    message_send(token2, ch_id2, "hello")['message_id']
     
     message_send(token2, ch_id2, "hello")
     message_send(token2, ch_id2, "hello")
@@ -37,7 +37,7 @@ def test_message_send():
 
     with pytest.raises(AccessError):
         #user id not created message and isnt an owner
-        message_remove(token1, m_id3)
+        message_remove(token2, m_id1)
 
     #checking messages have been added
     assert len(channel_messages(token1, ch_id1, 0,)['messages']) == 2
