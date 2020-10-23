@@ -1,6 +1,7 @@
 '''
 Auth Functions
 '''
+from datetime import datetime
 import sys
 sys.path.append("..")
 import jwt
@@ -28,6 +29,10 @@ def auth_login(email, password):
 
     user_found = False
     user_details = {}
+
+    #creating timestamp for token
+    now = datetime.now()
+    timestamp = datetime.timestamp(now)
     #  Check if entered email is registered as a user
 
     for user in users:
@@ -38,7 +43,7 @@ def auth_login(email, password):
             if hashlib.sha256(password.encode()).hexdigest() != user_details['password']:
                 raise InputError('Entered Password is Incorrect')
 
-            user['token'] = jwt.encode({'u_id': user['u_id']}, SECRET, algorithm='HS256')
+            user['token'] = jwt.encode({'u_id': user['u_id'], 'time': timestamp}, SECRET, algorithm='HS256')
 
             break
 

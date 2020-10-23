@@ -1,3 +1,4 @@
+from datetime import datetime
 import pytest
 from auth import auth_register
 from user import user_profile
@@ -18,7 +19,10 @@ def test_user_profile():
     u_id1 = user1['u_id']
     u_id2 = user2['u_id']
 
-    fake_token = jwt.encode({'u_id': 3}, SECRET, algorithm='HS256')
+    now = datetime.now()
+    timestamp = datetime.timestamp(now)
+
+    fake_token = jwt.encode({'u_id': 3, 'time': timestamp}, SECRET, algorithm='HS256')
     
     # raising error for an invalid user
     with pytest.raises(InputError):
