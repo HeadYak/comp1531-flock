@@ -145,6 +145,11 @@ def channel_join(token, channel_id):
     '''
     adds user to channel
     '''
+    #Comment out below
+    channels = getChannelData()
+
+
+    
     channel_id = int(channel_id)
     u_id = get_u_id(token)
 
@@ -170,6 +175,10 @@ def channel_join(token, channel_id):
                 and create_member(u_id) not in channel['members']
         ):
             channel['members'].append(create_member(u_id))       
+
+
+    #Comment out below
+    saveChannelData(channels)        
     return {}
 
 def channel_addowner(token, channel_id, u_id):

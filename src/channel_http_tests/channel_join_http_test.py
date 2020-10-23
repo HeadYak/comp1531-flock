@@ -8,6 +8,7 @@ from helper_functions import resetData, getChannelData, getUserData
 
 def test_channel_join_http(url):
     resetData()
+
     user1data = {
         'email': 'email@gmail.com',
         'password': 'HELLO123@',
@@ -49,20 +50,16 @@ def test_channel_join_http(url):
 
     
 
+    channels = getChannelData()
+    print("Channels_before:\n", channels)
 
     resp = requests.post(f"{url}/channel/join", json=channeljoindata)
 
+    channels = getChannelData()
+    print("Channels_after:\n", channels)
 
     resp_dict = resp.json()
     print("Resp:\n", resp)
     print("Resp_dict:\n", resp_dict)
 
-
-    channeldetailparam = {
-        'token': user1token,
-        'channel_id': channel_id
-    }
-    resp = requests.get(f"{url}channel/details", params=channeldetailparam)
-    print("\nresp:" , resp)
-    resp_dict = resp.json()
-    print("\nresp_dict:" , resp_dict)
+    
