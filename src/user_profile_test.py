@@ -18,7 +18,7 @@ def test_user_profile():
     
     # User with u_id is not a valid user
     with pytest.raises(InputError):
-        user_profile(3, u_id1)
+        user_profile(3, 3)
         
     # creating user profiles
     user_profile(token1, u_id1)
