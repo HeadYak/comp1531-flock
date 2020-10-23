@@ -254,5 +254,12 @@ def userprofilesetname():
     res = user_profile_setname(token, name_first, name_last)
     return dumps(res)
 
+@APP.route('/users/all', methods=['GET'])
+def usersall():
+    token = request.args.get('token')
+    res = users_all(token)
+    return dumps(res)
+
+    
 if __name__ == "__main__":
     APP.run(port=0) # Do not edit this port

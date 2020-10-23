@@ -41,7 +41,5 @@ def test_channels_list_http(url):
     resp1 = requests.get(f"{url}/channels/list", params=token)
     resp1_dict = resp1.json()
     print("Resp1_dict:", resp1_dict)
-    #Bugged need fix
-    # assert resp_dict == [{'channel_id': 1 , 'name': 'Test_channel'}]
     assert resp1_dict == {'channels': [{'channel_id': 1, 'name': 'Test_channel'}]}
     

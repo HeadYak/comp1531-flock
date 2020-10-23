@@ -1,5 +1,6 @@
 from global_data import users, channels
-from helper_functions import get_u_id, create_member, resetData
+from helper_functions import get_u_id, create_member, resetData, \
+    user_exists_persist, getUserData
 from error import InputError, AccessError
 
 def clear():
@@ -9,9 +10,14 @@ def clear():
     pass
 
 def users_all(token):
-    return {
-        users
-    }
+    users = getUserData()
+    u_id = get_u_id(token)
+
+    if(user_exists_persist(int(u_id))):
+        return {"users": users}
+    else:
+        return {}
+
 
 def admin_userpermission_change(token, u_id, permission_id):
     owner_level = 1
