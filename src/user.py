@@ -1,25 +1,54 @@
+import jwt
 from error import InputError
 from global_data import users
-
+from helper_functions import get_u_id, check
 
 def user_profile(token, u_id):
-    return {
-        'user': {
-        	'u_id': 1,
-        	'email': 'cs1531@cse.unsw.edu.au',
-        	'name_first': 'Hayden',
-        	'name_last': 'Jacobs',
-        	'handle_str': 'hjacobs',
-        },
-    }
+    # retrieve u_id from token
+    u_id = get_u_id(token)
+    # raise error if not a valid user
+    #user['token'] = jwt.encode({'u_id': user['u_id']}, SECRET, algorithm='HS256')
+    {'token': jwt.encode({'u_id': 3}, SECRET, algorithm = HS256)}
+    for user in users:
+        if user['u_id'] == u_id and user['token'] != token:
+            raise InputError('Invalid User')
+    for user in users:
+        if user['u_id'] == u_id:
+            return {
+                'u_id': user['u_id'],
+                'email': user['email'],
+                'name_first': user['name_first'],
+                'name_last': user['name_last'],
+                'handle_str': user['handle_str'],
+            }
 
 def user_profile_setname(token, name_first, name_last):
-    return {
-    }
+    u_id = get_u_id(token)
+    # Checks if the length of the user's name is within the set restrictions
+    if (len(name_first) < 1 or len(name_first) > 50):
+        raise InputError('Invalid First Name')
+    if (len(name_last) < 1 or len(name_last) > 50):
+        raise InputError('Invalid Last Name')
+    for user in users:
+        if user['u_id'] == u_id:
+            user['name_first'] == name_first
+            user['name_last'] == name_last
+            break
 
 def user_profile_setemail(token, email):
-    return {
-    }
+    u_id = get_u_id(token)
+    # Email entered is not a valid email
+    if check(email) == False:
+        raise InputError('Invalid Email')
+    # Email address is already being used by another user
+    for user in users:
+        if user['email'] == email:
+            raise InputError('Email is already being used')
+    for user in users:
+        if user['u_id'] == u_id:
+            user['email'] == email
+            break
+
 
 def user_profile_sethandle(token, handle_str):
     '''
