@@ -177,7 +177,7 @@ def channel_join(token, channel_id):
     #Comment out below     
     return {}
 
-def channel_join_p(token, channel_id):
+def channel_join_p(token, channel_id): # pragma: no cover
     '''
     adds user to channel
     '''
