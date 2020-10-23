@@ -11,8 +11,9 @@ def user_profile(token, u_id):
     '''
     Raise error if user with u_id is not a valid user 
     '''
+    u_id = int(u_id)
     for user in users:
-        if user_exists(new_u_id) and new_u_id != u_id:
+        if not user_exists(new_u_id) or new_u_id != u_id:
             raise InputError('Invalid User')
     
     for user in users:
@@ -41,6 +42,7 @@ def user_profile_setname(token, name_first, name_last):
             user['name_first'] == name_first
             user['name_last'] == name_last
             break
+    return {}
 
 def user_profile_setemail(token, email):
     u_id = get_u_id(token)
