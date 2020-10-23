@@ -176,9 +176,6 @@ def message_creator(u_id, message_id):
     found = False
     for channel in channels:
         for chan_messages in channel['messages']:
-            print(chan_messages)
-            print(u_id)
-            print(message_id)
             if chan_messages['creator'] == u_id and chan_messages['message_id'] == message_id:
                 found = True
                 return found
