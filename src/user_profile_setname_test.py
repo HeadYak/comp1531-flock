@@ -15,10 +15,15 @@ def test_user_profile_setname():
     u_id1 = user1['u_id']
     u_id2 = user2['u_id']
     
+    # raising errors for invalid length of first and last names
     with pytest.raises(InputError):
-        # first name is not between 1 and 50 characters
+        '''
+        first name is not between 1 and 50 characters
+        '''
         user_profile_setname(token1, 'user1'*100, 'userlast1')
-        # last name is not between 1 and 50 characters 
+        '''
+        last name is not between 1 and 50 characters 
+        '''
         user_profile_setname(token1, 'user1', 'userlast1'*100)
    
     # updating the users' names
@@ -33,5 +38,5 @@ def test_user_profile_setname():
         if user['u_id'] == u_id2:
             assert user['name_last'] == 'auserlast2'
     
-
+    clear()
 
