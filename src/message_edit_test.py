@@ -29,19 +29,25 @@ def test_message_edit():
     #creating channel messages
     m_id1 = message_send(token1, ch_id1, 'hello')['message_id']
     m_id2 = message_send(token1, ch_id1, 'hey')['message_id']
-    message_send(token2, ch_id2, "hello")['message_id']
+    m_id3 = message_send(token2, ch_id2, "hello")['message_id']
     message_send(token2, ch_id2, "hello")
     message_send(token2, ch_id2, "hello")
 
     channel_join(token1, ch_id2)
-    message_send(token1, ch_id2, "hello")
+    m_id4 = message_send(token1, ch_id2, "hello")['message_id']
 
     with pytest.raises(AccessError):
         #user did not created message and isnt an owner
         message_edit(token2, m_id1, "message")
 
+    #user editing thier own message
     message_edit(token1, m_id1, "newMessage")
-    message_edit(token1, m_id2, "")
+    
+    #owner of channel editing another users message/ empty string test
+    message_edit(token2, m_id4, "")
+
+    #owner of flcok editing a antoher users message
+    message_edit(token1, m_id3, "yoooo")
 
     found = False
     for channel in channels:
@@ -49,7 +55,10 @@ def test_message_edit():
             for msg in channel['messages']:
                 if msg['message_id'] == m_id1:
                     assert msg['message'] == "newMessage"
-                if msg['message_id'] == m_id2:
+                if msg['message_id'] == m_id4:
+                    assert msg['message'] == ""
                     found = True
+                if msg['message_id'] == m_id3:
+                    assert msg['message'] == "yoooo"
 
     assert found == False

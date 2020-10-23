@@ -28,7 +28,7 @@ def test_message_send():
     #creating channel messages
     m_id1 = message_send(token1, ch_id1, 'hello')['message_id']
     m_id2 = message_send(token1, ch_id1, 'hey')['message_id']
-    message_send(token2, ch_id2, "hello")['message_id']
+    m_id3 = message_send(token2, ch_id2, "hello")['message_id']
     
     message_send(token2, ch_id2, "hello")
     message_send(token2, ch_id2, "hello")
@@ -49,11 +49,13 @@ def test_message_send():
 
     #owner remove message they did not create
     message_remove(token2, m_id6)
+    #owner of flock remove message they did not create
+    message_remove(token1, m_id3)
 
 
     #checking messages have been removes
     assert len(channel_messages(token1, ch_id1, 0,)['messages']) == 0
-    assert len(channel_messages(token2, ch_id2, 0,)['messages']) == 3
+    assert len(channel_messages(token2, ch_id2, 0,)['messages']) == 2
 
     #error test
     with pytest.raises(InputError):
