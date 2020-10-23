@@ -109,6 +109,11 @@ def auth_register(email, password, name_first, name_last):
             'token': encoded_token.decode('utf-8')
         }
 
+        if len(users) == 0:
+            new_user['permission_id'] = 1
+        else:
+            new_user['permission_id'] = 2
+
         #A copy of the dictionary is needed otherwise it messes with the references
         new_user_copy = new_user.copy()
 
