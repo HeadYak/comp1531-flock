@@ -236,6 +236,23 @@ def messageremove():
     res = message_remove(token, message_id)
     return dumps(res)
 
+@APP.route('/user/profile', methods=['GET'])
+def userprofile():
+    token = request.args.get('token')
+    u_id = request.args.get('u_id')
+    res = user_profile(token, u_id)
+
+    return dumps(res)
+
+@APP.route('/user/profile/setname', methods=['PUT'])
+def userprofilesetname():
+    data = request.get_json()
+
+    token = data['token']
+    name_first = data['name_first']
+    name_last = data['name_last']
+    res = user_profile_setname(token, name_first, name_last)
+    return dumps(res)
 
 if __name__ == "__main__":
     APP.run(port=0) # Do not edit this port

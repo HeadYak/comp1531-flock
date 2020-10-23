@@ -27,6 +27,7 @@ def test_user_profile_http(url):
     resp_dict = resp.json()
     assert resp_dict == {}
 
+    '''
     user_data2 = {
         
         'token': token,
@@ -35,7 +36,7 @@ def test_user_profile_http(url):
 
     #checking names where changed
     #need to fix data storing for this to work 
-    '''
+    
     resp = requests.get(f"{url}/user/profile", params=user_data2)
     resp_dict = resp.json()
     assert resp_dict['name_first'] == 'Neve'
