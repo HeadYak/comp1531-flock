@@ -27,6 +27,7 @@ def test_user_profile():
     # raising error for an invalid user
     with pytest.raises(InputError):
         user_profile(fake_token, u_id1)
+        user_profile(fake_token, 3)
         
     # creating user profiles
     user_profile(token1, u_id1)

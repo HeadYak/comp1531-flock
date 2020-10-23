@@ -17,7 +17,7 @@ def test_auth_logout_http(url):
         'name_last': 'Su'
     }
 
-    requests.post(f"{url}/auth/register", json=data)
+    resp = requests.post(f"{url}/auth/register", json=data)
 
     resp = requests.post(f"{url}/auth/logout", json={'token': jwt.encode({'u_id': 1}, SECRET, algorithm='HS256')})
     payload = resp.json()
