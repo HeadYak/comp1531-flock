@@ -1,17 +1,21 @@
+import jwt
 from global_data import users
 from error import InputError
 from helper_functions import get_u_id, check
+
+SECRET = 'orangeTeam5'
 
 def user_profile(token, u_id):
     # retrieve u_id from token
     u_id = get_u_id(token)
     # raise error if not a valid user
+    #user['token'] = jwt.encode({'u_id': user['u_id']}, SECRET, algorithm='HS256')
+    {'token': jwt.encode({'u_id': 3}, SECRET, algorithm = HS256)}
+    for user in users:
+        if user['u_id'] == u_id and user['token'] != token:
+            raise InputError('Invalid User')
     for user in users:
         if user['u_id'] == u_id:
-            if user['token'] != token:
-                raise InputError('Invalid User')
-    for user in users: 
-        if user['u_id'] == u_id:  
             return {
                 'u_id': user['u_id'],
                 'email': user['email'],
@@ -50,3 +54,4 @@ def user_profile_setemail(token, email):
 def user_profile_sethandle(token, handle_str):
     return {
     }
+
