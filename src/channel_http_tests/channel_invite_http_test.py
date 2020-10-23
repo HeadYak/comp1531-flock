@@ -79,5 +79,4 @@ def test_channel_invite_http(url):
     print("\nChannels_end:\n" , channels)
     users = getUserData()
     print("\nUsers_end:\n" , users)
-    #400 error code invalid channel
     assert resp_dict == {}

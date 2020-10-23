@@ -3,22 +3,14 @@ from helper_functions import get_u_id, create_member
 from error import InputError, AccessError
 
 def clear():
+    resetData()
     del users[:]
     del channels[:]
-
     pass
 
 def users_all(token):
     return {
-        'users': [
-            {
-                'u_id': 1,
-                'email': 'cs1531@cse.unsw.edu.au',
-                'name_first': 'Hayden',
-                'name_last': 'Jacobs',
-                'handle_str': 'hjacobs',
-            },
-        ],
+        users
     }
 
 def admin_userpermission_change(token, u_id, permission_id):

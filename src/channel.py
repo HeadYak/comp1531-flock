@@ -46,13 +46,13 @@ def channel_details(token, channel_id):
     '''
     channel_id = int(channel_id)
     u_id = get_u_id(token)
-    if not channel_exists(channel_id):
-        raise InputError
-    if not user_in_channel_persist(u_id, channel_id):
-        raise AccessError
+    if not channel_exists_persist(int(channel_id)):
+        raise InputError('1')
+    if not user_in_channel_persist(int(u_id), int(channel_id)):
+        raise AccessError('2')
 
     for channel in channels:
-        if channel['channel_id'] == channel_id:
+        if channel['channel_id'] == int(channel_id):
 
             return {
                 'name': channel['name'],
@@ -116,6 +116,7 @@ def channel_leave(token, channel_id):
     removes user from channel
     '''
     authorised_u_id = get_u_id(token)
+    channels = getChannelData()
 
     #raises error is channel does not exist
     if not channel_exists(channel_id):
@@ -128,12 +129,15 @@ def channel_leave(token, channel_id):
     #removing member from channel
     for channel in channels:
         if channel['channel_id'] == channel_id:
+            print("Channel_before:\n" , channel['members'])
             for owner in channel['owners']:
                 if owner['u_id'] == authorised_u_id:
                     channel['owners'].remove(owner)
             for member in channel['members']:
                 if member['u_id'] == authorised_u_id:
                     channel['members'].remove(member)
+                    print("Channels_after:\n" , channel['members'])
+    saveChannelData(channels)
     return {}
 
 #function adds user to channel
