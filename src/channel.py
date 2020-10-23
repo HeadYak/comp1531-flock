@@ -145,6 +145,9 @@ def channel_join(token, channel_id):
     '''
     adds user to channel
     '''
+    #Comment out below
+    
+    channel_id = int(channel_id)
     u_id = get_u_id(token)
 
     #rasies error if channel does not exist
@@ -154,7 +157,7 @@ def channel_join(token, channel_id):
     #Check if channel is public or private
     public = False
     for channel in channels:
-        if channel['channel_id'] == channel_id:
+        if int(channel['channel_id']) == channel_id:
             if channel['is_public']:
                 public = True
 
@@ -165,10 +168,53 @@ def channel_join(token, channel_id):
     #adds member to channel
     for channel in channels:
         if (
-                channel['channel_id'] == channel_id
+                int(channel['channel_id']) == channel_id
                 and create_member(u_id) not in channel['members']
         ):
-            channel['members'].append(create_member(u_id))
+            channel['members'].append(create_member(u_id))       
+
+
+    #Comment out below     
+    return {}
+
+def channel_join_p(token, channel_id):
+    '''
+    adds user to channel
+    '''
+    #Comment out below
+    channels = getChannelData()
+
+
+    
+    channel_id = int(channel_id)
+    u_id = get_u_id(token)
+
+    #rasies error if channel does not exist
+    if not channel_exists(channel_id):
+        raise InputError('Invalid channel')
+
+    #Check if channel is public or private
+    public = False
+    for channel in channels:
+        if int(channel['channel_id']) == channel_id:
+            if channel['is_public']:
+                public = True
+
+    #if channel is prive error is raised
+    if not public:
+        raise AccessError('Private Channel')
+
+    #adds member to channel
+    for channel in channels:
+        if (
+                int(channel['channel_id']) == channel_id
+                and create_member(u_id) not in channel['members']
+        ):
+            channel['members'].append(create_member(u_id))       
+
+
+    #Comment out below
+    saveChannelData(channels)        
     return {}
 
 def channel_addowner(token, channel_id, u_id):
