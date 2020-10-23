@@ -15,10 +15,15 @@ def test_user_profile_setemail():
     u_id1 = user1['u_id']
     u_id2 = user2['u_id']
     
+    # raising errors for invalid users and taken email addresses
     with pytest.raises(InputError):
-        # email entered is not a valid email
+        '''
+        email entered is not a valid email
+        '''
         user_profile_setemail(token1, 'notavalidemailaddress')
-        # email address is already being used by another user
+        '''
+        email address is already being used by another user
+        '''
         user_profile_setemail(token1, 'email@gmail.com')
         user_profile_setemail(token2, 'email@gmail.com')
     
@@ -35,5 +40,4 @@ def test_user_profile_setemail():
             assert user['email'] == 'updateemail2@gmail.com'  
     
     clear()
-    
 
