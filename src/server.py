@@ -127,6 +127,19 @@ def channeldetails():
     res = channel_details(token, channel_id)
     return dumps(res)
 
+@APP.route('/channel/addowner', methods=['POST'])
+def channeladdowner():
+    '''
+    Route for chanenl addowner
+    '''
+
+    data = request.get_json()
+    token = data['token']
+    channel_id = data['channel_id']
+    u_id = data['u_id']
+    res = channel_addowner(token, channel_id, u_id)
+
+    return dumps(res)
 
 @APP.route('/channels/create', methods=['POST'])
 def channelscreate():
