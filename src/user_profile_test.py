@@ -8,7 +8,6 @@ import jwt
 
 SECRET = 'orangeTeam5'
 
-
 def test_user_profile():
 
     # creating users 
@@ -21,7 +20,7 @@ def test_user_profile():
 
     fake_token = jwt.encode({'u_id': 3}, SECRET, algorithm='HS256')
     
-    # User with u_id is not a valid user
+    # raising error for an invalid user
     with pytest.raises(InputError):
         user_profile(fake_token, u_id1)
         
@@ -47,5 +46,4 @@ def test_user_profile():
         'handle_str': 'user2u',
 
     }
-
 
