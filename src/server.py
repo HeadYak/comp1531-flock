@@ -283,7 +283,7 @@ def userprofilesetname():
 
 @APP.route('/user/profile/setemail', methods=['PUT'])
 def userprofilesetemail():
-    data = request.get_json()
+    data = request.get_json():
     
     token = data['token']
     email = data['email']
@@ -294,7 +294,7 @@ def userprofilesetemail():
     
 @APP.route('/user/profile/sethandle', methods=['PUT'])
 def userprofilesethandle():
-    data = request.get_json()
+    data = request.get_json():
     
     token = data['token']
     handle_str = data['handle_str']
