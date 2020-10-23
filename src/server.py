@@ -140,6 +140,17 @@ def channeladdowner():
     res = channel_addowner(token, channel_id, u_id)
 
     return dumps(res)
+@APP.route('/channel/join', methods=['POST'])
+def channeljoin():
+    '''
+    Route for channel_join
+    '''
+    data = request.get_json()
+    token = data['token']
+    channel_id = data['channel_id']   
+    res = channel_join_p(token, channel_id) 
+    return dumps(res)
+
 
 @APP.route('/channels/create', methods=['POST'])
 def channelscreate():

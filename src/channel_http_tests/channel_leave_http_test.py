@@ -6,7 +6,6 @@ import requests
 from helper_functions import resetData, getChannelData, getUserData
 
 def test_channel_leave_http(url):
-    resetData()
     user1data = {
         'email': 'email@gmail.com',
         'password': 'HELLO123@',
