@@ -4,6 +4,10 @@ from user import user_profile
 from error import InputError
 from global_data import users
 from other import clear
+import jwt
+
+SECRET = 'orangeTeam5'
+
 
 def test_user_profile():
 
@@ -14,10 +18,12 @@ def test_user_profile():
     token2 = user2['token']
     u_id1 = user1['u_id']
     u_id2 = user2['u_id']
+
+    fake_token = jwt.encode({'u_id': 3}, SECRET, algorithm='HS256')
     
     # User with u_id is not a valid user
     with pytest.raises(InputError):
-        user_profile(3, 3)
+        user_profile(fake_token, u_id1)
         
     # creating user profiles
     user_profile(token1, u_id1)

@@ -1,16 +1,16 @@
 import jwt
 from error import InputError
 from global_data import users
-from helper_functions import get_u_id, check
+from helper_functions import get_u_id, check, user_exists
 
 def user_profile(token, u_id):
     # retrieve u_id from token
-    u_id = get_u_id(token)
+    new_u_id = get_u_id(token)
     # raise error if not a valid user
     #user['token'] = jwt.encode({'u_id': user['u_id']}, SECRET, algorithm='HS256')
-    {'token': jwt.encode({'u_id': 3}, SECRET, algorithm = HS256)}
+    
     for user in users:
-        if user['u_id'] == u_id and user['token'] != token:
+        if user_exists(new_u_id) and new_u_id != u_id:
             raise InputError('Invalid User')
     for user in users:
         if user['u_id'] == u_id:
