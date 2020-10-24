@@ -260,7 +260,7 @@ def usersall():
     res = users_all(token)
     return dumps(res)
 
-@APP.route('/admin/userpermission/change', methods = ['POST'])
+@APP.route('/admin/userpermission/change', methods=['POST'])
 def adminuserpermissionchange():
     '''
     Route for admin_userpermission_change
@@ -275,7 +275,7 @@ def adminuserpermissionchange():
 
     return dumps(res)
 
-@APP.route('/clear', methods = ['DELETE'])
+@APP.route('/clear', methods=['DELETE'])
 def clear():
     '''
     Route for clear
