@@ -46,14 +46,14 @@ def test_search_http(url):
     resp_dict = resp.json()
     assert resp.status_code == 200
 
+    print(resp_dict)
     searchparam = {
         "token": user_dict['token'],
         "query_str": 'heeeyyyyyyyyy'
     }
 
 
-    #Search function might be broken
-    # res = requests.get(f"{url}/search", params=searchparam)
-    # res_dict = res.json()
-    # print("Res:\n", res)
-    # print("Res_dict:\n", res_dict)
+    res = requests.get(f"{url}/search", params=searchparam)
+    res_dict = res.json()
+    print("Res:\n", res)
+    print("Res_dict:\n", res_dict)

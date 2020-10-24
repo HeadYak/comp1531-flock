@@ -263,7 +263,7 @@ def usersall():
 
 
 @APP.route('/search', methods=['GET'])
-def search():
+def search_http():
     token = request.args.get('token')
     query_str = request.args.get('query_str')
     resp = search(token, query_str)
