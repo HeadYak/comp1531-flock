@@ -54,6 +54,7 @@ def test_search_http(url):
 
 
     res = requests.get(f"{url}/search", params=searchparam)
+    assert res.status_code == 200
     res_dict = res.json()
     print("Res:\n", res)
     print("Res_dict:\n", res_dict)
