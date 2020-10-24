@@ -10,7 +10,7 @@ SECRET = 'orangeTeam5'
 
 regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 
-def user_in_channel(u_id, channel_id):
+def user_in_channel(u_id, channel_id):# pragma: no cover
     '''
     checks if user is in channel
     '''
@@ -21,7 +21,7 @@ def user_in_channel(u_id, channel_id):
                 if member['u_id'] == u_id:
                     found = True
     return found
-def user_in_channel_persist(u_id, channel_id):
+def user_in_channel_persist(u_id, channel_id):# pragma: no cover
     channels = getChannelData()
     '''
     checks if user is in channel
@@ -34,7 +34,7 @@ def user_in_channel_persist(u_id, channel_id):
                     found = True
     return found    
 
-def user_is_owner(u_id, channel_id):
+def user_is_owner(u_id, channel_id):# pragma: no cover
     '''
     checks is user is owner
     '''
@@ -46,7 +46,7 @@ def user_is_owner(u_id, channel_id):
                     found = True
     return found
 
-def user_is_creator(u_id, channel_id):
+def user_is_creator(u_id, channel_id):# pragma: no cover
     '''
     checks is user is creator of channel
     '''
@@ -57,7 +57,7 @@ def user_is_creator(u_id, channel_id):
                 result = True
     return result
 
-def channel_exists(channel_id):
+def channel_exists(channel_id):# pragma: no cover
     '''
     checks if channel exists
     '''
@@ -68,7 +68,7 @@ def channel_exists(channel_id):
             return chan_exists
     return chan_exists
 
-def channel_exists_persist(channel_id):
+def channel_exists_persist(channel_id):# pragma: no cover
     '''
     checks if channel exists
     '''
@@ -80,7 +80,7 @@ def channel_exists_persist(channel_id):
             # return chan_exists
     return chan_exists
 
-def user_exists(u_id):
+def user_exists(u_id):# pragma: no cover
     '''
     checks if user exists
     '''
@@ -90,7 +90,7 @@ def user_exists(u_id):
             user = True
     return user_exists
 
-def user_exists_persist(u_id):
+def user_exists_persist(u_id):# pragma: no cover
     '''
     checks if user exists
     '''
@@ -101,14 +101,14 @@ def user_exists_persist(u_id):
             user = True
     return user_exists
 
-def get_u_id(token):
+def get_u_id(token):# pragma: no cover
     '''
     gets user id given their token
     '''
     decoded = jwt.decode(token, SECRET, algorithms=['HS256'])
     return decoded['u_id']
 
-def get_token(u_id):
+def get_token(u_id):# pragma: no cover
     '''
     Gets token given u_id
     '''
@@ -118,7 +118,7 @@ def get_token(u_id):
 
     return None
 
-def create_member(u_id):
+def create_member(u_id):# pragma: no cover
     '''
     creates a member dictionary for user
     '''
@@ -132,7 +132,7 @@ def create_member(u_id):
         'name_last': name_last,
     }
 
-def user_a_member(u_id, channel_id):
+def user_a_member(u_id, channel_id):# pragma: no cover
     '''
     check if user is a member of a channel
     '''
@@ -144,7 +144,7 @@ def user_a_member(u_id, channel_id):
                     found = True
     return found
 
-def user_a_member_persist(u_id, channel_id):
+def user_a_member_persist(u_id, channel_id):# pragma: no cover
     '''
     check if user is a member of a channel
     '''
@@ -157,7 +157,7 @@ def user_a_member_persist(u_id, channel_id):
                     found = True
     return found    
 
-def message_exists(message_id):
+def message_exists(message_id):# pragma: no cover
     '''
     checks if message exists
     '''
@@ -169,7 +169,7 @@ def message_exists(message_id):
                 return found
     return found
 
-def message_creator(u_id, message_id):
+def message_creator(u_id, message_id):# pragma: no cover
     '''
     checks is user is creator of the message
     '''
@@ -181,7 +181,7 @@ def message_creator(u_id, message_id):
                 return found
     return found
 
-def find_channel(message_id):
+def find_channel(message_id):# pragma: no cover
     '''
     find the channel a message belongs to
     '''
@@ -191,7 +191,7 @@ def find_channel(message_id):
                 return channel['channel_id']
     return None
 
-def check(email):
+def check(email):# pragma: no cover
     '''
     Check if email is valid
     '''
@@ -200,7 +200,7 @@ def check(email):
     else:
         return False
 
-def permission(u_id):
+def permission(u_id):# pragma: no cover
      '''
      find users premission
      '''
@@ -209,30 +209,30 @@ def permission(u_id):
              return user['permission_id']
      return None
 
-def getUserData():
+def getUserData():# pragma: no cover
     with open('./src/persistent_data/user_data.json', 'r') as FILE:
         DATA_STRUCTURE = json.load(FILE)
         return DATA_STRUCTURE['users']
 
-def getChannelData():
+def getChannelData():# pragma: no cover
     with open('./src/persistent_data/channel_data.json', 'r') as FILE:
         DATA_STRUCTURE = json.load(FILE)
         return DATA_STRUCTURE['channels']     
 
-def saveUserData(users):
+def saveUserData(users):# pragma: no cover
     DATA_STRUCTURE = {'users': users}
     with open('./src/persistent_data/user_data.json', 'w') as FILE:
     #print(json.dumps(DATA_STRUCTURE))
         json.dump(DATA_STRUCTURE, FILE)
     return
 
-def saveChannelData(channels):
+def saveChannelData(channels):# pragma: no cover
     DATA_STRUCTURE = {'channels': channels}
     with open('./src/persistent_data/channel_data.json', 'w') as FILE:
         json.dump(DATA_STRUCTURE, FILE)
     return         
 
-def resetData():
+def resetData():# pragma: no cover
     saveUserData([])
     saveChannelData([])
 

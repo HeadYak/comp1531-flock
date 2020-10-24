@@ -32,12 +32,12 @@ def test_search_test():
     message_send(token2, ch_id2, "bye")
     message_send(token2, ch_id2, "hey")
 
-    assert len(search(token1, 'hey')) == 2
-    assert len(search(token1, 'hey there')) == 1
-    assert len(search(token1, 'he')) == 3
-    assert len(search(token1, 'apple')) == 0
+    assert len(search(token1, 'hey')['messages']) == 2
+    assert len(search(token1, 'hey there')['messages']) == 1
+    assert len(search(token1, 'he')['messages']) == 3
+    assert len(search(token1, 'apple')['messages']) == 0
 
-    assert len(search(token2, 'by')) == 2
-    assert len(search(token2, 'byyyyeee')) == 1
-    assert len(search(token2, 'hey')) == 1
-    assert len(search(token2, 'apple')) == 0
+    assert len(search(token2, 'by')['messages']) == 2
+    assert len(search(token2, 'byyyyeee')['messages']) == 1
+    assert len(search(token2, 'hey')['messages']) == 1
+    assert len(search(token2, 'apple')['messages']) == 0

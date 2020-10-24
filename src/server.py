@@ -260,6 +260,14 @@ def usersall():
     res = users_all(token)
     return dumps(res)
 
+
+
+@APP.route('/search', methods=['GET'])
+def search_http():
+    token = request.args.get('token')
+    query_str = request.args.get('query_str')
+    resp = search(token, query_str)
+    return dumps(resp)
 @APP.route('/admin/userpermission/change', methods=['POST'])
 def adminuserpermissionchange():
     '''
@@ -276,7 +284,7 @@ def adminuserpermissionchange():
     return dumps(res)
 
 @APP.route('/clear', methods=['DELETE'])
-def clear():
+def clear_http():
     '''
     Route for clear
     '''

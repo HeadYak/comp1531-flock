@@ -1,4 +1,4 @@
-from global_data import users, channels
+from global_data import users, channels, messages
 from helper_functions import get_u_id, create_member, resetData, \
     user_exists_persist, getUserData
 from error import InputError, AccessError
@@ -7,15 +7,15 @@ def clear():
     resetData()
     del users[:]
     del channels[:]
-    pass
-
+    del messages[:]
+    return {}
 def users_all(token):
     users = getUserData()
     u_id = get_u_id(token)
 
     if(user_exists_persist(int(u_id))):
         return {"users": users}
-    else:
+    else: # pragma: no cover cannot test this as not way to fake a invalid token
         return {}
 
 
@@ -56,4 +56,5 @@ def search(token, query_str):
                 if query_str in msg['message']:
                     message_matches.append(msg)
 
-    return message_matches
+    return {"messages": message_matches}
+    # return "Hello"
