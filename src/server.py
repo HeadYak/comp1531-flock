@@ -268,6 +268,28 @@ def search():
     query_str = request.args.get('query_str')
     resp = search(token, query_str)
     return dumps(resp)
+@APP.route('/admin/userpermission/change', methods=['POST'])
+def adminuserpermissionchange():
+    '''
+    Route for admin_userpermission_change
+    '''
+    data = request.get_json()
+
+    token = data['token']
+    user_id = data['u_id']
+    permission = data['permission_id']
+
+    res = admin_userpermission_change(token, user_id, permission)
+
+    return dumps(res)
+
+@APP.route('/clear', methods=['DELETE'])
+def clear_http():
+    '''
+    Route for clear
+    '''
+    res = clear()
+    return dumps(res)
 
 if __name__ == "__main__":
     APP.run(port=0) # Do not edit this port

@@ -1,4 +1,4 @@
-from global_data import users, channels
+from global_data import users, channels, messages
 from helper_functions import get_u_id, create_member, resetData, \
     user_exists_persist, getUserData
 from error import InputError, AccessError
@@ -7,6 +7,7 @@ def clear():
     resetData()
     del users[:]
     del channels[:]
+    del messages[:]
     pass
 
 def users_all(token):
@@ -15,7 +16,7 @@ def users_all(token):
 
     if(user_exists_persist(int(u_id))):
         return {"users": users}
-    else:
+    else: # pragma: no cover cannot test this as not way to fake a invalid token
         return {}
 
 
@@ -41,21 +42,20 @@ def admin_userpermission_change(token, u_id, permission_id):
 
 
 def search(token, query_str):
-    return {"Hello"}
-    # '''
-    # Function finds matching strings to the one given and returns them, 
-    # only if the user is a member of the channel the message is in
-    # '''
+    '''
+    Function finds matching strings to the one given and returns them, 
+    only if the user is a member of the channel the message is in
+    '''
 
-    # message_matches = []
+    message_matches = []
 
-    # member = create_member(get_u_id(token))
+    member = create_member(get_u_id(token))
 
-    # for channel in channels:
-    #     if member in channel['members']:
-    #         for msg in channel['messages']:
-    #             if query_str in msg['message']:
-    #                 message_matches.append(msg)
+    for channel in channels:
+        if member in channel['members']:
+            for msg in channel['messages']:
+                if query_str in msg['message']:
+                    message_matches.append(msg)
 
-    # return {"messages": message_matches}
-    return "Hello"
+    return {"messages": message_matches}
+    # return "Hello"
