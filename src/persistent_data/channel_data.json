@@ -1,1 +1,1 @@
-{"channels": [{"channel_id": 1, "name": "Test_channel", "is_public": true, "creator": {"u_id": 1, "name_first": "Frank", "name_last": "Su"}, "owners": [{"u_id": 1, "name_first": "Frank", "name_last": "Su"}], "members": [{"u_id": 1, "name_first": "Frank", "name_last": "Su"}], "messages": []}]}
+{"channels": []}

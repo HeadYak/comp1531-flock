@@ -8,8 +8,7 @@ def clear():
     del users[:]
     del channels[:]
     del messages[:]
-    pass
-
+    return {}
 def users_all(token):
     users = getUserData()
     u_id = get_u_id(token)
