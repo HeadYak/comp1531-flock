@@ -260,6 +260,14 @@ def usersall():
     res = users_all(token)
     return dumps(res)
 
-    
+
+
+@APP.route('/search', methods=['GET'])
+def search():
+    token = request.args.get('token')
+    query_str = request.args.get('query_str')
+    resp = search(token, query_str)
+    return dumps(resp)
+
 if __name__ == "__main__":
     APP.run(port=0) # Do not edit this port
