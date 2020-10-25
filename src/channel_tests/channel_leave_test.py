@@ -13,7 +13,6 @@ def test_channels_leave():
     Tests for channel_leave
     '''
     clear()
-    channels = getChannelData()
     #Creating users to create channels
 
     user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
@@ -27,7 +26,6 @@ def test_channels_leave():
     ch_id1 = channels_create(token1, "aGreatChannel", True)['channel_id']
     ch_id2 = channels_create(token2, "yetAnotherChannel", False)['channel_id']
     
-    channels = getChannelData()
     with pytest.raises(InputError):
         #test for invalid channel
         channel_leave(token1, 50)
@@ -38,7 +36,6 @@ def test_channels_leave():
 
     #test leaving a public channel
     channel_leave(token1, ch_id1)
-    channels = getChannelData()
     assert not user_in_channel_persist(u_id1, ch_id1)
     assert not user_a_member_persist(u_id1, ch_id1)
 
