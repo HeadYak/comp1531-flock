@@ -45,7 +45,6 @@ def search(token, query_str):
     Function finds matching strings to the one given and returns them, 
     only if the user is a member of the channel the message is in
     '''
-
     message_matches = []
 
     member = create_member(get_u_id(token))
@@ -57,4 +56,3 @@ def search(token, query_str):
                     message_matches.append(msg)
 
     return {"messages": message_matches}
-    # return "Hello"

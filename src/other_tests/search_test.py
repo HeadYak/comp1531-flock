@@ -32,6 +32,7 @@ def test_search_test():
     message_send(token2, ch_id2, "bye")
     message_send(token2, ch_id2, "hey")
 
+    #asserting search is finding correct number of messages
     assert len(search(token1, 'hey')['messages']) == 2
     assert len(search(token1, 'hey there')['messages']) == 1
     assert len(search(token1, 'he')['messages']) == 3

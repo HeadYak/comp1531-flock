@@ -40,6 +40,4 @@ def test_channels_list():
     channel_join(token1, ch_id2)
     assert len(channels_list(token1)['channels']) == 3
 
-    #check once user has left a channel they are no longer a member
-    # channel_leave(token2, ch_id4)
-    # assert len(channels_list(token2)['channels']) == 1
+

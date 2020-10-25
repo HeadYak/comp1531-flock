@@ -49,6 +49,7 @@ def test_message_edit():
     #owner of flcok editing a antoher users message
     message_edit(token1, m_id3, "yoooo")
 
+    #checking old message is replaves by new message
     found = False
     for channel in channels:
         if channel['channel_id'] == ch_id1:
@@ -61,4 +62,5 @@ def test_message_edit():
                 if msg['message_id'] == m_id3:
                     assert msg['message'] == "yoooo"
 
+    #checking if string given is empty the message is removed
     assert found == False
