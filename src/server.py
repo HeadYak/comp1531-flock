@@ -78,11 +78,13 @@ def authlogout():
 
     return dumps(r)
 
+
 @APP.route('/auth/register', methods=['POST'])
 def authregister():
     '''
     Route for auth_register
     '''
+
     data = request.get_json()
 
     email = data['email']
@@ -109,7 +111,6 @@ def channelinvite():
 @APP.route('/channel/leave', methods=['POST'])
 def channelleave():
     data = request.get_json()
-    
     token = data['token']
     channel_id = data['channel_id']
     
@@ -142,7 +143,7 @@ def channeladdowner():
     res = channel_addowner(token, channel_id, u_id)
     
     return dumps(res)
-
+    
 @APP.route('/channel/removeowner', methods=['POST'])
 def channelremoveowner():
     '''
@@ -156,7 +157,7 @@ def channelremoveowner():
     res = channel_removeowner(token, channel_id, u_id)
     
     return dumps(res)
-
+    
 @APP.route('/channel/join', methods=['POST'])
 def channeljoin():
     '''
@@ -191,9 +192,7 @@ def channelslist():
     Route for channels_list
     '''
     token = request.args.get('token')
-    
     res = channels_list(token)
-    
     return dumps(res)
 
 @APP.route('/channels/listall', methods=['GET'])
@@ -282,45 +281,20 @@ def userprofilesetname():
     
     return dumps(res)
 
-@APP.route('/user/profile/setemail', methods=['PUT'])
-def userprofilesetemail():
-    data = request.get_json()
-    
-    token = data['token']
-    email = data['email']
-    
-    res = user_profile_setemail(token, email)
-    
-    return dumps(res)
-    
-@APP.route('/user/profile/sethandle', methods=['PUT'])
-def userprofilesethandle():
-    data = request.get_json()
-    
-    token = data['token']
-    handle_str = data['handle_str']
-    
-    res = user_profile_sethandle(token, handle_str)
-
-    return dumps(res)
-
 @APP.route('/users/all', methods=['GET'])
 def usersall():
     token = request.args.get('token')
-    
     res = users_all(token)
-    
     return dumps(res)
+
+
 
 @APP.route('/search', methods=['GET'])
 def search_http():
     token = request.args.get('token')
     query_str = request.args.get('query_str')
-    
     resp = search(token, query_str)
-    
     return dumps(resp)
-    
 @APP.route('/admin/userpermission/change', methods=['POST'])
 def adminuserpermissionchange():
     '''

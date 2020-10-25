@@ -62,7 +62,6 @@ def user_profile_setemail(token, email):
         if user['u_id'] == u_id:
             user['email'] == email
             break
-    return {}
 
 
 def user_profile_sethandle(token, handle_str):
@@ -84,5 +83,3 @@ def user_profile_sethandle(token, handle_str):
         if user['token'] == token:
             user['handle_str'] = handle_str
             break
-
-    return {}
