@@ -1,6 +1,6 @@
 import requests
 
-def test_user_profile_setname_http(url):
+def test_user_profile_http(url):
     #creating user
     user1 = {
         'email': 'email@gmail.com',
