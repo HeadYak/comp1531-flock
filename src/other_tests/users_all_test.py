@@ -24,8 +24,8 @@ def test_users_all_multiple():
     user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
     token1 = user1['token']
 
-    user2 = auth_register("user2@gmail.com", "user2pass", "user2", "last2")
-    user3 = auth_register("hello@gmail.com", "meep12", "name3", "last3")
+    auth_register("user2@gmail.com", "user2pass", "user2", "last2")
+    auth_register("hello@gmail.com", "meep12", "name3", "last3")
 
     assert 'users' in users_all(token1)
 
