@@ -19,6 +19,9 @@
 * channel.py - channel_addowner: Upon being added as an owner, the user is a member of the channel
 * channel.py - channels_listall: channes_listall lists all public and private channels
 
+### Messages
+* message.py - message_send: The m_id is equal the number of messages in flockr plus 1
+
 ### Data storing
 
 * users - users are stored in a list of dictionaries with each dictionary having the following keys
@@ -59,6 +62,18 @@ user = {
         'name_first': string,
         'name_last': string,
      }
+```
+* Messages are represented by dictionaries in this form
+
+```python
+    {
+        'message_id':int,
+        'u_id': int,
+        'creator': int,
+        'message': string,
+        'time_created': timestamp,
+    }
+
 ```
 
 
