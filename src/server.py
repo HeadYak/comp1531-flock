@@ -93,19 +93,19 @@ def authregister():
     name_last = data['name_last']
 
     res = auth_register(email, password, name_first, name_last)
-
+    
     return dumps(res)
-
 
 @APP.route('/channel/invite', methods=['POST'])
 def channelinvite():
-
     data = request.get_json()
 
     token = data['token']
     channel_id = data['channel_id']
     u_id = data['u_id']
+    
     res = channel_invite(token, channel_id, u_id)
+    
     return dumps(res)
 
 @APP.route('/channel/leave', methods=['POST'])
@@ -113,7 +113,9 @@ def channelleave():
     data = request.get_json()
     token = data['token']
     channel_id = data['channel_id']
+    
     res = channel_leave(token, channel_id)
+    
     return dumps(res)
 
 @APP.route('/channel/details', methods=['GET'])
@@ -121,25 +123,41 @@ def channeldetails():
     '''
     Route for channel_invite
     '''
-
     token = request.args.get('token')
     channel_id = request.args.get('channel_id')
+    
     res = channel_details(token, channel_id)
+    
     return dumps(res)
 
 @APP.route('/channel/addowner', methods=['POST'])
 def channeladdowner():
     '''
-    Route for chanenl addowner
+    Route for channel_addowner
     '''
-
     data = request.get_json()
     token = data['token']
     channel_id = data['channel_id']
     u_id = data['u_id']
+    
     res = channel_addowner(token, channel_id, u_id)
-
+    
     return dumps(res)
+    
+@APP.route('/channel/removeowner', methods=['POST'])
+def channelremoveowner():
+    '''
+    Route for channel_removeowner 
+    '''
+    data = request.get_json()
+    token = data['token']
+    channel_id = data['channel_id']
+    u_id = data['u_id']
+    
+    res = channel_removeowner(token, channel_id, u_id)
+    
+    return dumps(res)
+    
 @APP.route('/channel/join', methods=['POST'])
 def channeljoin():
     '''
@@ -148,44 +166,44 @@ def channeljoin():
     data = request.get_json()
     token = data['token']
     channel_id = data['channel_id']   
+    
     res = channel_join_p(token, channel_id) 
+    
     return dumps(res)
-
 
 @APP.route('/channels/create', methods=['POST'])
 def channelscreate():
     '''
-    Route for channel_create
+    Route for channels_create
     '''
-
     data = request.get_json()
 
     token = data['token']
     name = data['name']
     is_public = data['is_public']
-
+    
     res = channels_create(token, name, is_public)
+    
     return dumps(res)
 
 @APP.route('/channels/list', methods=['GET'])
 def channelslist():
     '''
-    Route for channel_list
+    Route for channels_list
     '''
-
     token = request.args.get('token')
     res = channels_list(token)
     return dumps(res)
 
-
 @APP.route('/channels/listall', methods=['GET'])
 def channelslistall():
     '''
-    Route for channel_listall
+    Route for channels_listall
     '''
-
     token = request.args.get('token')
+    
     res = channels_list(token)
+    
     return dumps(res) 
 
 @APP.route('/channel/messages', methods=['GET'])
@@ -196,8 +214,9 @@ def channelmessages():
     token = request.args.get('token')
     channel_id = request.args.get('channel_id')
     start = request.args.get('start')
-
+    
     res = channel_messages(token, channel_id, start)
+    
     return dumps(res)
 
 @APP.route('/message/send', methods=['POST'])
@@ -210,8 +229,9 @@ def messagesend():
     token = data['token']
     channel_id = data['channel_id']
     message = data['message']
-
+    
     res = message_send(token, channel_id, message)
+    
     return dumps(res)
 
 @APP.route('/message/edit', methods=['PUT'])
@@ -224,7 +244,9 @@ def messageedit():
     token = data['token']
     message_id = data['message_id']
     message = data['message']
+    
     res = message_edit(token, message_id, message)
+    
     return dumps(res)
 
 @APP.route('/message/remove', methods=['DELETE'])
@@ -233,15 +255,18 @@ def messageremove():
 
     token = data['token']
     message_id = data['message_id']
+    
     res = message_remove(token, message_id)
+    
     return dumps(res)
 
 @APP.route('/user/profile', methods=['GET'])
 def userprofile():
     token = request.args.get('token')
     u_id = request.args.get('u_id')
+    
     res = user_profile(token, u_id)
-
+    
     return dumps(res)
 
 @APP.route('/user/profile/setname', methods=['PUT'])
@@ -251,7 +276,9 @@ def userprofilesetname():
     token = data['token']
     name_first = data['name_first']
     name_last = data['name_last']
+    
     res = user_profile_setname(token, name_first, name_last)
+    
     return dumps(res)
 
 @APP.route('/users/all', methods=['GET'])
