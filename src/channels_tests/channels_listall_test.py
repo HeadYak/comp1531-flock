@@ -26,13 +26,10 @@ def test_channels_listall():
     channels_create(token1, "aGreatChannel", True)
     assert len(channels_listall(token1)['channels']) == 1
 
-
-    ch_id2 = channels_create(token2, "yetAnotherChannel", True)['channel_id']
+    #creating channels
+    channels_create(token2, "yetAnotherChannel", True)['channel_id']
     channels_create(token1, "SameName", True)
-    ch_id4 = channels_create(token2, "SameName", False)['channel_id']
+    channels_create(token2, "SameName", False)['channel_id']
 
     #test if multiple channels in the dictionary
     assert len(channels_listall(token1)['channels']) == 4
-
-    channel_join(token1, ch_id2)
-    channel_leave(token2, ch_id4)

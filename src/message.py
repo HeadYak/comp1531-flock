@@ -13,16 +13,20 @@ def message_send(token, channel_id, message):
     '''
     channel_id = int(channel_id)
 
+    #check message length
     if len(message) > 1000:
         raise InputError("Message too long")
+    #check user send message is in the channel
     if not user_in_channel(get_u_id(token), channel_id):
         raise AccessError("User not in channel")
 
+    #creating timestamp for message
     now = datetime.now()
     timestamp = datetime.timestamp(now)
 
     m_id = len(messages) + 1
 
+    #creating new message dictionary
     new_message = {
         'message_id':m_id,
         'u_id': get_u_id(token),
@@ -30,8 +34,10 @@ def message_send(token, channel_id, message):
         'message': message,
         'time_created': timestamp,
     }
+    #adding message_id to list
     messages.append(new_message['message_id'])
 
+    #appending new message to message list in channel dictionary
     for channel in channels:
         if channel['channel_id'] == channel_id:
             channel['messages'].append(new_message)
@@ -54,10 +60,13 @@ def message_remove(token, message_id):
     creator = message_creator(u_id, message_id)
     permission_id = permission(u_id)
 
+    #raising error if message doesnt exist
     if not m_id:
         raise InputError("Invalid message ID")
+    #checking if user has authorization to remove message
     if not creator and not owner and permission_id == 2:
         raise AccessError("user is not authorised to remove message")
+    #removing message from channel
     for channel in channels:
         for chan_messages in channel['messages']:
             if chan_messages['message_id'] == message_id:
@@ -77,9 +86,11 @@ def message_edit(token, message_id, message):
     creator = message_creator(u_id, message_id)
     permission_id = permission(u_id)
 
+    #checking if user has authorization to edit message
     if not creator and not owner and permission_id == 2:
         raise AccessError("user is not authorised to remove message")
 
+    #checking if new message is empty strin
     no_message = False
     if message == "":
         no_message = True
@@ -87,8 +98,10 @@ def message_edit(token, message_id, message):
     for channel in channels:
         for chan_messages in channel['messages']:
             if chan_messages['message_id'] == message_id:
+                #removing message if empty string
                 if no_message:
                     channel['messages'].remove(chan_messages)
+                #chaning old message to new message
                 else:
                     chan_messages['message'] = message
 

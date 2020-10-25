@@ -47,6 +47,7 @@ def test_channels_join():
     channel_join(token3, ch_id1)
     assert user_in_channel(u_id3, ch_id1)
 
+    #checking the amount of members has increased in the channels
     channel_join(token3, ch_id1)
     for channel in channels:
         if channel['channel_id'] == ch_id1:
