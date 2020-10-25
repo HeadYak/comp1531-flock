@@ -17,7 +17,7 @@ def test_channel_removeowner_http(url):
         'name_last': 'Su'
     }
     user1 = requests.post(url + 'auth/register', json=user1data)
-    user1_dict = json.loads()
+    user1_dict = user1.json()
     user1token = user1_dict['token']
     
     # registers another user
