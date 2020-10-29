@@ -2,7 +2,8 @@
 
 ## Changelog
 
-N/A
+* 28-10: Adding password reset as routes not automatically auth checking
+* 29-10: 6.1 section updated with corrected types
 
 ## Contents
 
@@ -160,7 +161,7 @@ Develop a series of questions to ask these target users to understand what *prob
 
 Once you've elicited this information, it's time to consolidate it.
 
-Take the responses from the elicitation and express these requirements as **User Stories**. Document these user stories. 
+Take the responses from the elicitation and express these requirements as **User Stories**. Document these user stories. For each user story, add User Acceptance Criteria as notes so that you have a clear definition of when a story has been completed.
 
 Once documented, generate at least one use case that attempts to tell a story of a solution that satifies the requirements elicited. You can generate a visual diagram or a more written-recipe style, as per lectures.
 
@@ -261,11 +262,14 @@ These interface specifications come from Sally and Bob, who are building the fro
 |has suffix **_str**|string|
 |has suffix **end**|integer|
 |has suffix **start**|integer|
-|(outputs only) named exactly **user**|Dictionary containing u_id, email, name_first, name_last, handle_str|
-|(outputs only) named exactly **users**|List of dictionaries, where each dictionary contains types u_id, email, name_first, name_last, handle_str|
-|(outputs only) named exactly **messages**|List of dictionaries, where each dictionary contains types { message_id, u_id, message, time_created  }|
+|(outputs only) named exactly **user**|Dictionary containing u_id, email, name_first, name_last, handle_str, profile_img_url|
+|(outputs only) named exactly **users**|List of dictionaries, where each dictionary contains types u_id, email, name_first, name_last, handle_str, profile_img_url|
+|(outputs only) named exactly **messages**|List of dictionaries, where each dictionary contains types { message_id, u_id, message, time_created, reacts, is_pinned  }|
 |(outputs only) named exactly **channels**|List of dictionaries, where each dictionary contains types { channel_id, name }|
-|(outputs only) name ends in **members**|List of dictionaries, where each dictionary contains types { u_id, name_first, name_last }|
+|(outputs only) name ends in **members**|List of dictionaries, where each dictionary contains types { u_id, name_first, name_last, profile_img_url }|
+|(outputs only) name ends in **reacts**|List of dictionaries, where each dictionary contains types { react_id, u_ids, is_this_user_reacted } where react_id is the id of a react, and u_ids is a list of user id's of people who've reacted for that react. is_this_user_reacted is whether or not the authorised user has been one of the reacts to this post|
+
+
 
 ### 6.2. Interface
 
@@ -311,7 +315,7 @@ These interface specifications come from Sally and Bob, who are building the fro
 
 Either an `InputError` or `AccessError` is thrown when something goes wrong. All of these cases are listed in the **Interface** table.
 
-One exception is that, even though it's not listed in the table, for all functions except `auth/register` and `auth/login`, an `AccessError` is thrown when the token passed in is not a valid token.
+One exception is that, even though it's not listed in the table, for all functions except `auth/register`, `auth/login`, `auth/passwordreset/request` and `auth/passwordreset/reset`, an `AccessError` is thrown when the token passed in is not a valid token.
 
 ### 6.4. Token
 
