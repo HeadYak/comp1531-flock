@@ -1,4 +1,4 @@
-from auth import auth_register, auth_passowordreset_request
+from auth import auth_register, auth_passwordreset_request
 from other import clear
 from global_data import users
 
@@ -9,7 +9,7 @@ def test_auth_password_request_test():
     auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     
     #checking a request assigns the user a reset code
-    auth_passowordreset_request('validemail@gmail.com')
+    auth_passwordreset_request('validemail@gmail.com')
 
     for user in users:
         if user['u_id'] == 1:

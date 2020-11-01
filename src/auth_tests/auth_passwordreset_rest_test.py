@@ -1,4 +1,4 @@
-from auth import auth_register, auth_passowordreset_reset, auth_passowordreset_request
+from auth import auth_register, auth_passwordreset_reset, auth_passwordreset_request
 from other import clear
 from global_data import users
 from error import InputError
@@ -12,7 +12,7 @@ def test_auth_password_reset_test():
     auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     
     #requesting a password reset
-    auth_passowordreset_request('validemail@gmail.com')
+    auth_passwordreset_request('validemail@gmail.com')
 
     for user in users:
         if user['u_id'] == 1:
@@ -22,14 +22,14 @@ def test_auth_password_reset_test():
 
     with pytest.raises(InputError):
         #raise error if incorrect code
-        auth_passowordreset_reset('12345', 'Agoodpassowrd')
+        auth_passwordreset_reset('12345', 'Agoodpassowrd')
         #raise error if bad bassword
-        auth_passowordreset_reset(reset_code, 'bad')
+        auth_passwordreset_reset(reset_code, 'bad')
         #raise error if both incorrect
-        auth_passowordreset_reset('12345', 'bad')
+        auth_passwordreset_reset('12345', 'bad')
 
     #test correct inputs change passowrd
-    auth_passowordreset_reset(reset_code, 'Agoodpassowrd')
+    auth_passwordreset_reset(reset_code, 'Agoodpassowrd')
     for user in users:
         if user['u_id'] == 1:
             assert user['password'] ==  hashlib.sha256('Agoodpassowrd'.encode()).hexdigest()
