@@ -144,6 +144,7 @@ def auth_passwordreset_request(email):
             reset_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
             user['reset_code'] = reset_code
             break
+    saveUserData(users)
     return reset_code
 
 def auth_passwordreset_reset(reset_code, new_password):
@@ -163,7 +164,10 @@ def auth_passwordreset_reset(reset_code, new_password):
             user['reset_code'] = 0
             found = True
             break
+
+    saveUserData(users)
     #if the reset code was not found raise an error
     if not found:
         raise InputError("Invalid reset_code")
-
+    
+    return {}

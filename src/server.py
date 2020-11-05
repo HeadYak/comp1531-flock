@@ -9,6 +9,7 @@ from json import dumps
 from flask import Flask, request
 from flask_cors import CORS
 from error import InputError
+from flask_mail import Mail, Message
 
 # from auth import auth_login, auth_logout, auth_register
 # from channel import channel_invite, channel_details, channel_messages,channel_leave,channel_join,channel_addowner,channel_removeowner
@@ -37,8 +38,18 @@ def defaultHandler(err):
     response.content_type = 'application/json'
     return response
 
+
 APP = Flask(__name__)
 CORS(APP)
+mail= Mail(APP)
+
+APP.config['MAIL_SERVER']='smtp.gmail.com'
+APP.config['MAIL_PORT'] = 465
+APP.config['MAIL_USERNAME'] = 'orangeteam5cs1531@gmail.com'
+APP.config['MAIL_PASSWORD'] = 'OT5cs1531'
+APP.config['MAIL_USE_TLS'] = False
+APP.config['MAIL_USE_SSL'] = True
+mail = Mail(APP)
 
 APP.config['TRAP_HTTP_EXCEPTIONS'] = True
 APP.register_error_handler(Exception, defaultHandler)
@@ -92,6 +103,22 @@ def authregister():
 
     res = auth_register(email, password, name_first, name_last)
     
+    return dumps(res)
+
+@APP.route('/auth/passwordreset/request', methods=['POST']) 
+def authpasswordresetrequest():
+    data = request.get_json()
+    email = data['email']
+    code = auth_passwordreset_request(email)
+    msg = Message("Password reset verification code", sender='orangeteam5cs1531@gmail.com',recipients=[email])
+    msg.body = code
+    mail.send(msg)
+    return dumps ({})
+
+@APP.route('/auth/passwordreset/reset', methods=['POST']) 
+def authpasswordresetreset():
+    data = request.get_json()
+    res = auth_passwordreset_reset(data['reset_code'], data['new_password'])
     return dumps(res)
 
 @APP.route('/channel/invite', methods=['POST'])
@@ -345,4 +372,4 @@ def clear_http():
     return dumps(res)
 
 if __name__ == "__main__":
-    APP.run(port=0) # Do not edit this port
+    APP.run(port=0, debug=True) # Do not edit this port
