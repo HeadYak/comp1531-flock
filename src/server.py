@@ -276,7 +276,7 @@ def messageedit():
     res = message_edit(token, message_id, message)
     
     return dumps(res)
-
+    
 @APP.route('/message/remove', methods=['DELETE'])
 def messageremove():
     data = request.get_json()
@@ -287,6 +287,17 @@ def messageremove():
     res = message_remove(token, message_id)
     
     return dumps(res)
+
+@APP.route('/message/pin', methods=['POST'])
+def messagepin():
+    data = request.get_json()
+
+    token = data['token']
+    message_id = data['message_id']
+    
+    res = message_pin(token, message_id)
+    
+    return dumps(res)   
 
 @APP.route('/user/profile', methods=['GET'])
 def userprofile():
