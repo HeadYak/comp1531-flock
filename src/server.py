@@ -297,7 +297,18 @@ def messagepin():
     
     res = message_pin(token, message_id)
     
-    return dumps(res)   
+    return dumps(res) 
+    
+@APP.route('/message/unpin', methods=['POST'])
+def messageunpin():
+    data = request.get_json()
+    
+    token = data['token']
+    message_id = data['message_id']
+    
+    res = message_unpin(token, message_id)
+    
+    return dumps(res)  
 
 @APP.route('/user/profile', methods=['GET'])
 def userprofile():
