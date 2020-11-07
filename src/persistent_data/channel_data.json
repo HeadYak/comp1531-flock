@@ -1,1 +1,1 @@
-{"channels": []}
+{"channels": [{"channel_id": 1, "name": "Testing Channel", "is_public": true, "creator": {"u_id": 1, "name_first": "Hayden", "name_last": "Everest"}, "owners": [{"u_id": 1, "name_first": "Hayden", "name_last": "Everest"}], "members": [{"u_id": 1, "name_first": "Hayden", "name_last": "Everest"}], "messages": [], "is_standup": false, "standup_finish": null, "standup": []}]}
