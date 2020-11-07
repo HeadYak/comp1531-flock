@@ -69,7 +69,7 @@ def test_standup_send_notinstandup():
     #Storing channel_id generated from channel creation in a variable for easy access
     channel_id = new_channel['channel_id']
 
-     with pytest.raises(InputError):
+    with pytest.raises(InputError):
         #Channel not in standup
         standup_send(creator_token, channel_id, 'h')
 
@@ -95,6 +95,6 @@ def test_standup_send_usernotinchannel():
     #Storing channel_id generated from channel creation in a variable for easy access
     channel_id = new_channel['channel_id']
 
-     with pytest.raises(AccessError):
+    with pytest.raises(AccessError):
         #User not in channel
         standup_send(another_token, channel_id, 'h')

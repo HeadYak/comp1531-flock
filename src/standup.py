@@ -23,7 +23,7 @@ def standup(channel_id, token, length):
     for channel in channels:
         if channel['channel_id'] == int(channel_id):
             channel['is_standup'] == False
-            channel['standup'] == None
+            channel['standup'] == ''
             channel['standup_finish'] == None
 
 
@@ -72,6 +72,7 @@ def standup_start(token, channel_id, length):
 
 def standup_active(token, channel_id):
     channels = getChannelData()
+    users = getUserData()
     authorised_u_id = get_u_id(token)
 
     if not channel_exists_persist(channel_id):
@@ -102,5 +103,16 @@ def standup_send(token, channel_id, message):
 
     for channel in channels:
         if channel['channel_id'] == channel_id:
-            if channel['is_standup'] == False
+            if channel['is_standup'] == False:
                 raise InputError("Channel not in standup")
+    for user in users:
+        if user['u_id'] == authorised_u_id:
+            handle = user['handle_str']
+
+    new_message = handle + ": " + message + "\n"
+
+    for channel in channels:
+        if channel['channel_id'] == channel_id:
+            channel['standup'] = channel['standup'] + new_message
+
+    return {}        

@@ -53,7 +53,7 @@ def channels_create(token, name, is_public):
             'messages': [],
             'is_standup': False,
             'standup_finish': None,
-            'standup': None
+            'standup': ''
         }
         new_channel_copy = new_channel.copy()
         channels.append(new_channel_copy)
