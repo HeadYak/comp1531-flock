@@ -288,6 +288,18 @@ def messageremove():
     
     return dumps(res)
 
+@APP.route('/message/react', methods=['POST'])
+def messagereact():
+    data = request.get_json()
+    
+    token = data['token']
+    message_id = data['message_id']
+    react_id = data['react_id']
+    
+    res = message_react(token, message_id, react_id)
+    
+    return dumps(res)
+
 @APP.route('/user/profile', methods=['GET'])
 def userprofile():
     token = request.args.get('token')
