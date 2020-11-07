@@ -27,7 +27,7 @@ def test_message_send():
 
     #error test
     with pytest.raises(InputError):
-        #message too lond
+        #message too long
         message_send(token1, ch_id1, 'h'*1001)
 
     with pytest.raises(AccessError):

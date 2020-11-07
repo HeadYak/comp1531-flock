@@ -2,6 +2,7 @@ from helper_functions import get_u_id, create_member, resetData, \
     user_exists_persist, getUserData, getChannelData, saveChannelData, \
     channel_exists_persist, user_in_channel_persist    
 from error import InputError, AccessError
+from message import message_send
 import threading
 import datetime
 from threading import Thread 
@@ -12,12 +13,21 @@ def standup(channel_id, token, length):
     channels = getChannelData()
     print("Standup start for " + str(length) + " seconds")
     
+    for channel in channels:
+        if channel['channel_id'] == int(channel_id):
+            standup_message = ['standup']
+
+
+    message_send(token, channel_id, standup_message)
 
     for channel in channels:
         if channel['channel_id'] == int(channel_id):
             channel['is_standup'] == False
-            channel['standup'] == []
+            channel['standup'] == None
             channel['standup_finish'] == None
+
+
+    
 
     saveChannelData(channels)
     
@@ -75,4 +85,22 @@ def standup_active(token, channel_id):
             is_active = channel['is_standup']
             time_finish = channel['standup_finish']
 
-    return {'is_active': is_active, 'time_finish': time_finish}       
+    return {'is_active': is_active, 'time_finish': time_finish}      
+
+    saveChannelData(channels)
+def standup_send(token, channel_id, message):
+    channels = getChannelData()
+    authorised_u_id = get_u_id(token)
+
+    if not channel_exists_persist(channel_id):
+        raise InputError('Invalid channel')
+
+    if not user_in_channel_persist(authorised_u_id, channel_id):
+        raise AccessError('User not a member of channel')
+    if len(message) > 1000:
+        raise InputError("Message too long")
+
+    for channel in channels:
+        if channel['channel_id'] == channel_id:
+            if channel['is_standup'] == False
+                raise InputError("Channel not in standup")
