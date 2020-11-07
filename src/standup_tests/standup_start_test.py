@@ -25,10 +25,10 @@ def test_standup_start_invalidchannelid():
 
     for channel in channels:
         if channel['channel_id'] == channel_id:
-            assert len(channel['is_standup']) == False
+            assert channel['is_standup'] == False
 
     with pytest.raises(InputError):
-        standup_start(creator_token, channel_id*100, 10)        
+        standup_start(creator_token, channel_id*100, 3)        
         
 
 
@@ -46,13 +46,13 @@ def test_standup_start_alreadyinstandup():
 
     for channel in channels:
         if channel['channel_id'] == channel_id:
-            assert len(channel['is_standup']) == False
+            channel['is_standup'] == False
 
-    standup_start(creator_token, channel_id, 10)        
+    standup_start(creator_token, channel_id, 3)        
 
     for channel in channels:
         if channel['channel_id'] == channel_id:
-            assert len(channel['is_standup']) == True  
+            channel['is_standup'] == True  
 
     with pytest.raises(InputError):
         standup_start(creator_token, channel_id, 10)   
