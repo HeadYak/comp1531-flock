@@ -6,7 +6,7 @@ def test_auth_password_request_test():
 
     clear()
     #resgistering user to test
-    auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
+    auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
     
     #checking a request assigns the user a reset code
     auth_passwordreset_request('validemail@gmail.com')
