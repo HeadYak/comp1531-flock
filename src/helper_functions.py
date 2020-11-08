@@ -215,7 +215,7 @@ def permission(u_id):# pragma: no cover
              return user['permission_id']
      return None
 
-def change_picture(u_id, image_url):
+def change_picture(u_id, image_url): # pragma: no cover
     for channel in channels:
         for member in channel['members']:
             if member['u_id'] == u_id:
@@ -227,7 +227,7 @@ def change_picture(u_id, image_url):
             if user['u_id'] == u_id: 
                 user['profile_img_url'] = image_url
 
-def check_token(function):
+def check_token(function): # pragma: no cover
     def wrapper(*args, **kwargs):
         token = args[0]
         print(user_exists(get_u_id(token)))

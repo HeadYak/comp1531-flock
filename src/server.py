@@ -23,7 +23,7 @@ from global_data import *
 from helper_functions import *
 from other import *
 from user import *
-
+from standup import *
 def defaultHandler(err):
     '''
     Error handler
@@ -389,6 +389,40 @@ def clear_http():
     Route for clear
     '''
     res = clear()
+    return dumps(res)
+
+@APP.route('/standup/start', methods=['POST'])    
+def standupstart():
+    data = request.get_json()
+
+    token = data['token']
+    channel_id = data['channel_id']
+    length = data['length']
+    
+    res = standup_start(token, channel_id, length)
+
+    return dumps(res)    
+
+@APP.route('/standup/active', methods=['GET'])
+def standupactive():
+    data = request.get_json()
+    token = data['token']
+    channel_id = data['channel_id']
+
+    res = standup_active(token, channel_id)
+
+    return dumps(res)
+
+@APP.route('/standup/send', methods=['POST'])
+def standupsend():
+    data = request.get_json()
+    
+    token = data['token']
+    channel_id = data['channel_id']
+    message = data['message']
+
+    res = standup_send(token, channel_id, message)
+
     return dumps(res)
 
 if __name__ == "__main__":
