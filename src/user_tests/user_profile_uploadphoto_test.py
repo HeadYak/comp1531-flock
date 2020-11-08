@@ -26,7 +26,7 @@ def test_user_profile_uploadphoto():
     with pytest.raises(InputError):
         #Invalid url
         user_profile_uploadphoto(token, 'https://helpx.adobe.com/content/dam/help/en/stock/visual-reverse-image-search-v2_297x176.jpg', 0,0,50,50, None)
-        user_profile_uploadphoto(token, '', 0,0,50,50)
+        user_profile_uploadphoto(token, '', 0,0,50,50, None)
 
     with pytest.raises(InputError):
         #image not a jpeg
