@@ -72,7 +72,6 @@ def standup_start(token, channel_id, length):
 
 def standup_active(token, channel_id):
     channels = getChannelData()
-    users = getUserData()
     authorised_u_id = get_u_id(token)
 
     if not channel_exists_persist(channel_id):
@@ -86,9 +85,10 @@ def standup_active(token, channel_id):
             is_active = channel['is_standup']
             time_finish = channel['standup_finish']
 
+    saveChannelData(channels)
     return {'is_active': is_active, 'time_finish': time_finish}      
 
-    saveChannelData(channels)
+    
 def standup_send(token, channel_id, message):
     channels = getChannelData()
     users = getUserData()
