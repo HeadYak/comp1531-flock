@@ -181,6 +181,17 @@ def message_creator(u_id, message_id):# pragma: no cover
                 return found
     return found
 
+def find_message(channel_id):# pragma: no cover
+    '''
+    find a message in a channel
+    '''
+    for channel in channels:
+        if channel['channel_id'] == channel_id:
+            for message in channel['messages']:
+                if message['message_id'] == message_id:
+                    return message['message_id]
+    return None
+
 def find_channel(message_id):# pragma: no cover
     '''
     find the channel a message belongs to
