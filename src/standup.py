@@ -8,7 +8,7 @@ import datetime
 from threading import Thread 
 import time
 from datetime import datetime, timedelta
-def standup(channel_id, token, length):
+def standup(token, channel_id, length):
     time.sleep(length)
     channels = getChannelData()
     print("Standup start for " + str(length) + " seconds")
@@ -91,6 +91,8 @@ def standup_active(token, channel_id):
     saveChannelData(channels)
 def standup_send(token, channel_id, message):
     channels = getChannelData()
+    users = getUserData()
+    channel_id = int(channel_id)
     authorised_u_id = get_u_id(token)
 
     if not channel_exists_persist(channel_id):
@@ -114,5 +116,6 @@ def standup_send(token, channel_id, message):
     for channel in channels:
         if channel['channel_id'] == channel_id:
             channel['standup'] = channel['standup'] + new_message
-
+    
+    saveChannelData(channels)
     return {}        
