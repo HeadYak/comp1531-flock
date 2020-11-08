@@ -14,8 +14,8 @@ def test_search_test():
     print('hejhefjsdal;f')
 
      #Creating users to create channels
-    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
-    user2 = auth_register("user2@gmail.com", "user2pass", "user2", "last2")
+    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1", None)
+    user2 = auth_register("user2@gmail.com", "user2pass", "user2", "last2", None)
     token1 = user1['token']
     token2 = user2['token']
 
