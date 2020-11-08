@@ -6,6 +6,8 @@ import sys
 sys.path.append("..")
 import jwt
 import hashlib
+import random
+import string
 from global_data import users
 from error import InputError
 from helper_functions import check, get_u_id, getUserData, saveUserData
@@ -136,3 +138,39 @@ def auth_register(email, password, name_first, name_last, url):
             'token': new_user_copy['token'],
         }
     return None
+
+def auth_passwordreset_request(email):
+    #find user given email
+    for user in users:
+        if user['email'] == email:
+            #chage reset code to random string
+            reset_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+            user['reset_code'] = reset_code
+            break
+    saveUserData(users)
+    return reset_code
+
+def auth_passwordreset_reset(reset_code, new_password):
+    
+    #raises and error is the password is invalid
+    if len(new_password) < 6:
+        raise InputError("Invalid password")
+    
+    #boolean to check if reset code was found
+    found = False
+
+    #finding user fiven reset_code
+    for user in users:
+        if user['reset_code'] == reset_code:
+            #if reset code found changing password and setting reset code back to zero
+            user['password'] = hashlib.sha256(new_password.encode()).hexdigest()
+            user['reset_code'] = 0
+            found = True
+            break
+
+    saveUserData(users)
+    #if the reset code was not found raise an error
+    if not found:
+        raise InputError("Invalid reset_code")
+    
+    return {}
