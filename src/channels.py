@@ -54,7 +54,10 @@ def channels_create(token, name, is_public):
             'creator': create_member(get_u_id(token)),
             'owners': [create_member(get_u_id(token))],
             'members': [create_member(get_u_id(token))],
-            'messages': []
+            'messages': [],
+            'is_standup': False,
+            'standup_finish': None,
+            'standup': ''
         }
         new_channel_copy = new_channel.copy()
         channels.append(new_channel_copy)
