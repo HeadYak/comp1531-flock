@@ -4,9 +4,10 @@ File of message funtions, message_send, message_remove and message edit
 from datetime import datetime
 from global_data import channels, messages
 from helper_functions import user_in_channel, get_u_id, message_exists, \
-user_is_owner, message_creator, find_channel, getChannelData, permission
+user_is_owner, message_creator, find_channel, getChannelData, permission, check_token
 from error import InputError, AccessError
 
+@check_token
 def message_send(token, channel_id, message):
     '''
     Function sends message to channel
@@ -47,6 +48,7 @@ def message_send(token, channel_id, message):
         'message_id': m_id,
     }
 
+@check_token
 def message_remove(token, message_id):
     '''
     Funtion remove message from channel given message and token
@@ -74,6 +76,7 @@ def message_remove(token, message_id):
                 return {}
     return {}
 
+@check_token
 def message_edit(token, message_id, message):
     '''
     Function edits message with new message given

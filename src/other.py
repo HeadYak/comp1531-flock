@@ -1,6 +1,6 @@
 from global_data import users, channels, messages
 from helper_functions import get_u_id, create_member, resetData, \
-    user_exists_persist, getUserData
+    user_exists_persist, getUserData, check_token
 from error import InputError, AccessError
 
 def clear():
@@ -9,6 +9,8 @@ def clear():
     del channels[:]
     del messages[:]
     return {}
+
+@check_token
 def users_all(token):
     users = getUserData()
     u_id = get_u_id(token)
@@ -18,7 +20,7 @@ def users_all(token):
     else: # pragma: no cover cannot test this as not way to fake a invalid token
         return {}
 
-
+@check_token
 def admin_userpermission_change(token, u_id, permission_id):
     owner_level = 1
     member_level = 2
@@ -39,7 +41,7 @@ def admin_userpermission_change(token, u_id, permission_id):
 
     raise InputError("Specified user not found")
 
-
+@check_token
 def search(token, query_str):
     '''
     Function finds matching strings to the one given and returns them, 

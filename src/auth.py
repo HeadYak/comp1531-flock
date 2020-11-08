@@ -10,7 +10,7 @@ import random
 import string
 from global_data import users
 from error import InputError
-from helper_functions import check, get_u_id, getUserData, saveUserData
+from helper_functions import check, get_u_id, getUserData, saveUserData, check_token
 NAME_MAXLEN = 50
 NAME_MINLEN = 1
 SECRET = 'orangeTeam5'
@@ -56,6 +56,7 @@ def auth_login(email, password):
     # Return u_id and token upon successful login
     return {'u_id' : user_details['u_id'], 'token' : user_details['token']}
 
+@check_token
 def auth_logout(token):
     '''
     function logs out user given valid token

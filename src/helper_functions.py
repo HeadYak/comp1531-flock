@@ -5,6 +5,7 @@ import jwt
 import re 
 from global_data import users, channels
 import json
+from error import InputError, AccessError
 
 SECRET = 'orangeTeam5'
 
@@ -84,11 +85,12 @@ def user_exists(u_id):# pragma: no cover
     '''
     checks if user exists
     '''
-    user = False
+    found = False
     for user in users:
         if user['u_id'] == u_id:
-            user = True
-    return user_exists
+            found = True
+            return found
+    return found
 
 def user_exists_persist(u_id):# pragma: no cover
     '''
@@ -105,9 +107,11 @@ def get_u_id(token):# pragma: no cover
     '''
     gets user id given their token
     '''
-    decoded = jwt.decode(token, SECRET, algorithms=['HS256'])
-    return decoded['u_id']
-
+    try:
+        decoded = jwt.decode(token, SECRET, algorithms=['HS256'])
+        return decoded['u_id']
+    except Exception:
+        raise AccessError("Invalid token")
 def get_token(u_id):# pragma: no cover
     '''
     Gets token given u_id
@@ -222,6 +226,22 @@ def change_picture(u_id, image_url):
         for user in users:
             if user['u_id'] == u_id: 
                 user['profile_img_url'] = image_url
+
+def check_token(function):
+    def wrapper(*args, **kwargs):
+        token = args[0]
+        print(user_exists(get_u_id(token)))
+        if token == -1:
+            raise AccessError("User is logged off")
+
+        print(user_exists(get_u_id(token)))
+
+        if not user_exists(get_u_id(token)):
+            raise AccessError("Token is not valid")
+
+        return function(*args, **kwargs)
+    return wrapper
+
 
 def getUserData():# pragma: no cover
     with open('./src/persistent_data/user_data.json', 'r') as FILE:

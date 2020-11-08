@@ -4,10 +4,12 @@ Funcstion for channels list, listall and messages
 from global_data import channels, users
 from error import InputError
 from helper_functions import create_member, user_in_channel, get_u_id, user_exists, \
-    saveChannelData
+    saveChannelData, check_token
 
 global channels
 global users
+
+@check_token
 def channels_list(token):
     '''
     Lists all current channels user is apart of
@@ -21,6 +23,7 @@ def channels_list(token):
     # return user_channels
     return {"channels" : user_channels}
 
+@check_token
 def channels_listall(token):
     '''
     Lists all currents channels in flock
@@ -32,6 +35,7 @@ def channels_listall(token):
         return {"channels": allchannel} 
     return None
 
+@check_token
 def channels_create(token, name, is_public):
     '''
     Creates a new channel

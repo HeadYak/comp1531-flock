@@ -7,6 +7,7 @@ sys.path.append("..")
 from auth import auth_logout
 from auth import auth_register
 from other import clear
+from error import AccessError
 import pytest
 # Testing giving a valid token
 def test_auth_logout_valid():
@@ -21,7 +22,8 @@ def test_auth_logout_invalid():
     '''
     test invalid login info
     '''
-    bad_log = auth_logout(-4)
-    assert not bad_log['is_success']
+    with pytest.raises(AccessError):
+        auth_logout(-1)
+    
     clear()
     
