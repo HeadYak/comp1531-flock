@@ -80,7 +80,6 @@ def test_standup_send_invalidchannel():
 
 def test_standup_send_notinstandup():
     clear()
-    channels = getChannelData()
     #Registering a user
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest',  None)
     #Storing token generated from registration process in a variable for easy access
@@ -98,7 +97,6 @@ def test_standup_send_notinstandup():
 
 def test_standup_send_usernotinchannel():
     clear()
-    channels = getChannelData()
     #Registering a user
     register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest',  None)
     #Storing token generated from registration process in a variable for easy access
