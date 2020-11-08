@@ -85,5 +85,5 @@ def test_standup_active_usernotinchannel():
     another_token = register1['token']
 
     with pytest.raises(AccessError):
-        res = standup_active(another_token, channel_id)
+        standup_active(another_token, channel_id)
     
