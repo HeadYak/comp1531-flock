@@ -8,8 +8,8 @@ from other import clear
 def test_user_profile_setemail():
 
     # creating users 
-    user1 = auth_register('email1@gmail.com', 'password1', 'user1', 'userlast1')
-    user2 = auth_register('email2@gmail.com', 'password2', 'user2', 'userlast2')
+    user1 = auth_register('email1@gmail.com', 'password1', 'user1', 'userlast1', None)
+    user2 = auth_register('email2@gmail.com', 'password2', 'user2', 'userlast2', None)
     token1 = user1['token']
     token2 = user2['token']
     u_id1 = user1['u_id']

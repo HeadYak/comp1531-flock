@@ -16,9 +16,9 @@ def test_channels_join():
     '''
     clear()
     #Creating users to create channels
-    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
-    user2 = auth_register("user2@gmail.com", "user2pass", "user2", "last2")
-    user3 = auth_register("user3@gmail.com", "user3pass", "user3", "last3")
+    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1", None)
+    user2 = auth_register("user2@gmail.com", "user2pass", "user2", "last2", None)
+    user3 = auth_register("user3@gmail.com", "user3pass", "user3", "last3", None)
     token1 = user1['token']
     token2 = user2['token']
     token3 = user3['token']

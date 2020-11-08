@@ -6,7 +6,7 @@ import sys
 sys.path.append('../')
 
 from json import dumps
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 from error import InputError
 
@@ -37,7 +37,7 @@ def defaultHandler(err):
     response.content_type = 'application/json'
     return response
 
-APP = Flask(__name__)
+APP = Flask(__name__, static_url_path='/static/')
 CORS(APP)
 
 APP.config['TRAP_HTTP_EXCEPTIONS'] = True
@@ -90,7 +90,7 @@ def authregister():
     name_first = data['name_first']
     name_last = data['name_last']
 
-    res = auth_register(email, password, name_first, name_last)
+    res = auth_register(email, password, name_first, name_last, request.url_root)
     
     return dumps(res)
 
@@ -312,6 +312,27 @@ def usersall():
     
     return dumps(res)
 
+@APP.route('/user/profile/uploadphoto', methods=['POST'])
+def userprofileuploadphoto():
+    data = request.get_json()
+    
+    token = data['token']
+    img_url = data['img_url']
+    x_start = data['x_start']
+    y_start = data['y_start']
+    x_end = data['x_end']
+    y_end = data['y_end']
+
+    res = user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end, request.url_root)
+
+    return dumps(res)
+
+@APP.route('/static/<path:path>')
+def send_pic(path):
+    #return send_from_directory(APP.static_url_path + '/', path)
+    print(path)
+    return send_from_directory('', path)
+
 @APP.route('/search', methods=['GET'])
 def search_http():
     token = request.args.get('token')
@@ -345,4 +366,4 @@ def clear_http():
     return dumps(res)
 
 if __name__ == "__main__":
-    APP.run(port=0) # Do not edit this port
+    APP.run(port=0, debug=True) # Do not edit this port

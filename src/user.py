@@ -1,7 +1,13 @@
 import jwt
+import requests
+import os
 from error import InputError
 from global_data import users
-from helper_functions import get_u_id, check, user_exists
+from helper_functions import get_u_id, check, user_exists, change_picture
+from PIL import Image
+import urllib.request
+from urllib.error import HTTPError
+
 
 def user_profile(token, u_id):
     '''
@@ -85,3 +91,34 @@ def user_profile_sethandle(token, handle_str):
             user['handle_str'] = handle_str
             break
     return {}
+
+def user_profile_uploadphoto(token, img_url, x_start, y_start, x_end, y_end, url):
+
+    u_id = get_u_id(token)
+
+    profile_img_url = os.path.join("src/static/", str(u_id) + ".jpg")
+
+    try:
+        urllib.request.urlretrieve(img_url, profile_img_url)
+    except HTTPError as e:
+        raise InputError("Invalid url:", e)
+
+    if (not img_url.endswith('jpg')):
+        raise InputError("invalid file type")
+    
+    img = Image.open(profile_img_url)
+    size = img.size
+
+    if ( (x_start < 0) | (x_end > size[0]) | (y_start < 0) | (y_end > size[1]) ):
+        raise InputError("Not valid start points")
+
+    cropped = img.crop( (int(x_start), int(y_start), int(x_end), int(y_end)) )
+
+    cropped.save(profile_img_url)
+
+    profile_img_url = str(url) + profile_img_url
+
+    change_picture(u_id, profile_img_url)
+
+    return {}
+
