@@ -22,7 +22,3 @@ def test_auth_logout_http(url):
     resp = requests.post(f"{url}/auth/logout", json={'token': jwt.encode({'u_id': 1}, SECRET, algorithm='HS256')})
     payload = resp.json()
     assert payload['is_success']
-
-    resp = requests.post(f"{url}/auth/logout", json={'token': jwt.encode({'u_id': -1}, SECRET, algorithm='HS256') })
-    payload = resp.json()
-    assert not payload['is_success']

@@ -5,12 +5,12 @@ from user import user_profile
 from error import InputError
 from global_data import users
 from other import clear
-import jwt
 
 SECRET = 'orangeTeam5'
 
 def test_user_profile():
 
+    clear()
     # creating users 
     user1 = auth_register('email1@gmail.com', 'password1', 'user1', 'userlast1', None)
     user2 = auth_register('email2@gmail.com', 'password2', 'user2', 'userlast2', None)
@@ -19,15 +19,10 @@ def test_user_profile():
     u_id1 = user1['u_id']
     u_id2 = user2['u_id']
 
-    now = datetime.now()
-    timestamp = datetime.timestamp(now)
-
-    fake_token = jwt.encode({'u_id': 3, 'time': timestamp}, SECRET, algorithm='HS256')
-    
     # raising error for an invalid user
     with pytest.raises(InputError):
-        user_profile(fake_token, u_id1)
-        user_profile(fake_token, 3)
+        user_profile(token1, 3)
+
         
     # creating user profiles
     user_profile(token1, u_id1)

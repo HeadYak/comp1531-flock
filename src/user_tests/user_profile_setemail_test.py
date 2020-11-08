@@ -29,9 +29,7 @@ def test_user_profile_setemail():
     
     # updating the users' email address
     user_profile_setemail(token1, 'updateemail1@gmail.com')
-    clear()
     user_profile_setemail(token2, 'updateemail2@gmail.com')
-    clear()
     
     for user in users:
         if user['u_id'] == u_id1:
