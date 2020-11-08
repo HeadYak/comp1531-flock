@@ -262,6 +262,22 @@ def messagesend():
     
     return dumps(res)
 
+@APP.route('/message/sendlater', methods=['POST'])
+def messagesendlater():
+    '''
+    Route for message_sendlater
+    '''
+    data = request.get_json()
+    
+    token = data['token']
+    channel_id = data['channel_id']
+    message = data['message']
+    time_sent = data['time_sent']
+
+    res = message_sendlater(token, channel_id, message, time_sent)
+
+    return dumps(res)
+
 @APP.route('/message/edit', methods=['PUT'])
 def messageedit():
     '''
@@ -372,4 +388,4 @@ def clear_http():
     return dumps(res)
 
 if __name__ == "__main__":
-    APP.run(port=0, debug=True) # Do not edit this port
+    APP.run(port=0) # Do not edit this port
