@@ -33,6 +33,7 @@ def message_send(token, channel_id, message):
         'creator':  get_u_id(token),
         'message': message,
         'time_created': timestamp,
+        'is_pinned': False
     }
     #adding message_id to list
     messages.append(new_message['message_id'])
@@ -105,4 +106,60 @@ def message_edit(token, message_id, message):
                 else:
                     chan_messages['message'] = message
 
+    return {}
+    
+def message_pin(token, message_id):
+    '''
+    Given a message within a channel, mark it as "pinned" to be given special display treatment by the frontend
+    '''
+    u_id = get_u_id(token)
+
+    channel_id = find_channel(message_id)
+    message = find_message(channel_id)
+
+    m_id = message_exists(message_id)
+    auth_user = user_in_channel(u_id, channel_id)
+    
+    is_pinned = False
+
+    # Input errors for invalid / already pinned messages
+    if not m_id:
+        raise InputError("Invalid message ID")
+    if message['is_pinned'] == True:
+        raise InputError("Message is already pinned")
+    # Access error for non-owners / unauthorised users
+    if not auth_user:
+        raise AccessError("User is not a member of the channel")
+
+    for unpinned_message in message['is_pinned']:
+        message['is_pinned'] = True
+    
+    return {}
+    
+def message_unpin(token, message_id):
+    '''
+    Given a message within a channel, remove its mark as unpinned
+    '''
+    u_id = get_u_id(token)
+
+    channel_id = find_channel(message_id)
+    message = find_message(channel_id)
+
+    m_id = message_exists(message_id)
+    auth_user = user_in_channel(u_id, channel_id)
+
+    is_pinned = True
+
+    # Input errors for invalid / already unpinned messages
+    if not m_id:
+        raise InputError("Invalid message ID")
+    if message['is_pinned'] == False:
+        raise InputError("Message is already unpinned")
+    # Access error for non-owners / unauthorised users
+    if not auth_user:
+        raise AccessError("User is not a member of the channel")
+    
+    for pinned_message in message['is_pinned']:
+        message['is_pinned'] = False
+        
     return {}
