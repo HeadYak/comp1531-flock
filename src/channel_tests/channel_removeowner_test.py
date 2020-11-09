@@ -17,11 +17,11 @@ def test_channel_removeowner_owner():
     '''
     clear()
     #Registering a user
-    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
+    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
     #Storing token generated from registration process in a variable for easy access
     owner_token = register['token']
     #Registering another user
-    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Jordan', 'Fitch')
+    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Jordan', 'Fitch', None)
     #Storing u_id generated from registration process in a variable for easy access
     nonowner_u_id = register1['u_id']
     #Using the registered user to create a channel
@@ -49,12 +49,12 @@ def test_channel_removeowner_already_not_owner():
     '''
     clear()
     #Registering a user
-    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
+    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
 
     #Storing token generated from registration process in a variable for easy access
     owner_token = register['token']
     #Registering another user
-    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Jordan', 'Fitch')
+    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Jordan', 'Fitch', None)
     #Storing u_id generated from registration process in a variable for easy access
     nonowner_u_id = register1['u_id']
     #Using the registered user to create a channel
@@ -75,12 +75,12 @@ def test_channel_removeowner_invalidchannelid():
     '''
     clear()
     #Registering a user
-    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
+    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
 
     #Storing token generated from registration process in a variable for easy access
     owner_token = register['token']
     #Registering another user
-    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Jordan', 'Fitch')
+    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Jordan', 'Fitch', None)
     #Storing u_id generated from registration process in a variable for easy access
     nonowner_u_id = register1['u_id']
     #Using the registered user to create a channel
