@@ -116,9 +116,10 @@ def message_pin(token, message_id):
 
     channel_id = find_channel(message_id)
     message = find_message(channel_id)
+    channel = getChannelData()
 
     m_id = message_exists(message_id)
-    auth_user = user_in_channel(u_id, channel_id)
+    auth_user = user_in_channel_persist(u_id, channel_id)
     
     is_pinned = False
 
@@ -144,9 +145,10 @@ def message_unpin(token, message_id):
 
     channel_id = find_channel(message_id)
     message = find_message(channel_id)
+    channel = getChannelData()
 
     m_id = message_exists(message_id)
-    auth_user = user_in_channel(u_id, channel_id)
+    auth_user = user_in_channel_persist(u_id, channel_id)
 
     is_pinned = True
 
