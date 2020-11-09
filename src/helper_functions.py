@@ -189,7 +189,7 @@ def find_message(channel_id):# pragma: no cover
         if channel['channel_id'] == channel_id:
             for message in channel['messages']:
                 if message['message_id'] == message_id:
-                    return message['message_id]
+                    return message['message_id']
     return None
 
 def find_channel(message_id):# pragma: no cover
