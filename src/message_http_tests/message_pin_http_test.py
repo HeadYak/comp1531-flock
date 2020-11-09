@@ -4,7 +4,7 @@ HTTP tests for message pin
 import requests
 SECRET = 'orangeTeam5'
 
-def test_message_pin_http():
+def test_message_pin_http(url):
     '''
     HTTP test for auth register
     '''
@@ -42,9 +42,14 @@ def test_message_pin_http():
     message = requests.post(f"{url}/message/send", json=message_data)
     message_dict = message.json()
 
+    message_pin_data = {
+        'token': user_dict['token'],
+        'message_id': message_dict['message_id']
+    }
+
     #testing message pin
-    resp = requests.post(f"{url}/message/pin", json=message_data)
-    assert resp.status.code == 200
+    resp = requests.post(f"{url}/message/pin", json=message_pin_data)
+    assert resp.status_code == 200
     resp_dict = resp.json()
     assert resp_dict == {}
 

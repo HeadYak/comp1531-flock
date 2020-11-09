@@ -1,10 +1,10 @@
 '''
-HTTP tests for message pin
+HTTP tests for message unpin
 '''
 import requests
 SECRET = 'orangeTeam5'
 
-def test_message_pin_http():
+def test_message_unpin_http(url):
     '''
     HTTP test for auth register
     '''
@@ -42,12 +42,22 @@ def test_message_pin_http():
     message = requests.post(f"{url}/message/send", json=message_data)
     message_dict = message.json()
 
+    message_pin_data = {
+        'token': user_dict['token'],
+        'message_id': message_dict['message_id']
+    }
+
     #pinning a message
-    pinned_message = requests.post(f"{url}/message/pin", json=message_data)
-    pinned_message_dict = pinned_message.json()
+    requests.post(f"{url}/message/pin", json=message_pin_data)
     
+    message_unpin_data = {
+        'token': user_dict['token'],
+        'message_id': message_dict['message_id']
+    }
+
+
     #testing message unpin
-    resp = requests.post(f"{url}/message/unpin", json=message_data)
+    resp = requests.post(f"{url}/message/unpin", json=message_unpin_data)
     assert resp.status_code == 200
     resp_dict = resp.json()
     assert resp_dict == {}
