@@ -8,8 +8,8 @@ from other import clear
 def test_user_profile_setemail():
 
     # creating users 
-    user1 = auth_register('email1@gmail.com', 'password1', 'user1', 'userlast1', None)
-    user2 = auth_register('email2@gmail.com', 'password2', 'user2', 'userlast2', None)
+    user1 = auth_register('email1@gmail.com', 'password1', 'user1', 'userlast1')
+    user2 = auth_register('email2@gmail.com', 'password2', 'user2', 'userlast2')
     token1 = user1['token']
     token2 = user2['token']
     u_id1 = user1['u_id']
@@ -29,7 +29,9 @@ def test_user_profile_setemail():
     
     # updating the users' email address
     user_profile_setemail(token1, 'updateemail1@gmail.com')
+    clear()
     user_profile_setemail(token2, 'updateemail2@gmail.com')
+    clear()
     
     for user in users:
         if user['u_id'] == u_id1:

@@ -10,7 +10,7 @@ import random
 import string
 from global_data import users
 from error import InputError
-from helper_functions import check, get_u_id, getUserData, saveUserData, check_token
+from helper_functions import check, get_u_id, getUserData, saveUserData
 NAME_MAXLEN = 50
 NAME_MINLEN = 1
 SECRET = 'orangeTeam5'
@@ -56,7 +56,6 @@ def auth_login(email, password):
     # Return u_id and token upon successful login
     return {'u_id' : user_details['u_id'], 'token' : user_details['token']}
 
-@check_token
 def auth_logout(token):
     '''
     function logs out user given valid token
@@ -76,7 +75,7 @@ def auth_logout(token):
     }
 
 
-def auth_register(email, password, name_first, name_last, url):
+def auth_register(email, password, name_first, name_last):
     '''
     Function registers users
     '''
@@ -116,10 +115,7 @@ def auth_register(email, password, name_first, name_last, url):
             'password': hashlib.sha256(password.encode()).hexdigest(),
             'token': encoded_token.decode('utf-8'),
             'reset_code': 0,
-            'profile_img_url': str(url) + "static/defult.jpg"
         }
-
-        print(new_user['profile_img_url'])
 
         if len(users) == 0:
             new_user['permission_id'] = 1

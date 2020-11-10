@@ -17,7 +17,7 @@ def test_channel_addowner_owner():
     '''
     clear()
     #Registering a user
-    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
+    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     #Storing token generated from registration process in a variable for easy access
     creator_token = register['token']
     #Using the registered user to create a channel
@@ -25,7 +25,7 @@ def test_channel_addowner_owner():
     #Storing channel_id generated from channel creation in a variable for easy access
     channel_id = new_channel['channel_id']
 
-    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Howard', 'Everdun', None)
+    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Howard', 'Everdun')
     nonowner_u_id = register1['u_id']
 
     for channel in channels:
@@ -45,7 +45,7 @@ def test_channel_addowner_alreadyowner():
     '''
     clear()
     #Registering a user
-    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
+    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     #Storing u_id generated from registration process in a variable for easy access
     creator_u_id = register['u_id']
     #Storing token generated from registration process in a variable for easy access
@@ -71,7 +71,7 @@ def test_channel_addowner_notowner():
     '''
     clear()
     #Registering a user
-    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
+    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     #Storing token generated from registration process in a variable for easy access
     creator_token = register['token']
     #Using the registered user to create a channel
@@ -79,7 +79,7 @@ def test_channel_addowner_notowner():
     #Storing channel_id generated from channel creation in a variable for easy access
     channel_id = new_channel['channel_id']
 
-    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Howard', 'Everdun', None)
+    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Howard', 'Everdun')
     nonowner_u_id = register1['u_id']
     nonowner_token = register1['token']
 
@@ -98,7 +98,7 @@ def test_channel_addowner_invalidchannelid():
     '''
     clear()
     #Registering a user
-    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
+    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     #Storing token generated from registration process in a variable for easy access
     creator_token = register['token']
     #Using the registered user to create a channel
@@ -106,7 +106,7 @@ def test_channel_addowner_invalidchannelid():
     #Storing channel_id generated from channel creation in a variable for easy access
     channel_id = new_channel['channel_id']
 
-    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Howard', 'Everdun', None)
+    register1 = auth_register('anothervalidemail@gmail.com', '123abc!@#', 'Howard', 'Everdun')
     nonowner_u_id = register1['u_id']
     with pytest.raises(InputError):
         channel_addowner(creator_token, channel_id*100, nonowner_u_id)
