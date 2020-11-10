@@ -30,11 +30,11 @@ def test_auth_register_base_case():
     Test base case for auth_register
     '''
     clear()
-    auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton', None)
+    auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton')
     print(users)
     assert len(users) == 1
     print(users)
-    auth_register('andanothervalidemail@gmail.com', '123abc!@#*', 'Hayden', 'Everest', None)
+    auth_register('andanothervalidemail@gmail.com', '123abc!@#*', 'Hayden', 'Everest')
 
     assert len(users) == 2
     clear()
@@ -45,7 +45,7 @@ def test_auth_register_invalid_email():
     Tests invalid email
     '''
     with pytest.raises(InputError):
-        auth_register('Thisisnotanemailaddress', '123abc!@#', 'Hayden', 'Everest', None)
+        auth_register('Thisisnotanemailaddress', '123abc!@#', 'Hayden', 'Everest')
     clear()
 
 #Test case for when attempting to register with an email already used to register
@@ -53,10 +53,10 @@ def test_auth_register_existing_email():
     '''
     Tests existing email
     '''
-    auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
+    auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     with pytest.raises(InputError):
-        auth_register('validemail@gmail.com', '123abc!@#', 'Howard', 'Evererton', None)
-        auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
+        auth_register('validemail@gmail.com', '123abc!@#', 'Howard', 'Evererton')
+        auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
 
     clear()
 
@@ -67,7 +67,7 @@ def test_auth_register_invalid_password():
     Test invalid password
     '''
     with pytest.raises(InputError):
-        auth_register('validemail@gmail.com', '123', 'Hayden', 'Everest', None)
+        auth_register('validemail@gmail.com', '123', 'Hayden', 'Everest')
 
     clear()
 
@@ -77,7 +77,7 @@ def test_auth_register_invalid_first_name1():
     Tests invalid first name
     '''
     with pytest.raises(InputError):
-        auth_register('validemail@gmail.com', '123', 'Hayden'*100, 'Everest', None)
+        auth_register('validemail@gmail.com', '123', 'Hayden'*100, 'Everest')
 
     clear()
 
@@ -87,7 +87,7 @@ def test_auth_register_invalid_first_name2():
     Tests invalid first name
     '''
     with pytest.raises(InputError):
-        auth_register('validemail@gmail.com', '123', '', 'Everest', None)
+        auth_register('validemail@gmail.com', '123', '', 'Everest')
 
     clear()
 
@@ -97,7 +97,7 @@ def test_auth_register_invalid_last_name1():
     Tests invalid Last name
     '''
     with pytest.raises(InputError):
-        auth_register('validemail@gmail.com', '123', 'Hayden', 'Everest'*100, None)
+        auth_register('validemail@gmail.com', '123', 'Hayden', 'Everest'*100)
 
     clear()
 
@@ -108,6 +108,6 @@ def test_auth_register_invalid_last_name2():
     Tests invalid last name
     '''
     with pytest.raises(InputError):
-        auth_register('validemail@gmail.com', '123', 'Hayden', '', None)
+        auth_register('validemail@gmail.com', '123', 'Hayden', '')
 
     clear()

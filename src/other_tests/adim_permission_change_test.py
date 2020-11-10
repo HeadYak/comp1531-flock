@@ -12,8 +12,8 @@ def test_userpermssion_change_base():
     Owner will change the other user's permission from member to owner.
     '''
     clear()
-    user_owner = auth_register('owner@gmail.com', '123abc!@#*', 'Bob', 'Ross', None)
-    user_member = auth_register('member@gmail.com', '123abc!@#*', 'Jo', 'Ross', None)
+    user_owner = auth_register('owner@gmail.com', '123abc!@#*', 'Bob', 'Ross')
+    user_member = auth_register('member@gmail.com', '123abc!@#*', 'Jo', 'Ross')
 
     owner_token = user_owner['token']
     member_id = user_member['u_id']
@@ -35,8 +35,8 @@ def test_userpermssion_change_member():
     to get an AccessError.
     '''
     clear()
-    user_owner = auth_register('owner@gmail.com', '123abc!@#*', 'Bob', 'Ross', None)
-    user_member = auth_register('member@gmail.com', '123abc!@#*', 'Jo', 'Ross', None)
+    user_owner = auth_register('owner@gmail.com', '123abc!@#*', 'Bob', 'Ross')
+    user_member = auth_register('member@gmail.com', '123abc!@#*', 'Jo', 'Ross')
 
     member_token = user_member['token']
     owner_id = user_owner['u_id']
@@ -55,7 +55,7 @@ def test_userpermssion_change_notexist():
     permission of a non-existing user, to get InputError returned.
     '''
     clear()
-    user_owner = auth_register('owner@gmail.com', '123abc!@#*', 'Bob', 'Ross', None)
+    user_owner = auth_register('owner@gmail.com', '123abc!@#*', 'Bob', 'Ross')
     owner_token = user_owner['token']
     non_member_id = 99
     owner_level = 1
@@ -73,8 +73,8 @@ def test_userpermssion_change_other_owner():
     to change the permissions of the other owner.
     '''
     clear()
-    user_1 = auth_register('owner@gmail.com', '123abc!@#*', 'Bob', 'Ross', None)
-    user_2 = auth_register('member@gmail.com', '123abc!@#*', 'Jo', 'Ross', None)
+    user_1 = auth_register('owner@gmail.com', '123abc!@#*', 'Bob', 'Ross')
+    user_2 = auth_register('member@gmail.com', '123abc!@#*', 'Jo', 'Ross')
 
     token_1 = user_1['token']
     token_2 = user_2['token']

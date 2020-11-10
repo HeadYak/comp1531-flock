@@ -19,14 +19,14 @@ def test_auth_login_base_case():
     Tests for auth login base case
     '''
     clear()
-    auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton', None)
+    auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton')
     print(users)
     result = auth_login('anothervalidemail@gmail.com', '123abc!@#*')
     assert len(result) == 2
 
 #Testing for attempt to login using an invalid email address
     clear()
-    auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton', None)
+    auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton')
 def test_auth_login_invalid_email():
     '''
     Test for invalid email
@@ -40,13 +40,13 @@ def test_auth_login_non_existing_email():
     '''
     test for non-existing email
     '''
-    auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton', None)
+    auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton')
     with pytest.raises(InputError):
         auth_login('Emaildoesnotbelongtoauser', '123abc!@#')
 
 # Testing given an incorrect password
     clear()
-    auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton', None)
+    auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton')
 def test_auth_login_incorrect_password():
     clear()
     '''

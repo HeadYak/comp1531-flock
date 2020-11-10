@@ -7,14 +7,13 @@ sys.path.append("..")
 from auth import auth_logout
 from auth import auth_register
 from other import clear
-from error import AccessError
 import pytest
 # Testing giving a valid token
 def test_auth_logout_valid():
     '''
     test valid login info
     '''
-    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
+    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     out_check = auth_logout(register['token'])
     assert out_check['is_success']
 
@@ -22,8 +21,7 @@ def test_auth_logout_invalid():
     '''
     test invalid login info
     '''
-    with pytest.raises(AccessError):
-        auth_logout(-1)
-    
+    bad_log = auth_logout(-4)
+    assert not bad_log['is_success']
     clear()
     

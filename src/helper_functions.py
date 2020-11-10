@@ -5,7 +5,6 @@ import jwt
 import re 
 from global_data import users, channels
 import json
-from error import InputError, AccessError
 
 SECRET = 'orangeTeam5'
 
@@ -85,12 +84,11 @@ def user_exists(u_id):# pragma: no cover
     '''
     checks if user exists
     '''
-    found = False
+    user = False
     for user in users:
         if user['u_id'] == u_id:
-            found = True
-            return found
-    return found
+            user = True
+    return user_exists
 
 def user_exists_persist(u_id):# pragma: no cover
     '''
@@ -107,11 +105,9 @@ def get_u_id(token):# pragma: no cover
     '''
     gets user id given their token
     '''
-    try:
-        decoded = jwt.decode(token, SECRET, algorithms=['HS256'])
-        return decoded['u_id']
-    except Exception:
-        raise AccessError("Invalid token")
+    decoded = jwt.decode(token, SECRET, algorithms=['HS256'])
+    return decoded['u_id']
+
 def get_token(u_id):# pragma: no cover
     '''
     Gets token given u_id
@@ -130,12 +126,10 @@ def create_member(u_id):# pragma: no cover
         if user['u_id'] == u_id:
             name_first = user['name_first']
             name_last = user['name_last']
-            url = user['profile_img_url']
     return {
         'u_id': u_id,
         'name_first': name_first,
         'name_last': name_last,
-        'profile_img_url': url,
     }
 
 def user_a_member(u_id, channel_id):# pragma: no cover
@@ -187,6 +181,17 @@ def message_creator(u_id, message_id):# pragma: no cover
                 return found
     return found
 
+def find_message(channel_id, message_id):# pragma: no cover
+    '''
+    find a message in a channel
+    '''
+    for channel in channels:
+        if channel['channel_id'] == channel_id:
+            for message in channel['messages']:
+                if message['message_id'] == message_id:
+                    return message
+    return None
+
 def find_channel(message_id):# pragma: no cover
     '''
     find the channel a message belongs to
@@ -214,34 +219,6 @@ def permission(u_id):# pragma: no cover
          if user['u_id'] == u_id:
              return user['permission_id']
      return None
-
-def change_picture(u_id, image_url): # pragma: no cover
-    for channel in channels:
-        for member in channel['members']:
-            if member['u_id'] == u_id:
-                member['profile_img_url'] = image_url
-        for owner in channel['owners']:
-            if owner['u_id'] == u_id:
-                owner['profile_img_url'] = image_url
-        for user in users:
-            if user['u_id'] == u_id: 
-                user['profile_img_url'] = image_url
-
-def check_token(function): # pragma: no cover
-    def wrapper(*args, **kwargs):
-        token = args[0]
-        print(user_exists(get_u_id(token)))
-        if token == -1:
-            raise AccessError("User is logged off")
-
-        print(user_exists(get_u_id(token)))
-
-        if not user_exists(get_u_id(token)):
-            raise AccessError("Token is not valid")
-
-        return function(*args, **kwargs)
-    return wrapper
-
 
 def getUserData():# pragma: no cover
     with open('./src/persistent_data/user_data.json', 'r') as FILE:
