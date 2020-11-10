@@ -13,7 +13,7 @@ def test_sethandle_base_case():
     between 3 and 20 inclusive.
     '''
     clear()
-    holder = auth_register('atest@gmail.com', '123abc!@#*', 'Howard', 'Everton', None)
+    holder = auth_register('atest@gmail.com', '123abc!@#*', 'Howard', 'Everton')
     user_token = holder['token']
     user_profile_sethandle(user_token, "Gr8Handlem8")
 
@@ -27,7 +27,7 @@ def test_sethandle_short_case():
     Registering user, and giving them a handle where its number of characters is
     below 3.
     '''
-    holder = auth_register('atest@gmail.com', '123abc!@#*', 'Howard', 'Everton', None)
+    holder = auth_register('atest@gmail.com', '123abc!@#*', 'Howard', 'Everton')
     user_token = holder['token']
 
     with pytest.raises(InputError):
@@ -41,7 +41,7 @@ def test_sethandle_long_case():
     Registering user, and giving them a handle where its number of characters is
     above 20.
     '''
-    holder = auth_register('atest@gmail.com', '123abc!@#*', 'Howard', 'Everton', None)
+    holder = auth_register('atest@gmail.com', '123abc!@#*', 'Howard', 'Everton')
     user_token = holder['token']
 
     with pytest.raises(InputError):
@@ -55,10 +55,10 @@ def test_sethandle_taken_case():
     Registering user, and giving them a handle that has been taken by another
     registered user.
     '''
-    user_1 = auth_register('atest@gmail.com', '123abc!@#*', 'Howard', 'Everton', None)
+    user_1 = auth_register('atest@gmail.com', '123abc!@#*', 'Howard', 'Everton')
     user1_token = user_1['token']
 
-    user_2 = auth_register('hello@gmail.com', '123abc!@#*', 'Bob', 'Jones', None)
+    user_2 = auth_register('hello@gmail.com', '123abc!@#*', 'Bob', 'Jones')
     user2_token = user_2['token']
 
     user_profile_sethandle(user1_token, "MyHandle")

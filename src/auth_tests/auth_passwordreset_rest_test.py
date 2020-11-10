@@ -9,7 +9,7 @@ def test_auth_password_reset_test():
     clear()
 
     #resgistering user to test
-    auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
+    auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     
     #requesting a password reset
     auth_passwordreset_request('validemail@gmail.com')

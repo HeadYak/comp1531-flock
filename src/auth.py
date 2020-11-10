@@ -75,7 +75,7 @@ def auth_logout(token):
     }
 
 
-def auth_register(email, password, name_first, name_last, url):
+def auth_register(email, password, name_first, name_last):
     '''
     Function registers users
     '''
@@ -115,10 +115,7 @@ def auth_register(email, password, name_first, name_last, url):
             'password': hashlib.sha256(password.encode()).hexdigest(),
             'token': encoded_token.decode('utf-8'),
             'reset_code': 0,
-            'profile_img_url': str(url) + "static/defult.jpg"
         }
-
-        print(new_user['profile_img_url'])
 
         if len(users) == 0:
             new_user['permission_id'] = 1

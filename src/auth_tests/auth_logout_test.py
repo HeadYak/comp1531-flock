@@ -13,7 +13,7 @@ def test_auth_logout_valid():
     '''
     test valid login info
     '''
-    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest', None)
+    register = auth_register('validemail@gmail.com', '123abc!@#', 'Hayden', 'Everest')
     out_check = auth_logout(register['token'])
     assert out_check['is_success']
 

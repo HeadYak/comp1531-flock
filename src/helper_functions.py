@@ -126,12 +126,10 @@ def create_member(u_id):# pragma: no cover
         if user['u_id'] == u_id:
             name_first = user['name_first']
             name_last = user['name_last']
-            url = user['profile_img_url']
     return {
         'u_id': u_id,
         'name_first': name_first,
         'name_last': name_last,
-        'profile_img_url': url,
     }
 
 def user_a_member(u_id, channel_id):# pragma: no cover
@@ -183,6 +181,17 @@ def message_creator(u_id, message_id):# pragma: no cover
                 return found
     return found
 
+def find_message(channel_id, message_id):# pragma: no cover
+    '''
+    find a message in a channel
+    '''
+    for channel in channels:
+        if channel['channel_id'] == channel_id:
+            for message in channel['messages']:
+                if message['message_id'] == message_id:
+                    return message
+    return None
+
 def find_channel(message_id):# pragma: no cover
     '''
     find the channel a message belongs to
@@ -210,18 +219,6 @@ def permission(u_id):# pragma: no cover
          if user['u_id'] == u_id:
              return user['permission_id']
      return None
-
-def change_picture(u_id, image_url):
-    for channel in channels:
-        for member in channel['members']:
-            if member['u_id'] == u_id:
-                member['profile_img_url'] = image_url
-        for owner in channel['owners']:
-            if owner['u_id'] == u_id:
-                owner['profile_img_url'] = image_url
-        for user in users:
-            if user['u_id'] == u_id: 
-                user['profile_img_url'] = image_url
 
 def getUserData():# pragma: no cover
     with open('./src/persistent_data/user_data.json', 'r') as FILE:
