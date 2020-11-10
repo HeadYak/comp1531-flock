@@ -6,12 +6,10 @@ from error import InputError, AccessError
 from helper_functions import user_in_channel, user_exists, channel_exists, \
     create_member, get_u_id, user_is_owner, user_is_creator, saveChannelData, \
     getChannelData, user_in_channel_persist, channel_exists_persist, user_exists_persist,\
-    getUserData, check_token
+    getUserData
 
 #function adds user to channel
-@check_token
 def channel_invite(token, channel_id, u_id):
-
     channels = getChannelData()
 
     '''
@@ -41,7 +39,6 @@ def channel_invite(token, channel_id, u_id):
     saveChannelData(channels)
     return {}
 
-@check_token
 def channel_details(token, channel_id):
     channels = getChannelData()
     '''
@@ -64,7 +61,6 @@ def channel_details(token, channel_id):
             }
     return None
 
-@check_token
 def channel_messages(token, channel_id, start):
     '''
     returns messages in channel with given index
@@ -115,7 +111,6 @@ def channel_messages(token, channel_id, start):
     }
 
 #function removes user from channel
-@check_token
 def channel_leave(token, channel_id):
     '''
     removes user from channel
@@ -146,7 +141,6 @@ def channel_leave(token, channel_id):
     return {}
 
 #function adds user to channel
-@check_token
 def channel_join(token, channel_id):
     '''
     adds user to channel
@@ -183,7 +177,6 @@ def channel_join(token, channel_id):
     #Comment out below     
     return {}
 
-@check_token
 def channel_join_p(token, channel_id): # pragma: no cover
     '''
     adds user to channel
@@ -224,7 +217,6 @@ def channel_join_p(token, channel_id): # pragma: no cover
     saveChannelData(channels)        
     return {}
 
-@check_token
 def channel_addowner(token, channel_id, u_id):
     '''
     adds owner to channel
@@ -244,7 +236,6 @@ def channel_addowner(token, channel_id, u_id):
     return {
     }
 
-@check_token
 def channel_removeowner(token, channel_id, u_id):
     '''
     removes owner from channel
