@@ -6,36 +6,21 @@ import pytest
 from auth import auth_register, users
 from error import InputError
 from other import clear
+from helper_functions import getUserData
 # from global_data import users
 
 
-#Test below is not a implementation of black_box testing
-
-# def test_auth_register_BaseCase():
-#     clear()
-#     result1 = auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton')
-#     u_id1 = result1['u_id']
-#     print(u_id1)
-#     result = auth_register('avalidemail@gmail.com', '123abc!@#*', 'Hayden', 'Everest')
-#     u_id = result['u_id']
-#     print(u_id)
-#     token = result['token']
-#     for user in users:
-#         if(user['u_id'] == u_id and user['token'] == token):
-#             pass
-
-#     clear()
 def test_auth_register_base_case():
     '''
     Test base case for auth_register
     '''
     clear()
     auth_register('anothervalidemail@gmail.com', '123abc!@#*', 'Howard', 'Everton', None)
-    print(users)
+    users = getUserData()
     assert len(users) == 1
-    print(users)
+    
     auth_register('andanothervalidemail@gmail.com', '123abc!@#*', 'Hayden', 'Everest', None)
-
+    users = getUserData()
     assert len(users) == 2
     clear()
 

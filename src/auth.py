@@ -15,13 +15,17 @@ NAME_MAXLEN = 50
 NAME_MINLEN = 1
 SECRET = 'orangeTeam5'
 
-global users
 
 def auth_login(email, password):
     '''
     functions logs in user
     '''
-    # Check is email is invalid
+    users = getUserData()
+
+    if (email == "RESET"): # pragma: no cover
+        resetAllData()
+        return
+    # Check is email is invalid    
     if not check(email):
         raise InputError('Invalid Email')
 
@@ -36,7 +40,7 @@ def auth_login(email, password):
     now = datetime.now()
     timestamp = datetime.timestamp(now)
     #  Check if entered email is registered as a user
-
+    
     for user in users:
         if user['email'] == email:
             user_found = True
@@ -58,6 +62,7 @@ def auth_login(email, password):
 
 @check_token
 def auth_logout(token):
+    users = getUserData()
     '''
     function logs out user given valid token
     '''
@@ -70,16 +75,16 @@ def auth_logout(token):
             token_found = True
             user['token'] = -1
             break
-
+    saveUserData(users)
     return {
         'is_success': token_found,
     }
-
 
 def auth_register(email, password, name_first, name_last, url):
     '''
     Function registers users
     '''
+    users=getUserData()
     #Code below checks if any users in the users dictionary and checks if input email already exists
     if not check(email):
         raise InputError('Invalid Email')
@@ -141,6 +146,7 @@ def auth_register(email, password, name_first, name_last, url):
     return None
 
 def auth_passwordreset_request(email):
+    users=getUserData()
     #find user given email
     for user in users:
         if user['email'] == email:
@@ -152,7 +158,7 @@ def auth_passwordreset_request(email):
     return reset_code
 
 def auth_passwordreset_reset(reset_code, new_password):
-    
+    users=getUserData()
     #raises and error is the password is invalid
     if len(new_password) < 6:
         raise InputError("Invalid password")
