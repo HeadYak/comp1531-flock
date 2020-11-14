@@ -261,6 +261,22 @@ def messagesend():
     
     return dumps(res)
 
+@APP.route('/message/sendlater', methods=['POST'])
+def messagesendlater():
+    '''
+    Route for message_sendlater
+    '''
+    data = request.get_json()
+    
+    token = data['token']
+    channel_id = data['channel_id']
+    message = data['message']
+    time_sent = data['time_sent']
+
+    res = message_sendlater(token, channel_id, message, time_sent)
+
+    return dumps(res)
+
 @APP.route('/message/edit', methods=['PUT'])
 def messageedit():
     '''
