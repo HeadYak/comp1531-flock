@@ -57,6 +57,6 @@ def test_message_send_http(url):
         'message_id': msg_dict['message_id'],
         'react_id' : 1
     }
-    resp = requests.post(f"{url}/message/react", json=unreact_data)
+    resp = requests.post(f"{url}/message/unreact", json=unreact_data)
     assert resp.status_code == 200
 
