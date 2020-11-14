@@ -20,13 +20,12 @@ def test_messagereact_base():
     token1 = user1['token']
     ch_id1 = channels_create(token1, "aGreatChannel", True)['channel_id']
 
-    m_id = message_send(token1, ch_id1, 'hey')
+    m_id = message_send(token1, ch_id1, 'hey')['message_id']
     message_react(token1, m_id, 1)
 
     data = getChannelData()
-    channel_list = data['channels']
 
-    for channel in channel_list:
+    for channel in data:
         for message in channel['messages']:
             assert len(message['reacts']) == 1
             for react in message['reacts']:
@@ -53,8 +52,8 @@ def test_messagereact_invalid_input():
     ch_id1 = channels_create(token1, "aGreatChannel", True)['channel_id']
     ch_id2 = channels_create(token2, "ChannelTwo", True)['channel_id']
 
-    m_id1 = message_send(token1, ch_id1, 'hey')
-    m_id2 = message_send(token2, ch_id2, 'hello')
+    m_id1 = message_send(token1, ch_id1, 'hey')['message_id']
+    m_id2 = message_send(token2, ch_id2, 'hello')['message_id']
 
     # Trying to react to a non_existing message
     with pytest.raises(InputError):

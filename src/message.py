@@ -34,6 +34,7 @@ def message_send(token, channel_id, message):
         'creator':  get_u_id(token),
         'message': message,
         'time_created': timestamp,
+        'reacts' : []
     }
     #adding message_id to list
     messages.append(new_message['message_id'])
@@ -120,10 +121,8 @@ def message_react(token, message_id, react_id):
     if not message_exists(message_id):
         raise InputError("Message cannot be found in any channel")
 
-    channel_data = getChannelData()
-    channel_list = channel_data['channels']
     # Obtaining channel id as well as the message dictionary
-    for channel in channel_list:
+    for channel in channels:
         for message in channel['messages']:
             if message['message_id'] == message_id:
                 channel_id = channel['channel_id']
@@ -132,7 +131,7 @@ def message_react(token, message_id, react_id):
 
     # Getting user_id, and seeing if the user is a member of the channel
     the_user = get_u_id(token)
-    if not user_a_member_persist(the_user, channel_id):
+    if not user_in_channel(the_user, channel_id):
         raise InputError("User is not a member of the message's channel")
 
     # Error returned if react_id is invalid
@@ -153,7 +152,7 @@ def message_react(token, message_id, react_id):
             raise InputError("User has already used this react for this message")
 
     # Find the react in channel message and add in the user to people who've reacted
-    for channel in channel_list:
+    for channel in channels:
         if channel['channel_id'] == channel_id:
             for message in channel['messages']:
                 if message['message_id'] == message_id:
@@ -164,11 +163,11 @@ def message_react(token, message_id, react_id):
                             break
                     # If react doesn't yet exist for that message add it in
                     if not react_exists:
-                        message['reacts'].append({react_id}, [the_user], True)
+                        new_react = {'react_id' : react_id, 'u_ids' : [the_user], 'is_this_user_reacted': True}
+                        message['reacts'].append(new_react)
                     break
             break
 
-    saveChannelData(channel_list)
     return {}
 
 def message_unreact(token, message_id, react_id):
@@ -183,10 +182,8 @@ def message_unreact(token, message_id, react_id):
     if not message_exists(message_id):
         raise InputError("Message cannot be found in any channel")
 
-    channel_data = getChannelData()
-    channel_list = channel_data['channels']
     # Obtaining channel id as well as the message dictionary
-    for channel in channel_list:
+    for channel in channels:
         for message in channel['messages']:
             if message['message_id'] == message_id:
                 channel_id = channel['channel_id']
@@ -195,7 +192,7 @@ def message_unreact(token, message_id, react_id):
 
     # Getting user_id, and seeing if the user is a member of the channel
     the_user = get_u_id(token)
-    if not user_a_member_persist(the_user, channel_id):
+    if not user_in_channel(the_user, channel_id):
         raise InputError("User is not a member of the message's channel")
 
     # Error returned if react_id is invalid
@@ -211,7 +208,7 @@ def message_unreact(token, message_id, react_id):
         raise InputError("Message does not contain a react of that react_id")
 
     # Find react_id and remove user from the users who have used that react
-    for channel in channel_list:
+    for channel in channels:
         if channel['channel_id'] == channel_id:
             for message in channel['messages']:
                 if message['message_id'] == message_id:
@@ -227,5 +224,4 @@ def message_unreact(token, message_id, react_id):
                     break
             break
 
-    saveChannelData(channel_list)
     return {}

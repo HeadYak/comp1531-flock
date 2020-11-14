@@ -2,6 +2,7 @@
 Required modules
 '''
 import pytest
+from global_data import channels
 from message import message_send, message_react, message_unreact
 from channels import channels_create
 from auth import auth_register
@@ -21,14 +22,12 @@ def test_messageunreact_base():
     token1 = user1['token']
     ch_id1 = channels_create(token1, "aGreatChannel", True)['channel_id']
 
-    m_id = message_send(token1, ch_id1, 'hey')
+    m_id = message_send(token1, ch_id1, 'hey')['message_id']
     message_react(token1, m_id, 1)
     message_unreact(token1, m_id, 1)
     
-    data = getChannelData()
-    channel_list = data['channels']
     
-    for channel in channel_list:
+    for channel in channels:
         for message in channel['messages']:
             assert len(message['reacts']) == 0
             break
@@ -50,8 +49,8 @@ def test_messageunreact_invalid_input():
     ch_id1 = channels_create(token1, "aGreatChannel", True)['channel_id']
     ch_id2 = channels_create(token2, "ChannelTwo", True)['channel_id']
 
-    m_id1 = message_send(token1, ch_id1, 'hey')
-    m_id2 = message_send(token2, ch_id2, 'hello')
+    m_id1 = message_send(token1, ch_id1, 'hey')['message_id']
+    m_id2 = message_send(token2, ch_id2, 'hello')['message_id']
     
     message_react(token1, m_id1, 1)
     
