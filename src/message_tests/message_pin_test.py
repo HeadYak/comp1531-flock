@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+
 import pytest
 from channel import channel_messages, channel_join
 from message import message_send, message_remove, message_pin
@@ -24,8 +27,8 @@ def test_message_pin():
     fake_token = jwt.encode({'u_id': 3, 'time': timestamp}, SECRET, algorithm='HS256')
 
     #creating users to create channels
-    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
-    user2 = auth_register("user2@gmail.com", "user2pass", "user2", "last2")
+    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1", None)
+    user2 = auth_register("user2@gmail.com", "user2pass", "user2", "last2", None)
     token1 = user1['token']
     token2 = user2['token']
 
