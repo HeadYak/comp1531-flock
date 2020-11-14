@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+
 import pytest
 from channel import channel_messages, channel_join
 from message import message_send, message_remove, message_pin

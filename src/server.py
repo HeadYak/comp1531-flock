@@ -261,6 +261,22 @@ def messagesend():
     
     return dumps(res)
 
+@APP.route('/message/sendlater', methods=['POST'])
+def messagesendlater():
+    '''
+    Route for message_sendlater
+    '''
+    data = request.get_json()
+    
+    token = data['token']
+    channel_id = data['channel_id']
+    message = data['message']
+    time_sent = data['time_sent']
+
+    res = message_sendlater(token, channel_id, message, time_sent)
+
+    return dumps(res)
+
 @APP.route('/message/edit', methods=['PUT'])
 def messageedit():
     '''
@@ -308,6 +324,31 @@ def messageunpin():
     res = message_unpin(token, message_id)
     
     return dumps(res)  
+
+@APP.route('/message/react', methods=['POST'])
+def messagereact():
+    data = request.get_json()
+    
+    token = data['token']
+    message_id = data['message_id']
+    react_id = data['react_id']
+    
+    res = message_react(token, message_id, react_id)
+    
+    return dumps(res)
+    
+@APP.route('/message/unreact', methods=['POST'])
+def messageunreact():
+    data = request.get_json()
+    
+    token = data['token']
+    message_id = data['message_id']
+
+    react_id = data['react_id']
+    
+    res = message_unreact(token, message_id, react_id)
+    
+    return dumps(res)
 
 @APP.route('/user/profile', methods=['GET'])
 def userprofile():
