@@ -39,7 +39,8 @@ def message_send(token, channel_id, message):
         'creator':  get_u_id(token),
         'message': message,
         'time_created': timestamp,
-        'is_pinned': False
+        'is_pinned': False,
+        'reacts' : []
     }
     #adding message_id to list
     messages.append(new_message['message_id'])
@@ -213,3 +214,120 @@ def message_sendlater_action(u_id, m_id, message, time_sent, channel_id):
             channel['messages'].append(new_message)
             break
 
+
+def message_react(token, message_id, react_id):
+    '''
+    Adds a 'react' to a certain message within a channel the authorised user
+    has joined
+    '''
+    channel_id = 0
+    the_message = {}
+    react_exists = False
+    # Raising error if message not found
+    if not message_exists(message_id):
+        raise InputError("Message cannot be found in any channel")
+
+    # Obtaining channel id as well as the message dictionary
+    for channel in channels:
+        for message in channel['messages']:
+            if message['message_id'] == message_id:
+                channel_id = channel['channel_id']
+                the_message = message
+                break
+
+    # Getting user_id, and seeing if the user is a member of the channel
+    the_user = get_u_id(token)
+    if not user_in_channel(the_user, channel_id):
+        raise InputError("User is not a member of the message's channel")
+
+    # Error returned if react_id is invalid
+    if react_id != 1:
+        raise InputError("React_id is not valid")
+
+    message_reacts = the_message['reacts']
+    reacted_users = []
+
+    for react in message_reacts:
+        if react['react_id'] == react_id:
+            reacted_users = react['u_ids']
+            break
+
+    # Error returned if user has already used the react for the message
+    for user in reacted_users:
+        if user == the_user:
+            raise InputError("User has already used this react for this message")
+
+    # Find the react in channel message and add in the user to people who've reacted
+    for channel in channels:
+        if channel['channel_id'] == channel_id:
+            for message in channel['messages']:
+                if message['message_id'] == message_id:
+                    for react in message['reacts']:
+                        if react['react_id'] == react_id:
+                            react['u_ids'].append(the_user)
+                            react_exists = True
+                            break
+                    # If react doesn't yet exist for that message add it in
+                    if not react_exists:
+                        new_react = {'react_id' : react_id, 'u_ids' : [the_user], 'is_this_user_reacted': True}
+                        message['reacts'].append(new_react)
+                    break
+            break
+
+    return {}
+
+def message_unreact(token, message_id, react_id):
+    '''
+    Removes a 'react' to a certain message within a channel the authorised user
+    has joined
+    '''
+    channel_id = 0
+    the_message = {}
+    react_found = False
+    # Raising error if message not found
+    if not message_exists(message_id):
+        raise InputError("Message cannot be found in any channel")
+
+    # Obtaining channel id as well as the message dictionary
+    for channel in channels:
+        for message in channel['messages']:
+            if message['message_id'] == message_id:
+                channel_id = channel['channel_id']
+                the_message = message
+                break
+
+    # Getting user_id, and seeing if the user is a member of the channel
+    the_user = get_u_id(token)
+    if not user_in_channel(the_user, channel_id):
+        raise InputError("User is not a member of the message's channel")
+
+    # Error returned if react_id is invalid
+    if react_id != 1:
+        raise InputError("React_id is not valid")
+
+    for react in the_message['reacts']:
+        if react_id == react['react_id']:
+            react_found = True
+            break
+    # Error is returned if no reacts of the specified react_id is found in msg
+    if react_found == False:
+        raise InputError("Message does not contain a react of that react_id")
+
+    # Find react_id and remove user from the users who have used that react
+    for channel in channels:
+        if channel['channel_id'] == channel_id:
+            for message in channel['messages']:
+                if message['message_id'] == message_id:
+                    for react in message['reacts']:
+                        if react['react_id'] == react_id:
+                            react['u_ids'].remove(the_user)
+                            # If there are no more users who have used the react
+                            # remove it completely from the message
+                            if len(react['u_ids']) == 0:
+                                message['reacts'].remove(react)
+                            break
+
+                    break
+            break
+
+    return {}
