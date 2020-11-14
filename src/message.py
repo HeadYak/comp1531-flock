@@ -1,11 +1,14 @@
 '''
 File of message funtions, message_send, message_remove and message edit
 '''
+import sys
+sys.path.append("..")
+
 from datetime import datetime
 from global_data import channels, messages
 from helper_functions import user_in_channel, get_u_id, message_exists, \
 user_is_owner, message_creator, find_channel, permission, \
-user_in_channel, channel_exists
+user_in_channel, channel_exists, check_token, find_message
 from error import InputError, AccessError
 from threading import Timer
 
@@ -112,7 +115,6 @@ def message_edit(token, message_id, message):
                     chan_messages['message'] = message
 
     return {}
-<<<<<<< HEAD
     
 def message_pin(token, message_id):
     '''
@@ -163,7 +165,6 @@ def message_unpin(token, message_id):
     message['is_pinned'] = False
         
     return {}
-=======
 
 def message_sendlater(token, channel_id, message, time_sent):
     # Error handling for long messages, non-existent channels, invalid time
@@ -212,4 +213,3 @@ def message_sendlater_action(u_id, m_id, message, time_sent, channel_id):
             channel['messages'].append(new_message)
             break
 
->>>>>>> message_sendlater

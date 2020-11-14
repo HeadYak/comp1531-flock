@@ -15,7 +15,7 @@ def test_message_sendlater_base():
     '''
     clear()
 
-    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
+    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1", None)
     token1 = user1['token']
 
     ch_id1 = channels_create(token1, "FirstChannel", True)['channel_id']
@@ -41,7 +41,7 @@ def test_message_sendlater_invalid_input():
     '''
     clear()
 
-    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
+    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1", None)
     token1 = user1['token']
 
     ch_id1 = channels_create(token1, "FirstChannel", True)['channel_id']
@@ -70,8 +70,8 @@ def test_message_sendlater_invalid_user():
     '''
     clear()
 
-    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
-    user2 = auth_register("user2@gmail.com", "user2pass", "user2", "last2")
+    user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1", None)
+    user2 = auth_register("user2@gmail.com", "user2pass", "user2", "last2", None)
     token1 = user1['token']
     token2 = user2['token']
 
