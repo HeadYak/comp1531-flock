@@ -44,8 +44,8 @@ def test_message_send_http(url):
 
     # Creating react data
     react_data = {
-        'token': user_dict['token']
-        'message_id': msg_dict['message_id']
+        'token': user_dict['token'],
+        'message_id': msg_dict['message_id'],
         'react_id' : 1
     }
 
