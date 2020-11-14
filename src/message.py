@@ -4,8 +4,8 @@ File of message funtions, message_send, message_remove and message edit
 from datetime import datetime
 from global_data import channels, messages
 from helper_functions import user_in_channel, get_u_id, message_exists, \
-user_is_owner, message_creator, find_channel, getChannelData, permission, \
-saveChannelData, user_in_channel_persist, channel_exists_persist
+user_is_owner, message_creator, find_channel, permission, \
+user_in_channel, channel_exists
 from error import InputError, AccessError
 from threading import Timer
 
@@ -114,40 +114,33 @@ def message_sendlater(token, channel_id, message, time_sent):
     # and user not part of channel
     if len(message) > 1000:
         raise InputError("Message is too long")
-    
-    if not channel_exists_persist(channel_id):
+
+    if not channel_exists(channel_id):
         raise InputError("Channel cannot be found")
 
     now = datetime.now()
     if time_sent < datetime.timestamp(now):
         raise InputError("Requested time to send message has already passed")
-        
-    if not user_in_channel_persist(get_u_id(token), channel_id):
+
+    if not user_in_channel(get_u_id(token), channel_id):
         raise AccessError("User is not part of the requested channel")
-    
-    data = getChannelData()
+
     m_id = 1
-    channel_list = data['channels']
     # Calculating message_id
-    for channel in channel_list:
+    for channel in channels:
         for message in channel['messages']:
             m_id = m_id + 1
-    
+
     # Calculating time difference and 
-    difference = datetime.fromtimestamp(time_sent) - now
-    delay = datetime.timestamp(difference)
-    
+    delay = time_sent - datetime.timestamp(now)
+
     # Starting timer to execute sending the message
     t = Timer(delay, message_sendlater_action, args=[get_u_id(token), m_id, message, time_sent, channel_id])
     t.start()
 
     return {'message_id' : m_id}
 
-
-def message_sendlater_action(u_id, m_id, message, time_sent, channel_id):
-    data = getChannelData()
-    channel_list = data['channels']
-    
+def message_sendlater_action(u_id, m_id, message, time_sent, channel_id):   
     new_message = {
         'message_id' : m_id,
         'u_id' : u_id,
@@ -157,11 +150,9 @@ def message_sendlater_action(u_id, m_id, message, time_sent, channel_id):
         'reacts' : [],
         'is_pinned' : False
     }
-    
-    for channel in channel_list:
+
+    for channel in channels:
         if channel['channel_id'] == channel_id:
             channel['messages'].append(new_message)
             break
-
-    saveChannelData(channel_list)
 
