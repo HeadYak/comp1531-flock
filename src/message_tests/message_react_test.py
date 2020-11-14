@@ -6,13 +6,14 @@ from message import message_send, message_react
 from channels import channels_create
 from auth import auth_register
 from error import InputError
-from helper_functions import getChannelData, resetData
+from helper_functions import getChannelData
+from other import clear
 
 def test_messagereact_base():
     '''
     Testing if a react can be added to a message
     '''
-    resetData()
+    clear()
 
     # Registering user and creating a channel to send messages to
     user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
@@ -36,13 +37,13 @@ def test_messagereact_base():
             break
         break
         
-    resetData()
+    clear()
 
 def test_messagereact_invalid_input():
     '''
     Testing if errors returned when given invalid input
     '''
-    resetData()
+    clear()
 
     # Registering users, creating channels and sending messages to both
     user1 = auth_register("user1@gmail.com", "user1pass", "user1", "last1")
@@ -72,4 +73,4 @@ def test_messagereact_invalid_input():
     with pytest.raises(InputError):
         message_react(token1, m_id1, 1)
 
-    resetData()
+    clear()
